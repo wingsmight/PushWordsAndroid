@@ -3,23 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/dictionary_tab">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.example.pushwords.ui.home.HomeFragment"
+        android:id="@+id/dictionary_tab"
+        android:name="com.example.pushwords.ui.dictionaryTab.DictionaryFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/dictionary_tab" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.example.pushwords.ui.dashboard.DashboardFragment"
+        android:id="@+id/learning_tab"
+        android:name="com.example.pushwords.ui.learningTab.LearningFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/learning_tab" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.pushwords.ui.notifications.NotificationsFragment"
+        android:id="@+id/learned_tab"
+        android:name="com.example.pushwords.ui.learnedTab.LearnedFragment"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/learned_tab" />
 </navigation>

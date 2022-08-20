@@ -3,4 +3,7 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="dictionary_tab_title">Словарь</string>
+    <string name="learning_tab_title">На изучении</string>
+    <string name="learned_tab_title">Выученные</string>
 </resources>

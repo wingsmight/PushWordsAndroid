@@ -1,4 +1,4 @@
-package com.example.pushwords.ui.notifications;
+package com.example.pushwords.ui.learningTab;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,22 +10,22 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.pushwords.databinding.FragmentNotificationsBinding;
+import com.example.pushwords.databinding.LearningTabBinding;
 
-public class NotificationsFragment extends Fragment {
+public class LearningFragment extends Fragment {
 
-    private FragmentNotificationsBinding binding;
+    private LearningTabBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        NotificationsViewModel notificationsViewModel =
-                new ViewModelProvider(this).get(NotificationsViewModel.class);
+        LearningViewModel dashboardViewModel =
+                new ViewModelProvider(this).get(LearningViewModel.class);
 
-        binding = FragmentNotificationsBinding.inflate(inflater, container, false);
+        binding = LearningTabBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textNotifications;
-        notificationsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        final TextView textView = binding.textDashboard;
+        dashboardViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 

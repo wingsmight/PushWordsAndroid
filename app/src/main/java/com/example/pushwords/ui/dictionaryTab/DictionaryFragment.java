@@ -1,4 +1,4 @@
-package com.example.pushwords.ui.home;
+package com.example.pushwords.ui.dictionaryTab;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,18 +10,18 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.pushwords.databinding.FragmentHomeBinding;
+import com.example.pushwords.databinding.DictionaryTabBinding;
 
-public class HomeFragment extends Fragment {
+public class DictionaryFragment extends Fragment {
 
-    private FragmentHomeBinding binding;
+    private DictionaryTabBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        HomeViewModel homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
+        DictionaryViewModel homeViewModel =
+                new ViewModelProvider(this).get(DictionaryViewModel.class);
 
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        binding = DictionaryTabBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         final TextView textView = binding.textHome;
