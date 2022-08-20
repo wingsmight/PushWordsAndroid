@@ -7,10 +7,14 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
     <color name="appAmber">#E8C340</color>
     <color name="appCyan">#66CEFB</color>
     <color name="appGreen">#98E27F</color>
     <color name="appRed">#FD625D</color>
     <color name="appYellow">#EFE270</color>
     <color name="appBrightYellow">#F8F9AB</color>
+
+    <color name="lightGray">#848484</color>
+    <color name="lightLightGray">#E3E2E2</color>
 </resources>
