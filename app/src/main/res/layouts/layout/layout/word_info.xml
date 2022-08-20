@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Сумка"
+        android:textColor="@color/black"
+        android:textSize="28sp"
+        android:paddingHorizontal="20dp"
+        android:paddingBottom="25dp"/>
+
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:divider="@drawable/translation_examples_group_divider"
+        android:showDividers="middle">
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/translation"
+            android:textColor="@color/black"
+            android:textAllCaps="false"
+            android:textSize="15sp"
+            app:cornerRadius="10dp"
+            app:backgroundTint="@color/lightLightGray"
+            android:stateListAnimator="@null" />
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/examples"
+            android:textColor="@color/black"
+            android:textAllCaps="false"
+            android:textSize="15sp"
+            app:cornerRadius="10dp"
+            android:backgroundTint="@color/lightLightGray"
+            android:stateListAnimator="@null" />
+
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+    <include layout="@layout/synonym_list" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

@@ -8,4 +8,6 @@
     <string name="learned_tab_title">Выученные</string>
     <string name="original_language">Русский</string>
     <string name="learned_language">Английский</string>
+    <string name="translation">Перевод</string>
+    <string name="examples">Примеры</string>
 </resources>

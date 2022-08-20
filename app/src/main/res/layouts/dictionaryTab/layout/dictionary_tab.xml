@@ -37,29 +37,59 @@
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="22dp" />
+            android:layout_marginTop="30dp" />
 
-        <include
-            layout="@layout/category_button"
-            android:layout_width="match_parent"
-            android:layout_height="75dp"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginVertical="12dp" />
 
-        <include
-            layout="@layout/category_button"
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
-            android:layout_height="75dp"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginVertical="12dp" />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="22dp"
+            android:visibility="visible">
 
-        <include
-            layout="@layout/category_button"
+            <include
+                layout="@layout/category_button"
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="12dp" />
+
+            <include
+                layout="@layout/category_button"
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="12dp" />
+
+            <include
+                layout="@layout/category_button"
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="12dp" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="75dp"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginVertical="12dp" />
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <include
+                layout="@layout/word_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"/>
+
+            <include
+                layout="@layout/word_control_panel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:layout_marginEnd="20dp"
+                android:layout_gravity="end"/>
+
+        </FrameLayout>
 
     </LinearLayout>
 
