@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="bag"
-                android:textSize="50dp"
+                android:textSize="50sp"
                 android:textColor="@color/black"
                 android:layout_margin="20dp" />
 
@@ -35,7 +35,8 @@
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <include layout="@layout/word_info"
+        <include
+            layout="@layout/word_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp" />

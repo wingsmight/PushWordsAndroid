@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp">
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:backgroundTint="@color/appGreen" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="5dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:src="@drawable/circled_checkmark_icon"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:layout_margin="6dp"
+            android:layout_toLeftOf="@id/start_test_button_label"
+            android:padding="6dp"/>
+
+        <TextView
+            android:id="@+id/start_test_button_label"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/repeat_words"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
+
+</FrameLayout>

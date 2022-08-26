@@ -10,4 +10,13 @@
     <string name="learned_language">Английский</string>
     <string name="translation">Перевод</string>
     <string name="examples">Примеры</string>
+    <string name="empty_learned_tab_label">Вы еще не выучили\nни одного слова 🤔</string>
+    <string name="empty_learning_tab_label">Добавьте слова из словаря\nдля начала изучения 💡</string>
+    <string name="repeat_words">Повторить слова</string>
+    <string name="remember">Помню</string>
+    <string name="forgot">Забыл</string>
+    <string name="finish_test_label">Good job! 👍🏻</string>
+    <string name="finish_test_under_label">Вы повторили все слова</string>
+    <string name="continue_button">Продолжить</string>
+    <string name="test_settings_label">Настройки теста</string>
 </resources>
