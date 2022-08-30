@@ -6,6 +6,7 @@
     android:background="@drawable/rounded_rectangle">
 
     <EditText
+        android:id="@+id/wordInputText"
         android:layout_width="match_parent"
         android:layout_height="75dp"
         android:layout_margin="20dp"
@@ -24,12 +25,14 @@
         android:layout_gravity="end">
 
         <include
+            android:id="@+id/closeButton"
             layout="@layout/close_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="-5dp"/>
 
         <include
+            android:id="@+id/speakerButton"
             layout="@layout/speaker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

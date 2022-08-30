@@ -26,6 +26,7 @@
             android:layout_gravity="center"/>
 
         <include
+            android:id="@+id/language_switch"
             layout="@layout/language_switch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -33,6 +34,7 @@
             android:layout_gravity="center"/>
 
         <include
+            android:id="@+id/wordInput"
             layout="@layout/word_input"
             android:layout_width="match_parent"
             android:layout_height="80dp"
@@ -41,6 +43,7 @@
 
 
         <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/category_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -71,17 +74,19 @@
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <FrameLayout
+            android:id="@+id/word_info_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone">
 
-            <include
-                layout="@layout/word_info"
-                android:layout_width="wrap_content"
+            <com.example.pushwords.ui.WordInfoView
+                android:id="@+id/word_info"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"/>
 
             <include
+                android:id="@+id/word_control_panel"
                 layout="@layout/word_control_panel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
