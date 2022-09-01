@@ -25,14 +25,17 @@ public class SpeakerView extends FrameLayout {
 
     public SpeakerView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+
         initView();
     }
     public SpeakerView(Context context, AttributeSet attrs) {
         super(context, attrs);
+
         initView();
     }
     public SpeakerView(Context context) {
         super(context);
+
         initView();
     }
 

@@ -30,9 +30,8 @@
                 android:layout_marginTop="30dp"
                 android:layout_gravity="center"/>
 
-            <include
-                android:id="@+id/language_switch"
-                layout="@layout/language_switch"
+            <com.example.pushwords.ui.dictionaryTab.LanguageSwitch
+                android:id="@+id/languageSwitch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"

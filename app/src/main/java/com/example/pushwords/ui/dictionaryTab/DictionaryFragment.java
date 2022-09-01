@@ -22,11 +22,9 @@ import com.example.pushwords.ui.WordControlPanel;
 import com.example.pushwords.ui.wordInfo.WordInfoView;
 
 public class DictionaryFragment extends Fragment {
-    private Language currentOriginalLanguage = Language.English;
-    private Language currentTargetLanguage = Language.Russian;
-
     private WordInfoView wordInfo;
     private WordControlPanel translatedWordControlPanel;
+    private LanguageSwitch languageSwitch;
 
     private TranslationApi translationApi = new TranslationApi();
 
@@ -52,29 +50,9 @@ public class DictionaryFragment extends Fragment {
         translatedWordControlPanel.setWord(wordInfo.findViewById(R.id.word));
 
         // language switch
-        View languageSwitch = view.findViewById(R.id.language_switch);
-        ImageView languageSwitchButton = languageSwitch.findViewById(R.id.switch_language_button);
-        TextView originalLanguageText = languageSwitch.findViewById(R.id.original_language);
-        TextView targetLanguageText = languageSwitch.findViewById(R.id.target_language);
-
-        languageSwitchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                currentOriginalLanguage = currentOriginalLanguage.getOpposite();
-                currentTargetLanguage = currentTargetLanguage.getOpposite();
-
-                originalLanguageText.setText(currentOriginalLanguage.getDescription());
-                targetLanguageText.setText(currentTargetLanguage.getDescription());
-
-                if (currentOriginalLanguage != Language.English) {
-                    view.animate().rotation(0).rotation(180).start();
-                } else {
-                    view.animate().rotation(180).rotation(0).start();
-                }
-
-                wordInfo.setTargetLanguage(currentTargetLanguage);
-            }
-        });
+        languageSwitch = view.findViewById(R.id.languageSwitch);
+        languageSwitch.setOnSwitchListener((originalLanguage, targetLanguage) ->
+                wordInfo.setTargetLanguage(targetLanguage));
 
         // word input
         View wordInput = view.findViewById(R.id.wordInput);
@@ -90,7 +68,10 @@ public class DictionaryFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 wordInfo.setWord("");
-                translationApi.translate(charSequence.toString(), currentTargetLanguage, onWordTranslated);
+
+                translationApi.translate(charSequence.toString(),
+                        languageSwitch.getCurrentTargetLanguage(),
+                        onWordTranslated);
 
                 if (charSequence.toString().isEmpty()) {
                     categoryView.setVisibility(View.VISIBLE);
