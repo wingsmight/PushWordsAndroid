@@ -5,6 +5,7 @@
     android:layout_height="wrap_content">
 
     <ImageButton
+        android:id="@+id/button"
         android:layout_width="27dp"
         android:layout_height="27dp"
         android:src="@drawable/close_icon"

@@ -18,12 +18,17 @@ import androidx.fragment.app.Fragment;
 import com.example.pushwords.R;
 import com.example.pushwords.data.Language;
 import com.example.pushwords.handlers.network.TranslationApi;
-import com.example.pushwords.handlers.network.dictionaryApis.examples.RussianExamplesApi;
-import com.example.pushwords.ui.WordInfoView;
+import com.example.pushwords.ui.WordControlPanel;
+import com.example.pushwords.ui.wordInfo.WordInfoView;
 
 public class DictionaryFragment extends Fragment {
     private Language currentOriginalLanguage = Language.English;
     private Language currentTargetLanguage = Language.Russian;
+
+    private WordInfoView wordInfo;
+    private WordControlPanel translatedWordControlPanel;
+
+    private TranslationApi translationApi = new TranslationApi();
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -34,17 +39,17 @@ public class DictionaryFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         // category view
-        View categoryView = view.findViewById(R.id.category_view);
+        View categoryView = view.findViewById(R.id.categoryView);
 
         // word info view
-        View wordInfoView = view.findViewById(R.id.word_info_view);
+        View wordInfoView = view.findViewById(R.id.wordInfoView);
 
         // word info
-        WordInfoView wordInfo = view.findViewById(R.id.word_info);
+        wordInfo = view.findViewById(R.id.wordInfo);
 
-        // test
-        RussianExamplesApi russianExamplesApi = new RussianExamplesApi();
-        russianExamplesApi.loadExamples(getContext(),"бегать");
+        // translated word panel
+        translatedWordControlPanel = view.findViewById(R.id.wordControlPanel);
+        translatedWordControlPanel.setWord(wordInfo.findViewById(R.id.word));
 
         // language switch
         View languageSwitch = view.findViewById(R.id.language_switch);
@@ -66,6 +71,8 @@ public class DictionaryFragment extends Fragment {
                 } else {
                     view.animate().rotation(180).rotation(0).start();
                 }
+
+                wordInfo.setTargetLanguage(currentTargetLanguage);
             }
         });
 
@@ -73,7 +80,8 @@ public class DictionaryFragment extends Fragment {
         View wordInput = view.findViewById(R.id.wordInput);
         EditText wordInputText = wordInput.findViewById(R.id.wordInputText);
 
-        Consumer<String> onWordTranslated = wordInfo::setWord;
+        Consumer<String> onWordTranslated = translation -> getActivity().
+                runOnUiThread(() -> wordInfo.setWord(translation));
 
         wordInputText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -81,7 +89,8 @@ public class DictionaryFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                new TranslationApi().translate(charSequence.toString(), currentTargetLanguage, onWordTranslated);
+                wordInfo.setWord("");
+                translationApi.translate(charSequence.toString(), currentTargetLanguage, onWordTranslated);
 
                 if (charSequence.toString().isEmpty()) {
                     categoryView.setVisibility(View.VISIBLE);

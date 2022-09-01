@@ -1,101 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.dictionaryTab.DictionaryFragment">
+    tools:context=".ui.dictionaryTab.DictionaryFragment"
+    android:layout_marginBottom="?attr/actionBarSize">
 
-    <include
-        layout="@layout/settings_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_margin="15dp" />
-
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <include
-            layout="@layout/logo"
+            layout="@layout/settings_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_gravity="center"/>
+            android:layout_gravity="end"
+            android:layout_margin="15dp" />
 
-        <include
-            android:id="@+id/language_switch"
-            layout="@layout/language_switch"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:layout_gravity="center"/>
-
-        <include
-            android:id="@+id/wordInput"
-            layout="@layout/word_input"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="30dp" />
-
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/category_view"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_marginTop="22dp"
-            android:visibility="visible">
+            android:orientation="vertical">
 
             <include
-                layout="@layout/category_button"
-                android:layout_width="match_parent"
-                android:layout_height="75dp"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginVertical="12dp" />
-
-            <include
-                layout="@layout/category_button"
-                android:layout_width="match_parent"
-                android:layout_height="75dp"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginVertical="12dp" />
-
-            <include
-                layout="@layout/category_button"
-                android:layout_width="match_parent"
-                android:layout_height="75dp"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginVertical="12dp" />
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <FrameLayout
-            android:id="@+id/word_info_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone">
-
-            <com.example.pushwords.ui.WordInfoView
-                android:id="@+id/word_info"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"/>
-
-            <include
-                android:id="@+id/word_control_panel"
-                layout="@layout/word_control_panel"
+                layout="@layout/logo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
-                android:layout_marginEnd="20dp"
-                android:layout_gravity="end"/>
+                android:layout_marginTop="30dp"
+                android:layout_gravity="center"/>
 
-        </FrameLayout>
+            <include
+                android:id="@+id/language_switch"
+                layout="@layout/language_switch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:layout_gravity="center"/>
 
-    </LinearLayout>
+            <com.example.pushwords.ui.dictionaryTab.WordInputView
+                android:id="@+id/wordInput"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="30dp"/>
 
-</FrameLayout>
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/categoryView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginTop="22dp"
+                android:visibility="visible">
+
+                <include
+                    layout="@layout/category_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginVertical="12dp" />
+
+                <include
+                    layout="@layout/category_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginVertical="12dp" />
+
+                <include
+                    layout="@layout/category_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginVertical="12dp" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <FrameLayout
+                android:id="@+id/wordInfoView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone">
+
+                <com.example.pushwords.ui.wordInfo.WordInfoView
+                    android:id="@+id/wordInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"/>
+
+                <com.example.pushwords.ui.WordControlPanel
+                    android:id="@+id/wordControlPanel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_gravity="end"/>
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+</ScrollView>

@@ -28,9 +28,20 @@ public class TranslationApi {
     private TranslationTask task = new TranslationTask("", Language.English);
 
     private Consumer<String> onCompleted;
+    private String currentText;
 
 
     public void translate(String text, Language targetLanguage, Consumer<String> onCompleted) {
+        currentText = text;
+
+        if (text.isEmpty()) {
+            task.cancel(true);
+
+            onFailure();
+
+            return;
+        }
+
         task.cancel(true);
         task = new TranslationTask(text, targetLanguage);
         task.execute();
@@ -42,7 +53,11 @@ public class TranslationApi {
         String translation = parse(response);
         onCompleted.accept(translation);
     }
-
+    private void onFailure() {
+        if (onCompleted != null) {
+            onCompleted.accept("Неизвестное слово...");
+        }
+    }
     private String parse(String response) {
         try {
             JSONObject jsonObject = new JSONObject(response);
@@ -88,10 +103,18 @@ public class TranslationApi {
                    onSuccess(response);
 
                    isSucceed = true;
-               }
-           } catch (Exception e) { }
+               } else {
 
-           return  isSucceed;
+               }
+           } catch (Exception e) {
+               Exception i = e;
+           }
+
+           if (!isSucceed) {
+               onFailure();
+           }
+
+           return isSucceed;
        }
 
        public String performPostCall(String requestURL, HashMap<String, String> postDataParams) {

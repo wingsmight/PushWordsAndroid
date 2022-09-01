@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
@@ -10,42 +10,51 @@
         android:id="@+id/word"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Сумка"
         android:textColor="@color/black"
         android:textSize="28sp"
         android:paddingHorizontal="20dp"
         android:paddingBottom="25dp"/>
 
-    <com.google.android.material.button.MaterialButtonToggleGroup
-        android:layout_width="wrap_content"
+    <com.nex3z.togglebuttongroup.SingleSelectToggleGroup
+        android:id="@+id/synonyms_examples_toggle"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:divider="@drawable/translation_examples_group_divider"
-        android:showDividers="middle">
+        app:tbgCheckedButton="@+id/synonyms"
+        android:layout_marginStart="20dp">
 
-        <com.google.android.material.button.MaterialButton
+        <com.nex3z.togglebuttongroup.button.LabelToggle
+            android:id="@+id/synonyms"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/translation"
-            android:textColor="@color/black"
-            android:textAllCaps="false"
             android:textSize="15sp"
-            app:cornerRadius="10dp"
-            app:backgroundTint="@color/lightLightGray"
-            android:stateListAnimator="@null" />
+            android:textColor="@color/lightGray"
+            app:tbgMarkerColor="@color/appBrightYellow"
+            app:tbgRadioStyle="true"/>
 
-        <com.google.android.material.button.MaterialButton
+        <com.nex3z.togglebuttongroup.button.LabelToggle
+            android:id="@+id/examples"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/examples"
-            android:textColor="@color/black"
-            android:textAllCaps="false"
             android:textSize="15sp"
-            app:cornerRadius="10dp"
-            android:backgroundTint="@color/lightLightGray"
-            android:stateListAnimator="@null" />
+            android:textColor="@color/lightGray"
+            app:tbgMarkerColor="@color/appBrightYellow"/>
 
-    </com.google.android.material.button.MaterialButtonToggleGroup>
+    </com.nex3z.togglebuttongroup.SingleSelectToggleGroup>
 
-    <include layout="@layout/synonym_list" />
+    <com.example.pushwords.ui.wordInfo.examples.ExampleList
+        android:id="@+id/example_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:visibility="gone"/>
+
+    <com.example.pushwords.ui.wordInfo.synonyms.SynonymList
+        android:id="@+id/synonym_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:visibility="visible"/>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

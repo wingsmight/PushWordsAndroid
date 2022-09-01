@@ -5,6 +5,7 @@
     android:layout_height="wrap_content">
 
     <ImageButton
+        android:id="@+id/button"
         android:layout_width="22dp"
         android:layout_height="22dp"
         android:src="@drawable/speaker_icon"

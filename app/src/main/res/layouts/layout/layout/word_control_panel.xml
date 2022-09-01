@@ -7,7 +7,10 @@
     android:layout_marginEnd="10dp"
     android:layout_gravity="end">
 
-    <include layout="@layout/speaker" />
+    <com.example.pushwords.ui.SpeakerView
+        android:id="@+id/speakerButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
     <include layout="@layout/learned_button" />
 

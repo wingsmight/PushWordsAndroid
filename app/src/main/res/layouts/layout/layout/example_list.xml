@@ -5,8 +5,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/example_row" />
+    <include
+        android:id="@+id/row_0"
+        layout="@layout/example_row" />
 
-    <include layout="@layout/example_row" />
+    <include
+        android:id="@+id/row_1"
+        layout="@layout/example_row" />
+
+    <include
+        android:id="@+id/row_2"
+        layout="@layout/example_row" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

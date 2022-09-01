@@ -3,6 +3,8 @@ package com.example.pushwords.handlers.network.dictionaryApis.examples;
 import android.content.Context;
 import android.util.Log;
 
+import androidx.core.util.Consumer;
+
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
@@ -10,16 +12,21 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class RussianExamplesApi {
+public class RussianExamplesApi implements IExamplesApi {
     private final String baseUrl = "https://lexicography.online/explanatory/";
 
-    private ArrayList<String> examples = new ArrayList<>();
-    private boolean isLoaded = false;
+
+    private Context context;
+    private String currentWord;
 
 
-    public void loadExamples(Context context, String word) {
-//        examples = []
-//        isLoaded = false
+    public RussianExamplesApi(Context context) {
+        this.context = context;
+    }
+
+
+    public void loadExamples(String word, Consumer<ArrayList<String>> onCompleted) {
+        currentWord = word;
 
         if (word.isEmpty()) {
             return;
@@ -30,7 +37,9 @@ public class RussianExamplesApi {
         if (handledRaw.isEmpty()) {
             return;
         }
-        String url = (baseUrl + handledRaw.charAt(0) + "/" + handledRaw); //.encodeUrl
+
+        ArrayList<String> examples = new ArrayList<>();
+        String url = (baseUrl + handledRaw.charAt(0) + "/" + handledRaw);
 
         Ion.with(context).load(url).asString().setCallback(new FutureCallback<String>() {
             @Override
@@ -46,47 +55,20 @@ public class RussianExamplesApi {
 
                 while (matcher.find() && examples.size() < maxExampleLength) {
                     String example = matcher.group(1);
-                    examples.add(example);
+
+                    if (example != null &&
+                        example.length() > 12 &&
+                        Character.isUpperCase(example.charAt(0))) {
+                        examples.add(example);
+                    }
                 }
-
-//                while (examples.size() < maxExampleLength) {
-//                    int startIndex = fullHtml.indexOf(startExampleRowPattern);
-//                    if (startIndex >= 0) {
-//                        int endIndex = fullHtml.indexOf(endExampleRowPattern);
-//
-//                        String example =
-//                    }
-
-
-//                    if let range = fullHtml.range(of: startExampleRowPattern) {
-//                        let firstIndex = range.upperBound
-//                        if let end = fullHtml[firstIndex...].range(of: endExampleRowPattern) {
-//                            let range = firstIndex..<end.lowerBound
-//
-//                            let example = String(fullHtml[range])
-//
-//                            if let firstExampleLetter = example.first {
-//                                if firstExampleLetter.isUppercase && example.count > 12 {
-//                                    examples.add(example);
-//                                    exampleCount++;
-//                                }
-//
-//                                fullHtml = fullHtml[end.upperBound...]
-//                            }
-//                        } else {
-//                            break
-//                        }
-//                    } else {
-//                        break
-//                    }
-//                }
-//
 
                 Log.i("RussianExamplesApi", examples + " for " + word);
 
-                isLoaded = true;
+                if (currentWord.equals(word)) {
+                    onCompleted.accept(examples);
+                }
             }
         });
-
     }
 }

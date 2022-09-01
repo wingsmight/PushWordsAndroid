@@ -31,7 +31,10 @@
                 android:textColor="@color/black"
                 android:layout_margin="20dp" />
 
-            <include layout="@layout/word_control_panel" />
+            <com.example.pushwords.ui.WordControlPanel
+                android:id="@+id/wordControlPanel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
