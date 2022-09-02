@@ -103,8 +103,6 @@ public class TranslationApi {
                    onSuccess(response);
 
                    isSucceed = true;
-               } else {
-
                }
            } catch (Exception e) {
                Exception i = e;

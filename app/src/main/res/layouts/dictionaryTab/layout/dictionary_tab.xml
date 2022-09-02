@@ -44,7 +44,7 @@
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="30dp"/>
 
-            <androidx.appcompat.widget.LinearLayoutCompat
+            <com.example.pushwords.ui.dictionaryTab.CategoryContainer
                 android:id="@+id/categoryView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -52,28 +52,7 @@
                 android:layout_marginTop="22dp"
                 android:visibility="visible">
 
-                <include
-                    layout="@layout/category_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="75dp"
-                    android:layout_marginHorizontal="20dp"
-                    android:layout_marginVertical="12dp" />
-
-                <include
-                    layout="@layout/category_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="75dp"
-                    android:layout_marginHorizontal="20dp"
-                    android:layout_marginVertical="12dp" />
-
-                <include
-                    layout="@layout/category_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="75dp"
-                    android:layout_marginHorizontal="20dp"
-                    android:layout_marginVertical="12dp" />
-
-            </androidx.appcompat.widget.LinearLayoutCompat>
+            </com.example.pushwords.ui.dictionaryTab.CategoryContainer>
 
             <FrameLayout
                 android:id="@+id/wordInfoView"
