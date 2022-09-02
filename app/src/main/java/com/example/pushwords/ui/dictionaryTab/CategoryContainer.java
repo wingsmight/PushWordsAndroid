@@ -8,8 +8,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.LinearLayoutCompat;
 
+import com.example.pushwords.data.WordPair;
+
 import java.io.InputStream;
 
+import jxl.Cell;
 import jxl.Sheet;
 import jxl.Workbook;
 import jxl.WorkbookSettings;
@@ -32,17 +35,15 @@ public class CategoryContainer extends LinearLayoutCompat {
     }
 
     private void initView() {
-        Context context = getContext();
-
-        CategoryButton.Label[] labels = parseButtonLabels();
-        for (CategoryButton.Label label : labels) {
-            addView(new CategoryButton(context, label));
+        CategoryButton[] buttons = parseCategoryButtons();
+        for (CategoryButton button : buttons) {
+            addView(button);
         }
     }
-    private CategoryButton.Label[] parseButtonLabels() {
-        CategoryButton view = new CategoryButton(getContext());
-
+    private CategoryButton[] parseCategoryButtons() {
         try {
+            Context context = getContext();
+
             WorkbookSettings ws = new WorkbookSettings();
             ws.setGCDisabled(true);
 
@@ -53,7 +54,7 @@ public class CategoryContainer extends LinearLayoutCompat {
 
             Workbook workbook = Workbook.getWorkbook(inputStream, ws);
             int count = workbook.getNumberOfSheets();
-            CategoryButton.Label[] viewLabels = new CategoryButton.Label[count];
+            CategoryButton[] buttons = new CategoryButton[count];
             for (int sheetIndex = 0; sheetIndex < count; sheetIndex++) {
                 Sheet sheet = workbook.getSheet(sheetIndex);
 
@@ -63,14 +64,21 @@ public class CategoryContainer extends LinearLayoutCompat {
                         sheet.getCell(5, 1).getContents(),
                         sheet.getCell(6, 1).getContents());
 
-                viewLabels[sheetIndex] = viewLabel;
+                Cell[] originals = sheet.getColumn(0);
+                Cell[] translations = sheet.getColumn(1);
+                int wordCount = Math.min(originals.length, translations.length);
+                WordPair[] words = new WordPair[wordCount];
+                for (int rowIndex = 0; rowIndex < wordCount; rowIndex++) {
+                    words[rowIndex] = new WordPair(originals[rowIndex].getContents(),
+                            translations[rowIndex].getContents());
+                }
+
+                buttons[sheetIndex] = new CategoryButton(context, viewLabel, words);
             }
 
-            return viewLabels;
+            return buttons;
         } catch (Exception e) {
-            Exception ei = e;
-
-            return new CategoryButton.Label[0];
+            return new CategoryButton[0];
         }
     }
 }

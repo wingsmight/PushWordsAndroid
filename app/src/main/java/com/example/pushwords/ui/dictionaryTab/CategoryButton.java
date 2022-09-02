@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 
 import com.example.pushwords.R;
+import com.example.pushwords.data.WordPair;
 import com.example.pushwords.extensions.StringExt;
 
 public class CategoryButton extends LinearLayout {
@@ -22,11 +23,15 @@ public class CategoryButton extends LinearLayout {
     private TextView headlineTextView;
     private View backgroundView;
 
+    private WordPair[] words;
 
-    public CategoryButton(Context context, Label label) {
+
+    public CategoryButton(Context context, Label label, WordPair[] words) {
         super(context);
 
         initView(label);
+
+        this.words = words;
     }
     public CategoryButton(Context context) {
         super(context);
