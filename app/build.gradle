@@ -31,7 +31,12 @@ android {
     sourceSets {
         main {
             res {
-                srcDirs 'src/main/res', 'src/main/res/dictionaryTab', 'src/main/res/layouts/dictionaryTab', 'src/main/res/layouts/learningTab', 'src/main/res/layouts/learnedTab', 'src/main/res/layouts/layout'
+                srcDirs 'src/main/res',
+                        'src/main/res/layouts/dictionaryTab',
+                        'src/main/res/layouts/learningTab',
+                        'src/main/res/layouts/learnedTab',
+                        'src/main/res/layouts/settingsTab',
+                        'src/main/res/layouts/layout'
             }
         }
     }

@@ -16,6 +16,9 @@
         android:theme="@style/Theme.PushWords"
         tools:targetApi="31">
         <activity
+            android:name=".ui.SettingsTab"
+            android:exported="false" />
+        <activity
             android:name=".ui.dictionaryTab.CategoryWordTab"
             android:exported="false" />
         <activity

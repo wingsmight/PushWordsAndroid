@@ -51,7 +51,9 @@
         <entry key="app/src/main/res/layouts/layout/layout/push_toggle_button.xml" value="0.30885416666666665" />
         <entry key="app/src/main/res/layouts/layout/layout/rounded_rectangle.xml" value="0.30885416666666665" />
         <entry key="app/src/main/res/layouts/layout/layout/settings_button.xml" value="0.3098958333333333" />
+        <entry key="app/src/main/res/layouts/layout/layout/settings_tab.xml" value="0.29052519621672457" />
         <entry key="app/src/main/res/layouts/layout/layout/speaker.xml" value="0.30885416666666665" />
+        <entry key="app/src/main/res/layouts/layout/layout/subscription_button.xml" value="0.30885416666666665" />
         <entry key="app/src/main/res/layouts/layout/layout/synonym_list.xml" value="0.2532801310221354" />
         <entry key="app/src/main/res/layouts/layout/layout/synonym_pair.xml" value="0.1675925925925926" />
         <entry key="app/src/main/res/layouts/layout/layout/synonym_row.xml" value="0.30885416666666665" />
@@ -70,8 +72,11 @@
         <entry key="app/src/main/res/layouts/learnedTab/layout/test_settings_button.xml" value="0.19114583333333332" />
         <entry key="app/src/main/res/layouts/learnedTab/layout/watch_translation_button.xml" value="0.30885416666666665" />
         <entry key="app/src/main/res/layouts/learnedTab/layout/word_count.xml" value="0.30885416666666665" />
+        <entry key="app/src/main/res/layouts/learningTab/layout-land/learning_tab.xml" value="0.1" />
         <entry key="app/src/main/res/layouts/learningTab/layout/learning_tab.xml" value="0.1921875" />
         <entry key="app/src/main/res/layouts/learningTab/layout/learning_word_pair_row.xml" value="0.1921875" />
+        <entry key="app/src/main/res/layouts/settingsTab/layout/sanction_info.xml" value="0.2717768351236979" />
+        <entry key="app/src/main/res/layouts/settingsTab/layout/subscription_button.xml" value="0.19722222222222222" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.3098958333333333" />
       </map>
     </option>

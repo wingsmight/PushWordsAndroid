@@ -19,6 +19,9 @@
     <string name="finish_test_under_label">Вы повторили все слова</string>
     <string name="continue_button">Продолжить</string>
     <string name="test_settings_label">Настройки теста</string>
+    <string name="settings_label">Настройки</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="buy_subscription">Купить подписку</string>
+    <string name="purchase_while_sanction">Оплата в условиях ограничений</string>
 </resources>
