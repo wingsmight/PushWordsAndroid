@@ -4,10 +4,12 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../../../layout/custom_preview.xml" value="0.14673913043478262" />
+        <entry key="../../../../.gradle/caches/transforms-3/99ee7e5e75e10fe574193f2470e99974/transformed/jetified-toggle-button-group-1.2.3/res/drawable/bg_circle.xml" value="0.1285" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1715" />
         <entry key="app/src/main/res/drawable/empty_tall_divider.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.1715" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1715" />
+        <entry key="app/src/main/res/drawable/push_toggle_selector.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/rounded_rectangle.xml" value="0.15" />
         <entry key="app/src/main/res/drawable/translation_examples_group_divider.xml" value="0.15" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.29609527587890627" />
@@ -15,12 +17,14 @@
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layouts/dictionaryTab/layout/category_button.xml" value="0.19526977539062496" />
-        <entry key="app/src/main/res/layouts/dictionaryTab/layout/category_word_pair_row.xml" value="0.2689412434895833" />
-        <entry key="app/src/main/res/layouts/dictionaryTab/layout/category_words_tab.xml" value="0.13516743977864581" />
+        <entry key="app/src/main/res/layouts/dictionaryTab/layout/category_word_pair_row.xml" value="0.21611989339192708" />
+        <entry key="app/src/main/res/layouts/dictionaryTab/layout/category_words_tab.xml" value="0.15777638753255205" />
         <entry key="app/src/main/res/layouts/dictionaryTab/layout/dictionary_tab.xml" value="0.21145833333333333" />
         <entry key="app/src/main/res/layouts/dictionaryTab/layout/language_switch.xml" value="0.18976440429687502" />
         <entry key="app/src/main/res/layouts/dictionaryTab/layout/word_input.xml" value="0.21625315348307295" />
+        <entry key="app/src/main/res/layouts/layout/drawable/bell_icon.xml" value="0.1285" />
         <entry key="app/src/main/res/layouts/layout/drawable/checkmark_icon.xml" value="0.15" />
+        <entry key="app/src/main/res/layouts/layout/drawable/circle_toggle.xml" value="0.1" />
         <entry key="app/src/main/res/layouts/layout/drawable/close_icon.xml" value="0.15" />
         <entry key="app/src/main/res/layouts/layout/drawable/eye_icon.xml" value="0.159" />
         <entry key="app/src/main/res/layouts/layout/drawable/eye_off_icon.xml" value="0.159" />
@@ -40,7 +44,9 @@
         <entry key="app/src/main/res/layouts/layout/layout/example_pair.xml" value="0.1675925925925926" />
         <entry key="app/src/main/res/layouts/layout/layout/example_row.xml" value="0.2819819132486979" />
         <entry key="app/src/main/res/layouts/layout/layout/learned_button.xml" value="0.30885416666666665" />
+        <entry key="app/src/main/res/layouts/layout/layout/learned_toggle.xml" value="0.473699951171875" />
         <entry key="app/src/main/res/layouts/layout/layout/learning_button.xml" value="0.30885416666666665" />
+        <entry key="app/src/main/res/layouts/layout/layout/learning_toggle.xml" value="0.7864990234375" />
         <entry key="app/src/main/res/layouts/layout/layout/logo.xml" value="0.20092592592592592" />
         <entry key="app/src/main/res/layouts/layout/layout/push_toggle_button.xml" value="0.30885416666666665" />
         <entry key="app/src/main/res/layouts/layout/layout/rounded_rectangle.xml" value="0.30885416666666665" />

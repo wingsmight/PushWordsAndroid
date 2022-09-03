@@ -33,9 +33,15 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <include layout="@layout/learning_button" />
+        <com.example.pushwords.ui.LearningToggle
+            android:id="@+id/learningToggle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
-        <include layout="@layout/learned_button" />
+        <com.example.pushwords.ui.LearnedToggle
+            android:id="@+id/learnedToggle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

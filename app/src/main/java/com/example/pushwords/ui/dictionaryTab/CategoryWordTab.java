@@ -8,13 +8,13 @@ import android.os.Bundle;
 
 import com.example.pushwords.R;
 import com.example.pushwords.data.WordPair;
-import com.example.pushwords.data.WordPairsAdapter;
+import com.example.pushwords.data.dictionaryTab.CategoryWordPairsAdapter;
 
 import java.util.ArrayList;
 
 public class CategoryWordTab extends AppCompatActivity {
     private RecyclerView recyclerView;
-    private WordPairsAdapter wordPairsAdapter;
+    private CategoryWordPairsAdapter wordPairsAdapter;
 
 
     @Override
@@ -26,7 +26,7 @@ public class CategoryWordTab extends AppCompatActivity {
         ArrayList<WordPair> words = getIntent().getParcelableArrayListExtra(CategoryButton.WORD_PAIRS_EXTRA);
 
         recyclerView = findViewById(R.id.wordPairs);
-        wordPairsAdapter = new WordPairsAdapter(words.toArray(new WordPair[] {}));
+        wordPairsAdapter = new CategoryWordPairsAdapter(words);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(wordPairsAdapter);
