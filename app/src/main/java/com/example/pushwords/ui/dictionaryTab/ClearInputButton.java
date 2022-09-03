@@ -2,6 +2,7 @@ package com.example.pushwords.ui.dictionaryTab;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -9,7 +10,7 @@ import android.widget.TextView;
 import com.example.pushwords.R;
 
 public class ClearInputButton extends FrameLayout {
-    private ImageButton button;
+    private View button;
     private TextView textToClear;
 
 

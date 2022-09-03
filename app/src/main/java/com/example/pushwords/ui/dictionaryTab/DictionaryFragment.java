@@ -7,8 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,7 +14,6 @@ import androidx.core.util.Consumer;
 import androidx.fragment.app.Fragment;
 
 import com.example.pushwords.R;
-import com.example.pushwords.data.Language;
 import com.example.pushwords.handlers.network.TranslationApi;
 import com.example.pushwords.ui.WordControlPanel;
 import com.example.pushwords.ui.wordInfo.WordInfoView;
@@ -40,13 +37,13 @@ public class DictionaryFragment extends Fragment {
         View categoryView = view.findViewById(R.id.categoryView);
 
         // word info view
-        View wordInfoView = view.findViewById(R.id.wordInfoView);
+        View wordInfoView = view.findViewById(R.id.translatedWordInfoView);
 
         // word info
         wordInfo = view.findViewById(R.id.wordInfo);
 
         // translated word panel
-        translatedWordControlPanel = view.findViewById(R.id.wordControlPanel);
+        translatedWordControlPanel = view.findViewById(R.id.translatedWordControlPanel);
         translatedWordControlPanel.setWord(wordInfo.findViewById(R.id.word));
 
         // language switch

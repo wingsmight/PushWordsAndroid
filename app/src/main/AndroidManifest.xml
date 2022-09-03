@@ -19,6 +19,9 @@
             android:name=".ui.dictionaryTab.CategoryWordTab"
             android:exported="false" />
         <activity
+            android:name=".ui.WordCardTabView"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name">

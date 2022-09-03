@@ -17,7 +17,14 @@ import com.example.pushwords.R;
 import com.example.pushwords.data.WordPair;
 import com.example.pushwords.extensions.StringExt;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class CategoryButton extends LinearLayout {
+    public static final String WORD_PAIRS_EXTRA = "WORD_PAIRS_EXTRA";
+
+
     private ImageView iconView;
     private TextView titleTextView;
     private TextView headlineTextView;
@@ -57,8 +64,11 @@ public class CategoryButton extends LinearLayout {
         headlineTextView = findViewById(R.id.headlineText);
         backgroundView = findViewById(R.id.background);
 
-        setOnClickListener(view -> getContext()
-            .startActivity(new Intent(getContext(), CategoryWordTab.class)));
+        setOnClickListener(view -> {
+            Intent intent = new Intent(getContext(), CategoryWordTab.class);
+            intent.putParcelableArrayListExtra(WORD_PAIRS_EXTRA, new ArrayList<>(Arrays.asList(words)));
+            getContext().startActivity(intent);
+        });
 
         if (label == null) {
             return;
