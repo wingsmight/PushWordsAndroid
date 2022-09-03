@@ -8,7 +8,7 @@
     android:paddingVertical="4dp">
 
     <TextView
-        android:id="@+id/textViewLarge"
+        android:id="@+id/original"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -18,7 +18,7 @@
         android:layout_marginTop="4dp" />
 
     <TextView
-        android:id="@+id/textViewSmall"
+        android:id="@+id/translation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
