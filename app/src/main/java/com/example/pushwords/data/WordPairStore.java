@@ -48,8 +48,8 @@ public class WordPairStore {
         SharedPreferences preferences = context.getSharedPreferences(Preference.SHARED, MODE_PRIVATE);
         SharedPreferences.Editor preferencesEditor = preferences.edit();
         Gson gson = new Gson();
-        String j = gson.toJson(wordPairs);
-        preferencesEditor.putString("MyObject", j);
+        String objectAsJson = gson.toJson(wordPairs);
+        preferencesEditor.putString(PREF_NAME, objectAsJson);
         preferencesEditor.apply();
     }
     public ArrayList<WordPair> getAll() {
@@ -58,7 +58,7 @@ public class WordPairStore {
     public ArrayList<WordPair> getLearningOnly() {
         ArrayList<WordPair> learningOnly = new ArrayList<>();
         for (WordPair wordPair : wordPairs) {
-            if (wordPair.state == WordPair.State.Learning) {
+            if (wordPair.getState() == WordPair.State.Learning) {
                 learningOnly.add(wordPair);
             }
         }
@@ -67,7 +67,7 @@ public class WordPairStore {
     public ArrayList<WordPair> getLearnedOnly() {
         ArrayList<WordPair> learnedOnly = new ArrayList<>();
         for (WordPair wordPair : wordPairs) {
-            if (wordPair.state == WordPair.State.Learned) {
+            if (wordPair.getState() == WordPair.State.Learned) {
                 learnedOnly.add(wordPair);
             }
         }
@@ -76,13 +76,26 @@ public class WordPairStore {
     public ArrayList<WordPair> getForgottenOnly() {
         ArrayList<WordPair> forgottenOnly = new ArrayList<>();
         for (WordPair wordPair : wordPairs) {
-            if (wordPair.state == WordPair.State.Forgotten) {
+            if (wordPair.getState() == WordPair.State.Forgotten) {
                 forgottenOnly.add(wordPair);
             }
         }
         return forgottenOnly;
     }
     public void add(WordPair wordPair) {
+        if (wordPairs.contains(wordPair)) {
+            return;
+        }
+
         wordPairs.add(wordPair);
+    }
+    public WordPair get(WordPair wordPair) {
+        for (WordPair existedWordPair : wordPairs) {
+            if (existedWordPair.equals(wordPair)) {
+                return existedWordPair;
+            }
+        }
+
+        return wordPair;
     }
 }

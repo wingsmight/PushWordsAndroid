@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pushwords.R;
 import com.example.pushwords.data.Preference;
+import com.example.pushwords.data.WordPairStore;
 
 public class TestSettingsTab extends AppCompatActivity {
     private static final String LAST_LEARNED_WORD_COUNT_PREF_NAME = "LAST_LEARNED_WORD_COUNT_PREF_NAME";
@@ -68,6 +69,12 @@ public class TestSettingsTab extends AppCompatActivity {
                     reverseTranslationToggle.isChecked())
                     .apply();
         });
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        WordPairStore.getInstance(this).save();
     }
 
 

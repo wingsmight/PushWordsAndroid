@@ -24,7 +24,8 @@ public class LearnedWordPairsAdapter extends RecyclerView.Adapter<LearnedWordPai
     @NonNull
     @Override
     public LearnedWordPairViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.learned_word_pair_row, parent, false);
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.learned_word_pair_row, parent, false);
 
         return new LearnedWordPairViewHolder(view);
     }

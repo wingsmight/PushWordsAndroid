@@ -9,11 +9,16 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.LinearLayoutCompat;
 
 import com.example.pushwords.R;
+import com.example.pushwords.data.WordPair;
+import com.example.pushwords.data.WordPairStore;
+
+import org.w3c.dom.Text;
 
 public class WordControlPanel extends LinearLayoutCompat {
-    private TextView wordView;
-
     private SpeakerView speaker;
+    private LearnedToggle learnedToggle;
+    private LearningToggle learningToggle;
+    private WordPairStore wordPairStore;
 
 
     public WordControlPanel(@NonNull Context context) {
@@ -32,9 +37,13 @@ public class WordControlPanel extends LinearLayoutCompat {
         initView();
     }
 
-    public void setWord(TextView wordView) {
-        this.wordView = wordView;
+    public void setWordPair(WordPair wordPair) {
+        wordPair = wordPairStore.get(wordPair);
 
+        learnedToggle.setWordPair(wordPair);
+        learningToggle.setWordPair(wordPair);
+    }
+    public void setWordTextView(TextView wordView) {
         speaker.setSpokenTextView(wordView);
     }
 
@@ -42,5 +51,9 @@ public class WordControlPanel extends LinearLayoutCompat {
         inflate(getContext(), R.layout.word_control_panel, this);
 
         speaker = findViewById(R.id.speakerButton);
+        learnedToggle = findViewById(R.id.learnedToggle);
+        learningToggle = findViewById(R.id.learningToggle);
+
+        wordPairStore = WordPairStore.getInstance(getContext());
     }
 }

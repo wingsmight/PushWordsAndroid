@@ -91,7 +91,12 @@ public class SynonymPair extends LinearLayoutCompat {
 
         String translatedSynonymRow = translatedSynonyms[0];
         for (int i = 1; i < translatedSynonyms.length; i++) {
-            translatedSynonymRow += ", " + translatedSynonyms[i];
+            String translatedSynonym = translatedSynonyms[i];
+            if (translatedSynonym.isEmpty()
+                || translatedSynonym.equals(EMPTY_TRANSLATED_STRING)) {
+                translatedSynonym = EMPTY_TRANSLATED_STRING;
+            }
+            translatedSynonymRow += ", " + translatedSynonym;
         }
 
         String finalTranslatedSynonymRow = translatedSynonymRow;

@@ -13,6 +13,7 @@
         android:layout_margin="15dp"/>
 
     <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/nonTestView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -26,15 +27,16 @@
             tools:listitem="@layout/learned_word_pair_row"
             android:layout_marginTop="75dp" />
 
-        <include
-            layout="@layout/start_test_button"
+        <com.example.pushwords.ui.learnedTab.StartTestButton
+            android:id="@+id/startTestButton"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_margin="17dp" />
+            android:layout_margin="17dp"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <TextView
+        android:id="@+id/emptyListView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/empty_learned_tab_label"
@@ -43,5 +45,11 @@
         android:textColor="@color/black"
         android:layout_gravity="center"
         android:visibility="gone" />
+
+    <com.example.pushwords.ui.learnedTab.TestView
+        android:id="@+id/test"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
 
 </FrameLayout>

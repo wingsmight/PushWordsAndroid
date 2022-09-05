@@ -10,10 +10,12 @@ import androidx.annotation.Nullable;
 
 import com.example.pushwords.R;
 import com.example.pushwords.data.WordPair;
+import com.example.pushwords.data.WordPairStore;
 
 public class PushToggle extends FrameLayout {
     private ToggleButton toggle;
 
+    private WordPairStore wordPairStore;
     private WordPair wordPair;
 
 
@@ -35,15 +37,17 @@ public class PushToggle extends FrameLayout {
 
 
     public void setWordPair(WordPair wordPair) {
-        this.wordPair = wordPair;
+        this.wordPair = wordPairStore.get(wordPair);
 
         toggle.setChecked(wordPair.isPushed());
 
-        wordPair.setOnPushedChanged(isPushed ->
+        wordPair.addOnPushedChanged(isPushed ->
                 toggle.setChecked(isPushed));
     }
     private void initView() {
         inflate(getContext(), R.layout.push_toggle_button, this);
+
+        wordPairStore = WordPairStore.getInstance(getContext());
 
         toggle = findViewById(R.id.toggle);
         toggle.setOnClickListener(view -> wordPair.setPushed(toggle.isChecked()));

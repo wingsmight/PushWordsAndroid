@@ -4,14 +4,22 @@
     android:layout_height="match_parent"
     android:background="@color/appBrightYellow">
 
-    <include
-        layout="@layout/close_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:layout_gravity="end" />
+    <View
+        android:id="@+id/left_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.7"
+        android:background="@color/appRed"/>
+
+    <View
+        android:id="@+id/right_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.7"
+        android:background="@color/appGreen"/>
 
     <TextView
+        android:id="@+id/counterText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
@@ -19,62 +27,110 @@
         android:textSize="16sp"
         android:layout_gravity="start" />
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="50sp"
-            android:textColor="@color/black"
-            android:text="Bag"
-            android:layout_gravity="center" />
-
-        <include
-            layout="@layout/speaker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"/>
-
-        <include
-            layout="@layout/word_info"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_gravity="center"
-            android:visibility="visible" />
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_gravity="bottom"
         android:layout_margin="10dp">
 
-        <include
-            layout="@layout/forgot_button"
-            android:layout_width="100dp"
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/originalWordText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Bag"
+                            android:textColor="@color/black"
+                            android:textSize="50sp" />
+
+                        <com.example.pushwords.ui.SpeakerView
+                            android:id="@+id/speakerButton"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_margin="10dp"/>
+
+                    </LinearLayout>
+
+                </FrameLayout>
+
+            </RelativeLayout>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="6"
+                android:layout_marginStart="10dp"
+                android:layout_gravity="center">
+
+                <com.example.pushwords.ui.wordInfo.WordInfoView
+                    android:id="@+id/wordInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible"/>
+
+            </ScrollView>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true" />
+            android:orientation="horizontal"
+            android:layout_gravity="bottom"
+            android:layout_margin="10dp">
 
-        <include
-            layout="@layout/watch_translation_button"
-            android:layout_width="38dp"
-            android:layout_height="30dp"
-            android:layout_centerInParent="true" />
+            <include
+                android:id="@+id/forgotButton"
+                layout="@layout/forgot_button"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true" />
 
-        <include
-            layout="@layout/remember_button"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true" />
+            <ToggleButton
+                android:id="@+id/watchTranslationToggle"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:background="@drawable/watch_toggle"
+                android:textOn=""
+                android:textOff=""
+                android:focusable="false"
+                android:checked="true"
+                android:focusableInTouchMode="false"
+                android:layout_centerVertical="true"
+                android:layout_centerInParent="true" />
 
-    </RelativeLayout>
+            <include
+                android:id="@+id/rememberButton"
+                layout="@layout/remember_button"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
 
 </FrameLayout>

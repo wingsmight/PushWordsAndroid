@@ -30,10 +30,10 @@ public class CategoryButton extends LinearLayout {
     private TextView headlineTextView;
     private View backgroundView;
 
-    private WordPair[] words;
+    private ArrayList<WordPair> words;
 
 
-    public CategoryButton(Context context, Label label, WordPair[] words) {
+    public CategoryButton(Context context, Label label, ArrayList<WordPair> words) {
         super(context);
 
         initView(label);
@@ -66,7 +66,7 @@ public class CategoryButton extends LinearLayout {
 
         setOnClickListener(view -> {
             Intent intent = new Intent(getContext(), CategoryWordTab.class);
-            intent.putParcelableArrayListExtra(WORD_PAIRS_EXTRA, new ArrayList<>(Arrays.asList(words)));
+            intent.putParcelableArrayListExtra(WORD_PAIRS_EXTRA, words);
             getContext().startActivity(intent);
         });
 

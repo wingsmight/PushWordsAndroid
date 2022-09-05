@@ -9,8 +9,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.LinearLayoutCompat;
 
 import com.example.pushwords.data.WordPair;
+import com.example.pushwords.data.WordPairStore;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 
 import jxl.Cell;
 import jxl.Sheet;
@@ -44,6 +46,8 @@ public class CategoryContainer extends LinearLayoutCompat {
         try {
             Context context = getContext();
 
+            WordPairStore wordPairStore = WordPairStore.getInstance(context);
+
             WorkbookSettings ws = new WorkbookSettings();
             ws.setGCDisabled(true);
 
@@ -67,10 +71,13 @@ public class CategoryContainer extends LinearLayoutCompat {
                 Cell[] originals = sheet.getColumn(0);
                 Cell[] translations = sheet.getColumn(1);
                 int wordCount = Math.min(originals.length, translations.length);
-                WordPair[] words = new WordPair[wordCount];
+                ArrayList<WordPair> words = new ArrayList<>(wordCount);
                 for (int rowIndex = 0; rowIndex < wordCount; rowIndex++) {
-                    words[rowIndex] = new WordPair(originals[rowIndex].getContents(),
+                    WordPair newWordPair = new WordPair(originals[rowIndex].getContents(),
                             translations[rowIndex].getContents());
+
+                    words.add(newWordPair);
+                    wordPairStore.add(newWordPair);
                 }
 
                 buttons[sheetIndex] = new CategoryButton(context, viewLabel, words);

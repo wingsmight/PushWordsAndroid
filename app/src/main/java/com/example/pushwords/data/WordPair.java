@@ -5,14 +5,20 @@ import android.os.Parcelable;
 
 import androidx.core.util.Consumer;
 
+import com.google.gson.annotations.Expose;
+
+import java.util.ArrayList;
+import java.util.Date;
+
 public class WordPair implements Parcelable {
     private String original;
     private String translation;
-    public State state = State.None;
-    public boolean isPushed = false;
+    private State state = State.None;
+    private boolean isPushed = false;
+    private Date changingDate = new Date();
 
-    private Consumer<State> onStateChanged = state -> { };
-    private Consumer<Boolean> onPushedChanged = state -> { };
+    private transient ArrayList<Consumer<State>> onStateChanged = new ArrayList<>();
+    private transient ArrayList<Consumer<Boolean>> onPushedChanged = new ArrayList<>();
 
 
     public WordPair(String original, String translation) {
@@ -48,18 +54,26 @@ public class WordPair implements Parcelable {
         parcel.writeSerializable(state);
         parcel.writeByte((byte) (isPushed ? 1 : 0));
     }
+    @Override
+    public boolean equals(Object object) {
+        WordPair anotherWord = (WordPair) object;
+        return this.original.equalsIgnoreCase(anotherWord.original)
+                && this.translation.equalsIgnoreCase(anotherWord.translation);
+    }
 
     public String getOriginal() {
         return original;
     }
     public void setOriginal(String original) {
         this.original = original;
+        setChangingDateToNow();
     }
     public String getTranslation() {
         return translation;
     }
     public void setTranslation(String translation) {
         this.translation = translation;
+        setChangingDateToNow();
     }
     public State getState() {
         return state;
@@ -67,7 +81,10 @@ public class WordPair implements Parcelable {
     public void setState(State state) {
         this.state = state;
 
-        onStateChanged.accept(state);
+        for (Consumer<State> event : onStateChanged) {
+            event.accept(state);
+        }
+        setChangingDateToNow();
     }
     public boolean isPushed() {
         return isPushed;
@@ -75,13 +92,29 @@ public class WordPair implements Parcelable {
     public void setPushed(boolean pushed) {
         isPushed = pushed;
 
-        onPushedChanged.accept(pushed);
+        for (Consumer<Boolean> event : onPushedChanged) {
+            event.accept(pushed);
+        }
+        setChangingDateToNow();
     }
-    public void setOnStateChanged(Consumer<State> onStateChanged) {
-        this.onStateChanged = onStateChanged;
+    public Date getChangingDate() {
+        return changingDate;
     }
-    public void setOnPushedChanged(Consumer<Boolean> onPushedChanged) {
-        this.onPushedChanged = onPushedChanged;
+    public void addOnStateChanged(Consumer<State> onStateChanged) {
+        if (this.onStateChanged == null)
+            this.onStateChanged = new ArrayList<>();
+
+        this.onStateChanged.add(onStateChanged);
+    }
+    public void addOnPushedChanged(Consumer<Boolean> onPushedChanged) {
+        if (this.onPushedChanged == null)
+            this.onPushedChanged = new ArrayList<>();
+
+        this.onPushedChanged.add(onPushedChanged);
+    }
+
+    private void setChangingDateToNow() {
+        changingDate = new Date();
     }
 
 

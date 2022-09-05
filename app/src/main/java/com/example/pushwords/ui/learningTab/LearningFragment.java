@@ -15,13 +15,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.pushwords.R;
 import com.example.pushwords.data.WordPair;
 import com.example.pushwords.data.WordPairStore;
+import com.example.pushwords.data.learnedTab.LearnedWordPairsAdapter;
 import com.example.pushwords.data.learningTab.LearningWordPairsAdapter;
+import com.example.pushwords.ui.learnedTab.StartTestButton;
+import com.example.pushwords.ui.learnedTab.TestView;
 
 import java.util.ArrayList;
 
 public class LearningFragment extends Fragment {
+    private View emptyListView;
     private RecyclerView recyclerView;
     private LearningWordPairsAdapter wordPairsAdapter;
+    private WordPairStore wordPairStore;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -31,18 +36,22 @@ public class LearningFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        // TEST
-        WordPair testWordPair = new WordPair("Book", "Книга");
-        testWordPair.setState(WordPair.State.Learning);
-        WordPairStore.getInstance(view.getContext()).add(testWordPair);
-        // TEST
-
-        ArrayList<WordPair> wordPairs = WordPairStore.getInstance(getContext()).getLearningOnly();
+        wordPairStore = WordPairStore.getInstance(getContext());
 
         recyclerView = view.findViewById(R.id.wordPairs);
+        emptyListView = view.findViewById(R.id.emptyListView);
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        ArrayList<WordPair> wordPairs = wordPairStore.getLearningOnly();
+
         wordPairsAdapter = new LearningWordPairsAdapter(wordPairs);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(wordPairsAdapter);
+
+        emptyListView.setVisibility(wordPairs.isEmpty() ? View.VISIBLE : View.GONE);
     }
 }

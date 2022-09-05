@@ -18,34 +18,46 @@ import com.example.pushwords.data.WordPair;
 import com.example.pushwords.data.WordPairStore;
 import com.example.pushwords.data.learnedTab.LearnedWordPairsAdapter;
 import com.example.pushwords.data.learningTab.LearningWordPairsAdapter;
-import com.example.pushwords.databinding.LearnedTabBinding;
 
 import java.util.ArrayList;
 
 public class LearnedFragment extends Fragment {
+    private View emptyListView;
     private RecyclerView recyclerView;
     private LearnedWordPairsAdapter wordPairsAdapter;
+    private WordPairStore wordPairStore;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.learned_tab, container, false);
     }
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        // TEST
-        WordPair testWordPair = new WordPair("Dog", "Собака");
-        testWordPair.setState(WordPair.State.Learned);
-        WordPairStore.getInstance(view.getContext()).add(testWordPair);
-        // TEST
-
-        ArrayList<WordPair> wordPairs = WordPairStore.getInstance(getContext()).getLearnedOnly();
+        wordPairStore = WordPairStore.getInstance(getContext());
 
         recyclerView = view.findViewById(R.id.wordPairs);
+
+        TestView testView = view.findViewById(R.id.test);
+        View nonTestView = view.findViewById(R.id.nonTestView);
+
+        StartTestButton startTestButton = view.findViewById(R.id.startTestButton);
+        startTestButton.setTest(testView);
+        startTestButton.setNonTestView(nonTestView);
+
+        emptyListView = view.findViewById(R.id.emptyListView);
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        ArrayList<WordPair> wordPairs = wordPairStore.getLearnedOnly();
+
         wordPairsAdapter = new LearnedWordPairsAdapter(wordPairs);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(wordPairsAdapter);
+
+        emptyListView.setVisibility(wordPairs.isEmpty() ? View.VISIBLE : View.GONE);
     }
 }

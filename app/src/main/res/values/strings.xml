@@ -24,4 +24,10 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="buy_subscription">Купить подписку</string>
     <string name="purchase_while_sanction">Оплата в условиях ограничений</string>
+    <string name="last_learned">Последние выученные</string>
+    <string name="earlier_learned">Ранее выученные</string>
+    <string name="forgot_repeating_count">Повтор забытых (раз)</string>
+    <string name="reverse_translation_in_text">Обратный перевод в тесте</string>
+    <string name="on">Вкл</string>
+    <string name="off">Выкл</string>
 </resources>

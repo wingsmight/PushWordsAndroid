@@ -6,6 +6,7 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pushwords.R;
+import com.example.pushwords.data.WordPairStore;
 
 public class SettingsTab extends AppCompatActivity {
     private View closeButton;
@@ -19,5 +20,11 @@ public class SettingsTab extends AppCompatActivity {
 
         closeButton = findViewById(R.id.closeButton);
         closeButton.setOnClickListener(view -> finish());
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        WordPairStore.getInstance(this).save();
     }
 }
