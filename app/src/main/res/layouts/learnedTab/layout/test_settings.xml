@@ -33,18 +33,18 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="Последние выученные"
+            android:text="@string/last_learned"
             android:textSize="17sp" />
 
-        <TextView
+        <NumberPicker
+            android:id="@+id/lastLearnedCountPicker"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="20 слов"
             android:textSize="17sp"
             android:textStyle="bold"
             android:textColor="@color/black"
-            android:gravity="center" />
+            android:gravity="center"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -59,18 +59,18 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="Ранее выученные"
+            android:text="@string/earlier_learned"
             android:textSize="17sp" />
 
-        <TextView
+        <NumberPicker
+            android:id="@+id/learnedCountPicker"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="15 слов"
             android:textSize="17sp"
             android:textStyle="bold"
             android:textColor="@color/black"
-            android:gravity="center" />
+            android:gravity="center"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -84,18 +84,18 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="Повтор забытых (раз)"
+            android:text="@string/forgot_repeating_count"
             android:textSize="17sp" />
 
-        <TextView
+        <NumberPicker
+            android:id="@+id/forgotRepeatPicker"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="3"
             android:textSize="17sp"
             android:textStyle="bold"
             android:textColor="@color/black"
-            android:gravity="center" />
+            android:gravity="center"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -110,15 +110,17 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="Обратный перевод в тесте"
+            android:text="@string/reverse_translation_in_text"
             android:textSize="17sp" />
 
         <ToggleButton
+            android:id="@+id/reverseTranslationToggle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textOn="Вкл"
-            android:textOff="Выкл"
+            android:background="@android:color/transparent"
+            android:textOn="@string/on"
+            android:textOff="@string/off"
             android:textSize="17sp"
             android:textStyle="bold"
             android:gravity="center" />
