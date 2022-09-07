@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 
@@ -18,6 +19,8 @@ public class CategoryWordTab extends AppCompatActivity {
     private RecyclerView recyclerView;
     private CategoryWordPairsAdapter wordPairsAdapter;
 
+    private String actionBarTitle;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,8 +29,10 @@ public class CategoryWordTab extends AppCompatActivity {
         setContentView(R.layout.category_words_tab);
 
         WordPairStore wordPairStore = WordPairStore.getInstance(this);
-        ArrayList<WordPair> categoryWordPairs = getIntent()
+        Intent intent = getIntent();
+        ArrayList<WordPair> categoryWordPairs = intent
                 .getParcelableArrayListExtra(CategoryButton.WORD_PAIRS_EXTRA);
+        actionBarTitle = intent.getStringExtra(CategoryButton.TAB_LABEL_EXTRA);
 
         ArrayList<WordPair> words = new ArrayList<>(categoryWordPairs.size());
         for (WordPair wordPair : categoryWordPairs) {
@@ -45,5 +50,12 @@ public class CategoryWordTab extends AppCompatActivity {
         super.onPause();
 
         WordPairStore.getInstance(this).save();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        getSupportActionBar().setTitle(actionBarTitle);
     }
 }

@@ -30,7 +30,6 @@ public class LearningFragment extends Fragment {
     private RecyclerView recyclerView;
     private LearningWordPairsAdapter wordPairsAdapter;
     private WordPairStore wordPairStore;
-    private BadgeDrawable tabBadge;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,

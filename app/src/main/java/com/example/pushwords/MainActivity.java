@@ -55,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
             learnedBadge.setNumber(localLearnedWordPairs.size());
             learnedBadge.setVisible(localLearnedWordPairs.size() > 0);
         });
+
+        getSupportActionBar().hide();
     }
     @Override
     protected void onPause() {

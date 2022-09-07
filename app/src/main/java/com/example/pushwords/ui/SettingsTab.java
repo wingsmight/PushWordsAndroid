@@ -9,7 +9,7 @@ import com.example.pushwords.R;
 import com.example.pushwords.data.WordPairStore;
 
 public class SettingsTab extends AppCompatActivity {
-    private View closeButton;
+    private static final String ACTION_BAR_TITLE = "Настройки";
 
 
     @Override
@@ -18,13 +18,24 @@ public class SettingsTab extends AppCompatActivity {
 
         setContentView(R.layout.settings_tab);
 
-        closeButton = findViewById(R.id.closeButton);
-        closeButton.setOnClickListener(view -> finish());
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
     @Override
     protected void onPause() {
         super.onPause();
 
         WordPairStore.getInstance(this).save();
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        getSupportActionBar().setTitle(ACTION_BAR_TITLE);
+    }
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+
+        return true;
     }
 }

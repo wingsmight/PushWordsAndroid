@@ -10,6 +10,8 @@ import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.util.Consumer;
 import androidx.fragment.app.Fragment;
 
@@ -23,8 +25,8 @@ public class DictionaryFragment extends Fragment {
     private WordInfoView wordInfo;
     private WordControlPanel translatedWordControlPanel;
     private LanguageSwitch languageSwitch;
-    private String inputOriginal;
 
+    private String inputOriginal;
     private TranslationApi translationApi = new TranslationApi();
 
 

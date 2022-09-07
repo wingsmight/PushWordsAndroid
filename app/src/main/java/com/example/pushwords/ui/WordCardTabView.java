@@ -46,6 +46,12 @@ public class WordCardTabView extends AppCompatActivity {
         WordPairStore.getInstance(this).save();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        getSupportActionBar().hide();
+    }
 
     public void set(WordPair wordPair, Language targetLanguage) {
         originalWordTextView.setText(wordPair.getOriginal());

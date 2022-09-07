@@ -23,6 +23,7 @@ import java.util.Arrays;
 
 public class CategoryButton extends LinearLayout {
     public static final String WORD_PAIRS_EXTRA = "WORD_PAIRS_EXTRA";
+    public static final String TAB_LABEL_EXTRA = "TAB_LABEL_EXTRA";
 
 
     private ImageView iconView;
@@ -67,6 +68,7 @@ public class CategoryButton extends LinearLayout {
         setOnClickListener(view -> {
             Intent intent = new Intent(getContext(), CategoryWordTab.class);
             intent.putParcelableArrayListExtra(WORD_PAIRS_EXTRA, words);
+            intent.putExtra(TAB_LABEL_EXTRA, label.getTitleText());
             getContext().startActivity(intent);
         });
 

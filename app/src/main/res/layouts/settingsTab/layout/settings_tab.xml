@@ -6,21 +6,21 @@
     android:orientation="vertical"
     android:padding="20dp">
 
-    <include
-        android:id="@+id/closeButton"
-        layout="@layout/close_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end" />
+<!--    <include-->
+<!--        android:id="@+id/closeButton"-->
+<!--        layout="@layout/close_button"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="end" />-->
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/settings_label"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:textSize="26sp"
-        android:gravity="center" />
+<!--    <TextView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="@string/settings_label"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:textStyle="bold"-->
+<!--        android:textSize="26sp"-->
+<!--        android:gravity="center" />-->
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
