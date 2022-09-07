@@ -30,6 +30,7 @@ public class LearningFragment extends Fragment {
     private RecyclerView recyclerView;
     private LearningWordPairsAdapter wordPairsAdapter;
     private WordPairStore wordPairStore;
+    private BadgeDrawable tabBadge;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -43,6 +44,10 @@ public class LearningFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.wordPairs);
         emptyListView = view.findViewById(R.id.emptyListView);
+
+        wordPairStore.setOnStateChanged(wordPair -> {
+            onResume();
+        });
     }
     @Override
     public void onResume() {
