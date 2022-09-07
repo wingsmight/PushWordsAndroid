@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.util.Consumer;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,6 +20,8 @@ import com.example.pushwords.data.learnedTab.LearnedWordPairsAdapter;
 import com.example.pushwords.data.learningTab.LearningWordPairsAdapter;
 import com.example.pushwords.ui.learnedTab.StartTestButton;
 import com.example.pushwords.ui.learnedTab.TestView;
+import com.google.android.material.badge.BadgeDrawable;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 

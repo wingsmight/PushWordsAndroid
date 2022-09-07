@@ -5,6 +5,8 @@ import static android.content.Context.MODE_PRIVATE;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import androidx.core.util.Consumer;
+
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -18,6 +20,8 @@ public class WordPairStore {
 
     private Context context;
     private ArrayList<WordPair> wordPairs;
+    private Consumer<WordPair> onAdded;
+    private ArrayList<Consumer<WordPair.State>> onStateChangedList = new ArrayList<>();
 
 
     private WordPairStore(Context context) {
@@ -30,6 +34,14 @@ public class WordPairStore {
             wordPairs = new ArrayList<>();
         } else {
             wordPairs = new ArrayList<>(Arrays.asList(gson.fromJson(objectAsJson, WordPair[].class)));
+        }
+
+        for (WordPair wordPair : wordPairs) {
+            wordPair.addOnStateChanged(state -> {
+                for (Consumer onStateChanged : onStateChangedList) {
+                    onStateChanged.accept(state);
+                }
+            });
         }
     }
 
@@ -52,6 +64,30 @@ public class WordPairStore {
         preferencesEditor.putString(PREF_NAME, objectAsJson);
         preferencesEditor.apply();
     }
+    public void add(WordPair wordPair) {
+        if (wordPairs.contains(wordPair)) {
+            return;
+        }
+
+        wordPairs.add(wordPair);
+
+        onAdded.accept(wordPair);
+        wordPair.addOnStateChanged(state -> {
+            for (Consumer onStateChanged : onStateChangedList) {
+                onStateChanged.accept(state);
+            }
+        });
+    }
+    public WordPair get(WordPair wordPair) {
+        for (WordPair existedWordPair : wordPairs) {
+            if (existedWordPair.equals(wordPair)) {
+                return existedWordPair;
+            }
+        }
+
+        return wordPair;
+    }
+
     public ArrayList<WordPair> getAll() {
         return wordPairs;
     }
@@ -82,20 +118,7 @@ public class WordPairStore {
         }
         return forgottenOnly;
     }
-    public void add(WordPair wordPair) {
-        if (wordPairs.contains(wordPair)) {
-            return;
-        }
-
-        wordPairs.add(wordPair);
-    }
-    public WordPair get(WordPair wordPair) {
-        for (WordPair existedWordPair : wordPairs) {
-            if (existedWordPair.equals(wordPair)) {
-                return existedWordPair;
-            }
-        }
-
-        return wordPair;
+    public void setOnStateChanged(Consumer<WordPair.State> onStateChanged) {
+        this.onStateChangedList.add(onStateChanged);
     }
 }

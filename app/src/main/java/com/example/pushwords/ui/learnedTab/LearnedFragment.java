@@ -18,6 +18,8 @@ import com.example.pushwords.data.WordPair;
 import com.example.pushwords.data.WordPairStore;
 import com.example.pushwords.data.learnedTab.LearnedWordPairsAdapter;
 import com.example.pushwords.data.learningTab.LearningWordPairsAdapter;
+import com.google.android.material.badge.BadgeDrawable;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 
