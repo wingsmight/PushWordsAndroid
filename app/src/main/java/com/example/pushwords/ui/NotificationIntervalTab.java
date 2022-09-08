@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pushwords.R;
 import com.example.pushwords.data.Preference;
+import com.example.pushwords.data.WordPairStore;
 
 public class NotificationIntervalTab extends AppCompatActivity {
     public static final int DEFAULT_FROM_HOUR = 8;
@@ -90,5 +91,11 @@ public class NotificationIntervalTab extends AppCompatActivity {
 
             finish();
         });
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        WordPairStore.getInstance(this).save();
     }
 }
