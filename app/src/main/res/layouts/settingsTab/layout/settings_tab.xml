@@ -84,19 +84,21 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:text="Частота уведомлений"
+            android:layout_weight="6"
+            android:text="@string/notification_frequency"
             android:textSize="17sp" />
 
-        <TextView
+        <Spinner
+            android:id="@+id/notificationFrequencySpinner"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Каждый час"
+            android:layout_weight="5"
             android:textSize="17sp"
             android:textStyle="bold"
             android:textColor="@color/black"
-            android:gravity="center" />
+            android:background="@null"
+            android:textAlignment="textEnd"
+            android:gravity="end" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -114,6 +116,7 @@
             android:textSize="17sp" />
 
         <TextView
+            android:id="@+id/notificationInterval"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

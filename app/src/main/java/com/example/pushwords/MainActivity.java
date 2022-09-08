@@ -83,6 +83,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
 
-        startService(new Intent( this, NotificationService.class )) ;
+        startService(new Intent(this, NotificationService.class));
     }
 }

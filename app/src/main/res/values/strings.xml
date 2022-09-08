@@ -27,4 +27,11 @@
     <string name="off">Выкл</string>
     <string name="words_in_one_notification">Слов в одном уведомлении</string>
     <string name="your_time_zone">Ваш часовой пояс</string>
+    <string name="notification_frequency">Частота уведомлений</string>
+
+    <!-- Notification interval -->
+    <string name="preference_do_not_disturb_from_hour">notification_interval_from_hour</string>
+    <string name="preference_do_not_disturb_from_minute">notification_interval_from_minute</string>
+    <string name="preference_do_not_disturb_to_hour">notification_interval_to_hour</string>
+    <string name="preference_do_not_disturb_to_minute">notification_interval_to_minute</string>
 </resources>

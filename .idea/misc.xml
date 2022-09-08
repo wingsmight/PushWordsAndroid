@@ -78,6 +78,7 @@
         <entry key="app/src/main/res/layouts/learningTab/layout-land/learning_tab.xml" value="0.1" />
         <entry key="app/src/main/res/layouts/learningTab/layout/learning_tab.xml" value="0.1921875" />
         <entry key="app/src/main/res/layouts/learningTab/layout/learning_word_pair_row.xml" value="0.1921875" />
+        <entry key="app/src/main/res/layouts/settingsTab/layout/notification_interval_tab.xml" value="0.19201597990813077" />
         <entry key="app/src/main/res/layouts/settingsTab/layout/sanction_info.xml" value="0.2717768351236979" />
         <entry key="app/src/main/res/layouts/settingsTab/layout/settings_tab.xml" value="0.1860070687753183" />
         <entry key="app/src/main/res/layouts/settingsTab/layout/subscription_button.xml" value="0.19722222222222222" />
