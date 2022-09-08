@@ -21,6 +21,7 @@ import com.example.pushwords.R;
 import com.example.pushwords.data.NotificationFrequency;
 import com.example.pushwords.data.Preference;
 import com.example.pushwords.data.WordPairStore;
+import com.example.pushwords.ui.learnedTab.TestSettingsTab;
 
 import java.util.TimeZone;
 
@@ -35,12 +36,13 @@ public class SettingsTab extends AppCompatActivity {
 
     private TextView timeZoneText;
     private NumberPicker notificationWordCountPicker;
+    private Spinner notificationFrequencySpinner;
     private TextView notificationIntervalText;
+    private View testSettingsButton;
 
 
     private SharedPreferences.Editor preferencesEditor;
     private SharedPreferences preferences;
-    private Spinner notificationFrequencySpinner;
 
 
     @Override
@@ -54,7 +56,7 @@ public class SettingsTab extends AppCompatActivity {
         preferences = getSharedPreferences(Preference.SHARED, MODE_PRIVATE);
         preferencesEditor = preferences.edit();
 
-        //
+        // Time zone text
         timeZoneText = findViewById(R.id.timeZoneText);
         TimeZone timeZone = TimeZone.getDefault();
         String timeZoneDisplayName = timeZone.getDisplayName(false, TimeZone.SHORT)
@@ -68,7 +70,7 @@ public class SettingsTab extends AppCompatActivity {
                 1,
                 4);
 
-        //
+        // Notification frequency spinner
         notificationFrequencySpinner = findViewById(R.id.notificationFrequencySpinner);
 
         String[] notificationFrequencyDescriptions
@@ -101,6 +103,11 @@ public class SettingsTab extends AppCompatActivity {
         notificationIntervalText = findViewById(R.id.notificationInterval);
         notificationIntervalText.setOnClickListener(view ->
                 startActivity(new Intent(this, NotificationIntervalTab.class)));
+
+        // Test settings button
+        testSettingsButton = findViewById(R.id.testSettingsButton);
+        testSettingsButton.setOnClickListener(view ->
+                startActivity(new Intent(this, TestSettingsTab.class)));
     }
     @Override
     protected void onPause() {

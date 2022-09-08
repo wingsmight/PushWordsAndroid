@@ -129,10 +129,12 @@
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <TextView
+        android:id="@+id/testSettingsButton"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:text="@string/test_settings_label"
         android:textSize="17sp"
+        android:textStyle="bold"
         android:gravity="start|center"/>
 
     <TextView
