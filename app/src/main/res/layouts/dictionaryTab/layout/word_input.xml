@@ -16,6 +16,8 @@
         android:minLines="1"
         android:maxLines="1"
         android:background="@null"
+        android:textColor="@color/black"
+        android:textColorHint="@color/lightGray"
         android:textSize="23sp" />
 
     <LinearLayout

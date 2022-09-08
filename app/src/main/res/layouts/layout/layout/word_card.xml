@@ -30,7 +30,7 @@
                 android:layout_weight="1"
                 android:text="bag"
                 android:textSize="50sp"
-                android:textColor="@color/black"
+                android:textColor="?android:textColorPrimary"
                 android:layout_margin="20dp" />
 
             <com.wingsmight.pushwords.ui.WordControlPanel

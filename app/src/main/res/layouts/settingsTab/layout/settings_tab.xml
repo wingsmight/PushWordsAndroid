@@ -6,22 +6,6 @@
     android:orientation="vertical"
     android:padding="20dp">
 
-<!--    <include-->
-<!--        android:id="@+id/closeButton"-->
-<!--        layout="@layout/close_button"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_gravity="end" />-->
-
-<!--    <TextView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="@string/settings_label"-->
-<!--        android:textColor="@color/black"-->
-<!--        android:textStyle="bold"-->
-<!--        android:textSize="26sp"-->
-<!--        android:gravity="center" />-->
-
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -44,7 +28,7 @@
             android:textSize="17sp"
             android:textAlignment="textEnd"
             android:textStyle="bold"
-            android:textColor="@color/black"
+            android:textColor="?android:textColorPrimary"
             android:gravity="end" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -70,7 +54,7 @@
             android:layout_weight="1"
             android:textSize="17sp"
             android:textStyle="bold"
-            android:textColor="@color/black"
+            android:textColor="?android:textColorPrimary"
             android:gravity="center"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -95,7 +79,7 @@
             android:layout_weight="5"
             android:textSize="17sp"
             android:textStyle="bold"
-            android:textColor="@color/black"
+            android:textColor="?android:textColorPrimary"
             android:background="@null"
             android:textAlignment="textEnd"
             android:gravity="end" />
@@ -123,7 +107,7 @@
             android:text="10:00 - 22:00"
             android:textSize="17sp"
             android:textStyle="bold"
-            android:textColor="@color/black"
+            android:textColor="?android:textColorPrimary"
             android:gravity="center" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>

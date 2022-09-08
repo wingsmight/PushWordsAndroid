@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:text="@string/finish_test_label"
             android:textSize="30sp"
-            android:textColor="@color/black" />
+            android:textColor="?android:textColorPrimary" />
 
         <TextView
             android:layout_width="wrap_content"

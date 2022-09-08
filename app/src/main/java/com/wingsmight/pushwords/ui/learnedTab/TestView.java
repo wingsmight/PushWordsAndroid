@@ -66,6 +66,10 @@ public class TestView extends FrameLayout {
         appWordPairs = wordPairStore.getAll();
 
         lastLearnedWordPairs = wordPairStore.getLearnedOnly();
+        if (lastLearnedWordPairs.isEmpty()) {
+            return;
+        }
+
         int lastLearnedWordCount = preferences.getInt(LAST_LEARNED_WORD_COUNT_PREF_NAME,
                 DEFAULT_LAST_LEARNED_WORD_COUNT);
         lastLearnedWordCount = Math.min(lastLearnedWordPairs.size(),

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="50dp">
 
@@ -22,7 +23,8 @@
             android:scaleType="centerCrop"
             android:layout_margin="6dp"
             android:layout_toLeftOf="@id/start_test_button_label"
-            android:padding="6dp"/>
+            android:padding="6dp"
+            app:tint="?android:textColorPrimary" />
 
         <TextView
             android:id="@+id/start_test_button_label"
@@ -33,7 +35,7 @@
             android:gravity="center"
             android:textStyle="bold"
             android:textSize="16sp"
-            android:textColor="@color/black"
+            android:textColor="?android:textColorPrimary"
             android:layout_centerInParent="true"/>
 
     </RelativeLayout>

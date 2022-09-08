@@ -20,6 +20,8 @@ import java.util.ArrayList;
 
 public class LearnedFragment extends Fragment {
     private View emptyListView;
+    private StartTestButton startTestButton;
+
     private RecyclerView recyclerView;
     private LearnedWordPairsAdapter wordPairsAdapter;
     private WordPairStore wordPairStore;
@@ -38,7 +40,7 @@ public class LearnedFragment extends Fragment {
         TestView testView = view.findViewById(R.id.test);
         View nonTestView = view.findViewById(R.id.nonTestView);
 
-        StartTestButton startTestButton = view.findViewById(R.id.startTestButton);
+        startTestButton = view.findViewById(R.id.startTestButton);
         startTestButton.setTest(testView);
         startTestButton.setNonTestView(nonTestView);
 
@@ -56,5 +58,6 @@ public class LearnedFragment extends Fragment {
         recyclerView.setAdapter(wordPairsAdapter);
 
         emptyListView.setVisibility(wordPairs.isEmpty() ? View.VISIBLE : View.GONE);
+        startTestButton.setVisibility(wordPairs.isEmpty() ? View.GONE : View.VISIBLE);
     }
 }
