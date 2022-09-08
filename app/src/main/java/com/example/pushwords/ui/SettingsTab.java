@@ -4,12 +4,15 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.NumberPicker;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pushwords.R;
 import com.example.pushwords.data.Preference;
 import com.example.pushwords.data.WordPairStore;
+
+import java.util.TimeZone;
 
 public class SettingsTab extends AppCompatActivity {
     private static final String ACTION_BAR_TITLE = "Настройки";
@@ -18,6 +21,7 @@ public class SettingsTab extends AppCompatActivity {
     public static final int NOTIFICATION_WORD_COUNT_DEFAULT = 2;
 
 
+    private TextView timeZoneText;
     private NumberPicker notificationWordCountPicker;
 
 
@@ -35,6 +39,12 @@ public class SettingsTab extends AppCompatActivity {
 
         preferences = getSharedPreferences(Preference.SHARED, MODE_PRIVATE);
         preferencesEditor = preferences.edit();
+
+        timeZoneText = findViewById(R.id.timeZoneText);
+        TimeZone timeZone = TimeZone.getDefault();
+        String timeZoneDisplayName = timeZone.getDisplayName(false, TimeZone.SHORT)
+            + " " + timeZone.getID();
+        timeZoneText.setText(timeZoneDisplayName);
 
         notificationWordCountPicker = findViewById(R.id.notificationWordCountPicker);
         initPicker(notificationWordCountPicker,

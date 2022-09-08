@@ -25,7 +25,6 @@
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:weightSum="3"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -33,18 +32,20 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="Ваш часовой пояс"
+            android:text="@string/your_time_zone"
             android:textSize="17sp" />
 
         <TextView
+            android:id="@+id/timeZoneText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="+3 GMC Новосибирск"
+            android:layout_weight="2"
+            android:text="+3 GMC"
             android:textSize="17sp"
+            android:textAlignment="textEnd"
             android:textStyle="bold"
             android:textColor="@color/black"
-            android:gravity="center" />
+            android:gravity="end" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

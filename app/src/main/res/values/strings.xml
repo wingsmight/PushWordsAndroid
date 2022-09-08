@@ -26,4 +26,5 @@
     <string name="on">Вкл</string>
     <string name="off">Выкл</string>
     <string name="words_in_one_notification">Слов в одном уведомлении</string>
+    <string name="your_time_zone">Ваш часовой пояс</string>
 </resources>
