@@ -64,9 +64,7 @@ public class TestView extends FrameLayout {
         int lastLearnedWordCount = Math.min(lastLearnedWordPairs.size(),
                 LAST_LEARNED_WORD_COUNT);
         Collections.sort(lastLearnedWordPairs, (lhs, rhs) ->
-                lhs.getChangingDate().getTime() > rhs.getChangingDate().getTime()
-                        ? -1
-                        : 0);
+                rhs.getChangingDate().compareTo(lhs.getChangingDate()));
         lastLearnedWordPairs = new ArrayList<>(lastLearnedWordPairs
                 .subList(0, lastLearnedWordCount));
 
@@ -74,9 +72,7 @@ public class TestView extends FrameLayout {
         int remainedLearnedWordCount = Math.min(LEARNED_WORD_COUNT,
                 learnedWordPairs.size() - lastLearnedWordPairs.size());
         Collections.sort(learnedWordPairs, (lhs, rhs) ->
-                lhs.getChangingDate().getTime() > rhs.getChangingDate().getTime()
-                        ? -1
-                        : 0);
+                rhs.getChangingDate().compareTo(lhs.getChangingDate()));
         if (remainedLearnedWordCount >= lastLearnedWordCount - 1) {
             learnedWordPairs = new ArrayList<>(learnedWordPairs
                     .subList(lastLearnedWordCount - 1,

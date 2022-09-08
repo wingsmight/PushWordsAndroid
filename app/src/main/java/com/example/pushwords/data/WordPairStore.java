@@ -22,6 +22,7 @@ public class WordPairStore {
     private ArrayList<WordPair> wordPairs;
     private Consumer<WordPair> onAdded = wordPair -> { };
     private ArrayList<Consumer<WordPair.State>> onStateChangedList = new ArrayList<>();
+    private ArrayList<Consumer<Boolean>> onPushedChangedList = new ArrayList<>();
 
 
     private WordPairStore(Context context) {
@@ -38,8 +39,14 @@ public class WordPairStore {
 
         for (WordPair wordPair : wordPairs) {
             wordPair.addOnStateChanged(state -> {
-                for (Consumer onStateChanged : onStateChangedList) {
+                for (Consumer<WordPair.State> onStateChanged : onStateChangedList) {
                     onStateChanged.accept(state);
+                }
+            });
+
+            wordPair.addOnPushedChanged(isPushed -> {
+                for (Consumer<Boolean> onPushedChanged : onPushedChangedList) {
+                    onPushedChanged.accept(isPushed);
                 }
             });
         }
@@ -72,9 +79,16 @@ public class WordPairStore {
         wordPairs.add(wordPair);
 
         onAdded.accept(wordPair);
+
         wordPair.addOnStateChanged(state -> {
-            for (Consumer onStateChanged : onStateChangedList) {
+            for (Consumer<WordPair.State> onStateChanged : onStateChangedList) {
                 onStateChanged.accept(state);
+            }
+        });
+
+        wordPair.addOnPushedChanged(isPushed -> {
+            for (Consumer<Boolean> onPushedChanged : onPushedChangedList) {
+                onPushedChanged.accept(isPushed);
             }
         });
     }
@@ -129,5 +143,8 @@ public class WordPairStore {
     }
     public void setOnStateChanged(Consumer<WordPair.State> onStateChanged) {
         this.onStateChangedList.add(onStateChanged);
+    }
+    public void setOnPushedChanged(Consumer<Boolean> onPushedChanged) {
+        this.onPushedChangedList.add(onPushedChanged);
     }
 }

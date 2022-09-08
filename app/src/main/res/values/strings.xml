@@ -1,8 +1,5 @@
 <resources>
     <string name="app_name">Push Words</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
     <string name="dictionary_tab_title">Словарь</string>
     <string name="learning_tab_title">На изучении</string>
     <string name="learned_tab_title">Выученные</string>
@@ -20,8 +17,6 @@
     <string name="continue_button">Продолжить</string>
     <string name="test_settings_label">Настройки теста</string>
     <string name="settings_label">Настройки</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="buy_subscription">Купить подписку</string>
     <string name="purchase_while_sanction">Оплата в условиях ограничений</string>
     <string name="last_learned">Последние выученные</string>
@@ -30,4 +25,5 @@
     <string name="reverse_translation_in_text">Обратный перевод в тесте</string>
     <string name="on">Вкл</string>
     <string name="off">Выкл</string>
+    <string name="words_in_one_notification">Слов в одном уведомлении</string>
 </resources>

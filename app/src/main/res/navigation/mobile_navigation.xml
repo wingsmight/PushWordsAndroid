@@ -8,18 +8,18 @@
     <fragment
         android:id="@+id/dictionary_tab"
         android:name="com.example.pushwords.ui.dictionaryTab.DictionaryFragment"
-        android:label="@string/title_home"
+        android:label="@string/dictionary_tab_title"
         tools:layout="@layout/dictionary_tab" />
 
     <fragment
         android:id="@+id/learning_tab"
         android:name="com.example.pushwords.ui.learningTab.LearningFragment"
-        android:label="@string/title_dashboard"
+        android:label="@string/learning_tab_title"
         tools:layout="@layout/learning_tab" />
 
     <fragment
         android:id="@+id/learned_tab"
         android:name="com.example.pushwords.ui.learnedTab.LearnedFragment"
-        android:label="@string/title_notifications"
+        android:label="@string/learned_tab_title"
         tools:layout="@layout/learned_tab" />
 </navigation>

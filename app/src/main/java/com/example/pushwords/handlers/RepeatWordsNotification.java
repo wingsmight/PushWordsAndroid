@@ -43,9 +43,7 @@ public class RepeatWordsNotification {
             return;
 
         Collections.sort(pushedWordPairs, (lhs, rhs) ->
-                lhs.getChangingDate().getTime() > rhs.getChangingDate().getTime()
-                        ? -1
-                        : 0);
+                rhs.getChangingDate().compareTo(lhs.getChangingDate()));
 
         for (WordPair pushedWordPair : pushedWordPairs) {
             int notificationId = pushedWordPair.getOriginal().hashCode();

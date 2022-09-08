@@ -70,6 +70,7 @@ public class WordPair implements Parcelable {
     }
     public void setOriginal(String original) {
         this.original = original;
+
         setChangingDateToNow();
     }
     public String getTranslation() {
@@ -77,6 +78,7 @@ public class WordPair implements Parcelable {
     }
     public void setTranslation(String translation) {
         this.translation = translation;
+
         setChangingDateToNow();
     }
     public State getState() {
@@ -88,6 +90,7 @@ public class WordPair implements Parcelable {
         for (Consumer<State> event : onStateChanged) {
             event.accept(state);
         }
+
         setChangingDateToNow();
     }
     public boolean isPushed() {
@@ -103,6 +106,7 @@ public class WordPair implements Parcelable {
         for (Consumer<Boolean> event : onPushedChanged) {
             event.accept(pushed);
         }
+
         setChangingDateToNow();
     }
     public Date getChangingDate() {

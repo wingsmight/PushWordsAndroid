@@ -24,6 +24,7 @@ import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class LearningFragment extends Fragment {
     private View emptyListView;
@@ -44,21 +45,26 @@ public class LearningFragment extends Fragment {
         recyclerView = view.findViewById(R.id.wordPairs);
         emptyListView = view.findViewById(R.id.emptyListView);
 
-        wordPairStore.setOnStateChanged(wordPair -> {
-            onResume();
-        });
+        wordPairStore.setOnStateChanged(wordPair -> onResume());
+        wordPairStore.setOnPushedChanged(wordPair -> onResume());
     }
     @Override
     public void onResume() {
         super.onResume();
 
-        ArrayList<WordPair> wordPairs = wordPairStore.getLearningOnly();
+        ArrayList<WordPair> learnedWordPairs = wordPairStore.getLearningOnly();
+        Collections.sort(learnedWordPairs, (lhs, rhs) ->
+                lhs.getChangingDate().compareTo(rhs.getChangingDate()));
+        Collections.sort(learnedWordPairs, (lhs, rhs) ->
+                lhs.isPushed() && !rhs.isPushed()
+                        ? -1
+                        : 0);
 
-        wordPairsAdapter = new LearningWordPairsAdapter(wordPairs);
+        wordPairsAdapter = new LearningWordPairsAdapter(learnedWordPairs);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(wordPairsAdapter);
 
-        emptyListView.setVisibility(wordPairs.isEmpty() ? View.VISIBLE : View.GONE);
+        emptyListView.setVisibility(learnedWordPairs.isEmpty() ? View.VISIBLE : View.GONE);
     }
 }
