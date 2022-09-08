@@ -1,22 +1,35 @@
 package com.example.pushwords;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import com.example.pushwords.data.WordPair;
 import com.example.pushwords.data.WordPairStore;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.pushwords.databinding.ActivityMainBinding;
+import com.example.pushwords.handlers.NotificationService;
+import com.example.pushwords.handlers.RepeatWordsNotification;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String CHANNEL_ID = "REPEAT_WORDS_CHANNEL_ID";
+    private static final String CHANNEL_NAME = "Word repeating";
+    private static final String CHANNEL_DESCRIPTION = "Word repeating";
+
+
     private ActivityMainBinding binding;
 
 
@@ -56,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
             learnedBadge.setVisible(localLearnedWordPairs.size() > 0);
         });
 
+        // Action bar
         getSupportActionBar().hide();
     }
     @Override
@@ -63,5 +77,12 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
 
         WordPairStore.getInstance(this).save();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        startService(new Intent( this, NotificationService.class )) ;
     }
 }

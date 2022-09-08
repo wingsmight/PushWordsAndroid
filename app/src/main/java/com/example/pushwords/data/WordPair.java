@@ -36,7 +36,11 @@ public class WordPair implements Parcelable {
     public static final Creator<WordPair> CREATOR = new Creator<WordPair>() {
         @Override
         public WordPair createFromParcel(Parcel in) {
-            return new WordPair(in);
+            WordPair wordPair = new WordPair(in);
+            wordPair.onStateChanged = new ArrayList<>();
+            wordPair.onPushedChanged = new ArrayList<>();
+
+            return wordPair;
         }
         @Override
         public WordPair[] newArray(int size) {
@@ -91,6 +95,10 @@ public class WordPair implements Parcelable {
     }
     public void setPushed(boolean pushed) {
         isPushed = pushed;
+
+        if (onPushedChanged == null) {
+            onPushedChanged = new ArrayList<>();
+        }
 
         for (Consumer<Boolean> event : onPushedChanged) {
             event.accept(pushed);

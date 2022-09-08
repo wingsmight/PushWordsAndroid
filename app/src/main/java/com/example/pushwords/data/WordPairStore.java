@@ -20,7 +20,7 @@ public class WordPairStore {
 
     private Context context;
     private ArrayList<WordPair> wordPairs;
-    private Consumer<WordPair> onAdded;
+    private Consumer<WordPair> onAdded = wordPair -> { };
     private ArrayList<Consumer<WordPair.State>> onStateChangedList = new ArrayList<>();
 
 
@@ -117,6 +117,15 @@ public class WordPairStore {
             }
         }
         return forgottenOnly;
+    }
+    public ArrayList<WordPair> getPushedOnly() {
+        ArrayList<WordPair> pushedOnly = new ArrayList<>();
+        for (WordPair wordPair : wordPairs) {
+            if (wordPair.isPushed()) {
+                pushedOnly.add(wordPair);
+            }
+        }
+        return pushedOnly;
     }
     public void setOnStateChanged(Consumer<WordPair.State> onStateChanged) {
         this.onStateChangedList.add(onStateChanged);
