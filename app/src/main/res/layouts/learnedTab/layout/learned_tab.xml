@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginBottom="?attr/actionBarSize">
 
-    <com.example.pushwords.ui.learnedTab.TestSettingsButton
+    <com.wingsmight.pushwords.ui.learnedTab.TestSettingsButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
@@ -27,7 +27,7 @@
             tools:listitem="@layout/learned_word_pair_row"
             android:layout_marginTop="75dp" />
 
-        <com.example.pushwords.ui.learnedTab.StartTestButton
+        <com.wingsmight.pushwords.ui.learnedTab.StartTestButton
             android:id="@+id/startTestButton"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -46,7 +46,7 @@
         android:layout_gravity="center"
         android:visibility="gone" />
 
-    <com.example.pushwords.ui.learnedTab.TestView
+    <com.wingsmight.pushwords.ui.learnedTab.TestView
         android:id="@+id/test"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

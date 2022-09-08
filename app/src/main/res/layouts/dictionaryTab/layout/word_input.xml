@@ -24,13 +24,13 @@
         android:orientation="vertical"
         android:layout_gravity="end">
 
-        <com.example.pushwords.ui.dictionaryTab.ClearInputButton
+        <com.wingsmight.pushwords.ui.dictionaryTab.ClearInputButton
             android:id="@+id/clearButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="-5dp"/>
 
-        <com.example.pushwords.ui.SpeakerView
+        <com.wingsmight.pushwords.ui.SpeakerView
             android:id="@+id/speakerButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

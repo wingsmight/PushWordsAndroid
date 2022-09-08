@@ -12,7 +12,7 @@
         android:text="1"
         android:layout_margin="10dp"/>
 
-    <com.example.pushwords.ui.wordInfo.synonyms.SynonymPair
+    <com.wingsmight.pushwords.ui.wordInfo.synonyms.SynonymPair
         android:id="@+id/pair"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

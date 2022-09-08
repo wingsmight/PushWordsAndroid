@@ -43,14 +43,14 @@
 
     </com.nex3z.togglebuttongroup.SingleSelectToggleGroup>
 
-    <com.example.pushwords.ui.wordInfo.examples.ExampleList
+    <com.wingsmight.pushwords.ui.wordInfo.examples.ExampleList
         android:id="@+id/example_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:visibility="gone"/>
 
-    <com.example.pushwords.ui.wordInfo.synonyms.SynonymList
+    <com.wingsmight.pushwords.ui.wordInfo.synonyms.SynonymList
         android:id="@+id/synonym_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"

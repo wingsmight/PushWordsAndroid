@@ -7,17 +7,17 @@
     android:layout_marginEnd="10dp"
     android:layout_gravity="end">
 
-    <com.example.pushwords.ui.SpeakerView
+    <com.wingsmight.pushwords.ui.SpeakerView
         android:id="@+id/speakerButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
-    <com.example.pushwords.ui.LearnedToggle
+    <com.wingsmight.pushwords.ui.LearnedToggle
         android:id="@+id/learnedToggle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
-    <com.example.pushwords.ui.LearningToggle
+    <com.wingsmight.pushwords.ui.LearningToggle
         android:id="@+id/learningToggle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>

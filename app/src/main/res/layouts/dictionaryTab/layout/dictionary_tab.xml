@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.example.pushwords.ui.SettingsButton
+        <com.wingsmight.pushwords.ui.SettingsButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"/>
@@ -28,21 +28,21 @@
                 android:layout_marginTop="30dp"
                 android:layout_gravity="center"/>
 
-            <com.example.pushwords.ui.dictionaryTab.LanguageSwitch
+            <com.wingsmight.pushwords.ui.dictionaryTab.LanguageSwitch
                 android:id="@+id/languageSwitch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
                 android:layout_gravity="center"/>
 
-            <com.example.pushwords.ui.dictionaryTab.WordInputView
+            <com.wingsmight.pushwords.ui.dictionaryTab.WordInputView
                 android:id="@+id/wordInput"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="30dp"/>
 
-            <com.example.pushwords.ui.dictionaryTab.CategoryContainer
+            <com.wingsmight.pushwords.ui.dictionaryTab.CategoryContainer
                 android:id="@+id/categoryView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -50,7 +50,7 @@
                 android:layout_marginTop="22dp"
                 android:visibility="visible">
 
-            </com.example.pushwords.ui.dictionaryTab.CategoryContainer>
+            </com.wingsmight.pushwords.ui.dictionaryTab.CategoryContainer>
 
             <FrameLayout
                 android:id="@+id/translatedWordInfoView"
@@ -58,13 +58,13 @@
                 android:layout_height="match_parent"
                 android:visibility="gone">
 
-                <com.example.pushwords.ui.wordInfo.WordInfoView
+                <com.wingsmight.pushwords.ui.wordInfo.WordInfoView
                     android:id="@+id/wordInfo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="20dp"/>
 
-                <com.example.pushwords.ui.WordControlPanel
+                <com.wingsmight.pushwords.ui.WordControlPanel
                     android:id="@+id/translatedWordControlPanel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

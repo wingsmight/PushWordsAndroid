@@ -66,7 +66,7 @@
                             android:textColor="@color/black"
                             android:textSize="50sp" />
 
-                        <com.example.pushwords.ui.SpeakerView
+                        <com.wingsmight.pushwords.ui.SpeakerView
                             android:id="@+id/speakerButton"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
@@ -85,7 +85,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_gravity="center">
 
-                <com.example.pushwords.ui.wordInfo.WordInfoView
+                <com.wingsmight.pushwords.ui.wordInfo.WordInfoView
                     android:id="@+id/wordInfo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

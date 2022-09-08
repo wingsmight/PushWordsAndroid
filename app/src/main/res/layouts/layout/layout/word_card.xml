@@ -33,14 +33,14 @@
                 android:textColor="@color/black"
                 android:layout_margin="20dp" />
 
-            <com.example.pushwords.ui.WordControlPanel
+            <com.wingsmight.pushwords.ui.WordControlPanel
                 android:id="@+id/translatedWordControlPanel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <com.example.pushwords.ui.wordInfo.WordInfoView
+        <com.wingsmight.pushwords.ui.wordInfo.WordInfoView
             android:id="@+id/translatedWordInfoView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
