@@ -1,5 +1,7 @@
 package com.example.pushwords.data.learnedTab;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.TextView;
@@ -9,8 +11,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pushwords.R;
+import com.example.pushwords.data.Preference;
 import com.example.pushwords.data.WordPair;
+import com.example.pushwords.handlers.RandomBoolean;
 import com.example.pushwords.ui.SpeakerView;
+import com.example.pushwords.ui.learnedTab.TestSettingsTab;
 import com.example.pushwords.ui.wordInfo.WordInfoView;
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
 import com.yuyakaido.android.cardstackview.CardStackView;
@@ -31,6 +36,7 @@ public class RepeatCardViewHolder extends RecyclerView.ViewHolder {
     private WordPair wordPair;
     private CardStackView cardStackView;
     private CardStackLayoutManager cardStackLayoutManager;
+    private final SharedPreferences preferences;
 
 
     public RepeatCardViewHolder(@NonNull View itemView) {
@@ -61,8 +67,8 @@ public class RepeatCardViewHolder extends RecyclerView.ViewHolder {
 
         counterText = itemView.findViewById(R.id.counterText);
 
-        // Test
-        wordInfoView.setVisibility(View.VISIBLE);
+        preferences = itemView.getContext()
+                .getSharedPreferences(Preference.SHARED, Context.MODE_PRIVATE);
     }
 
 
@@ -75,9 +81,24 @@ public class RepeatCardViewHolder extends RecyclerView.ViewHolder {
         this.cardStackView = cardStackView;
         this.cardStackLayoutManager = cardStackLayoutManager;
 
-        originalWordTextView.setText(wordPair.getOriginal());
+        boolean isTranslationRevered = false;
+        if (preferences.getBoolean(TestSettingsTab.REVERSE_TRANSLATION_PREF_NAME,
+                TestSettingsTab.DEFAULT_REVERSE_TRANSLATION)) {
+            isTranslationRevered = RandomBoolean.get();
+        }
+
+        String originalText;
+        String translationText;
+        if (!isTranslationRevered) {
+            originalText = wordPair.getOriginal();
+            translationText = wordPair.getTranslation();
+        } else {
+            originalText = wordPair.getTranslation();
+            translationText = wordPair.getOriginal();
+        }
+        originalWordTextView.setText(originalText);
         speakerView.setSpokenTextView(originalWordTextView);
-        wordInfoView.setWord(wordPair.getTranslation());
+        wordInfoView.setWord(translationText);
         counterText.setText((position + 1) + " из " + overallCount);
     }
     private void forgot() {

@@ -2,7 +2,6 @@ package com.example.pushwords.ui.learnedTab;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.NumberPicker;
 import android.widget.ToggleButton;
 
@@ -14,10 +13,16 @@ import com.example.pushwords.data.WordPairStore;
 
 public class TestSettingsTab extends AppCompatActivity {
     private static final String ACTION_BAR_TITLE = "Настройки теста";
-    private static final String LAST_LEARNED_WORD_COUNT_PREF_NAME = "LAST_LEARNED_WORD_COUNT_PREF_NAME";
-    private static final String LEARNED_WORD_COUNT_PREF_NAME = "LEARNED_WORD_COUNT_PREF_NAME";
-    private static final String FORGOT_REPEAT_COUNT_PREF_NAME = "FORGOT_REPEAT_COUNT";
-    private static final String REVERSE_TRANSLATION_PREF_NAME = "REVERSE_TRANSLATION_PREF_NAME";
+
+    public static final String LAST_LEARNED_WORD_COUNT_PREF_NAME = "LAST_LEARNED_WORD_COUNT_PREF_NAME";
+    public static final int DEFAULT_LAST_LEARNED_WORD_COUNT = 20;
+    public static final String LEARNED_WORD_COUNT_PREF_NAME = "LEARNED_WORD_COUNT_PREF_NAME";
+    public static final int DEFAULT_LEARNED_WORD_COUNT = 15;
+    public static final String FORGOT_REPEAT_COUNT_PREF_NAME = "FORGOT_REPEAT_COUNT";
+    public static final int DEFAULT_FORGOT_REPEAT_COUNT = 3;
+    public static final String REVERSE_TRANSLATION_PREF_NAME = "REVERSE_TRANSLATION_PREF_NAME";
+    public static final boolean DEFAULT_REVERSE_TRANSLATION = true;
+
 
     private NumberPicker lastLearnedCountPicker;
     private NumberPicker learnedCountPicker;
@@ -40,27 +45,28 @@ public class TestSettingsTab extends AppCompatActivity {
         lastLearnedCountPicker = findViewById(R.id.lastLearnedCountPicker);
         initPicker(lastLearnedCountPicker,
                 LAST_LEARNED_WORD_COUNT_PREF_NAME,
-                20,
+                DEFAULT_LAST_LEARNED_WORD_COUNT,
                 1,
                 40);
 
         learnedCountPicker = findViewById(R.id.learnedCountPicker);
         initPicker(learnedCountPicker,
                 LEARNED_WORD_COUNT_PREF_NAME,
-                15,
+                DEFAULT_LEARNED_WORD_COUNT,
                 1,
                 30);
 
         forgotRepeatPicker = findViewById(R.id.forgotRepeatPicker);
         initPicker(forgotRepeatPicker,
                 FORGOT_REPEAT_COUNT_PREF_NAME,
-                3,
+                DEFAULT_FORGOT_REPEAT_COUNT,
                 1,
                 10);
 
         reverseTranslationToggle = findViewById(R.id.reverseTranslationToggle);
         reverseTranslationToggle
-                .setChecked(preferences.getBoolean(REVERSE_TRANSLATION_PREF_NAME, true));
+                .setChecked(preferences.getBoolean(REVERSE_TRANSLATION_PREF_NAME,
+                        DEFAULT_REVERSE_TRANSLATION));
         reverseTranslationToggle.setOnClickListener(view -> {
             preferencesEditor.putBoolean(REVERSE_TRANSLATION_PREF_NAME,
                     reverseTranslationToggle.isChecked())

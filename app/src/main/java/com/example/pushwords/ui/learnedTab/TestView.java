@@ -1,6 +1,14 @@
 package com.example.pushwords.ui.learnedTab;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import static com.example.pushwords.ui.learnedTab.TestSettingsTab.DEFAULT_LAST_LEARNED_WORD_COUNT;
+import static com.example.pushwords.ui.learnedTab.TestSettingsTab.DEFAULT_LEARNED_WORD_COUNT;
+import static com.example.pushwords.ui.learnedTab.TestSettingsTab.LAST_LEARNED_WORD_COUNT_PREF_NAME;
+import static com.example.pushwords.ui.learnedTab.TestSettingsTab.LEARNED_WORD_COUNT_PREF_NAME;
+
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -9,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.pushwords.R;
+import com.example.pushwords.data.Preference;
 import com.example.pushwords.data.WordPair;
 import com.example.pushwords.data.WordPairStore;
 import com.example.pushwords.data.learnedTab.RepeatCardStackAdapter;
@@ -19,17 +28,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class TestView extends FrameLayout {
-    // TODO: bind with prefs
-    private static final int LAST_LEARNED_WORD_COUNT = 20;
-    private static final int LEARNED_WORD_COUNT = 15;
-
-
     private View closeButton;
     private CardStackView cardStackView;
     private CardStackLayoutManager cardStackLayoutManager;
 
     private ArrayList<WordPair> testWordPairs; // all words
     private int currentWordIndex = 0;
+    private SharedPreferences preferences;
 
     private ArrayList<WordPair> lastLearnedWordPairs; // 20 top learned except of forgotten words
     private ArrayList<WordPair> learnedWordPairs; // 15 learned after top except of forgotten words
@@ -61,15 +66,19 @@ public class TestView extends FrameLayout {
         appWordPairs = wordPairStore.getAll();
 
         lastLearnedWordPairs = wordPairStore.getLearnedOnly();
-        int lastLearnedWordCount = Math.min(lastLearnedWordPairs.size(),
-                LAST_LEARNED_WORD_COUNT);
+        int lastLearnedWordCount = preferences.getInt(LAST_LEARNED_WORD_COUNT_PREF_NAME,
+                DEFAULT_LAST_LEARNED_WORD_COUNT);
+        lastLearnedWordCount = Math.min(lastLearnedWordPairs.size(),
+                lastLearnedWordCount);
         Collections.sort(lastLearnedWordPairs, (lhs, rhs) ->
                 rhs.getChangingDate().compareTo(lhs.getChangingDate()));
         lastLearnedWordPairs = new ArrayList<>(lastLearnedWordPairs
                 .subList(0, lastLearnedWordCount));
 
         learnedWordPairs = wordPairStore.getLearnedOnly();
-        int remainedLearnedWordCount = Math.min(LEARNED_WORD_COUNT,
+        int learnedWordCount = preferences.getInt(LEARNED_WORD_COUNT_PREF_NAME,
+                DEFAULT_LEARNED_WORD_COUNT);
+        int remainedLearnedWordCount = Math.min(learnedWordCount,
                 learnedWordPairs.size() - lastLearnedWordPairs.size());
         Collections.sort(learnedWordPairs, (lhs, rhs) ->
                 rhs.getChangingDate().compareTo(lhs.getChangingDate()));
@@ -109,6 +118,8 @@ public class TestView extends FrameLayout {
         cardStackLayoutManager = new CardStackLayoutManager(getContext());
         cardStackLayoutManager.setCanScrollVertical(false);
         cardStackView.setLayoutManager(cardStackLayoutManager);
+
+        preferences = getContext().getSharedPreferences(Preference.SHARED, MODE_PRIVATE);
     }
     private void finishTest() {
         View parent = ((View) getParent());
