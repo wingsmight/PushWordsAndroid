@@ -138,10 +138,12 @@
         android:gravity="start|center"/>
 
     <TextView
+        android:id="@+id/shareAppButton"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="Поделиться"
+        android:text="@string/share"
         android:textSize="17sp"
+        android:textStyle="bold"
         android:gravity="start|center"/>
 
     <include layout="@layout/subscription_button"

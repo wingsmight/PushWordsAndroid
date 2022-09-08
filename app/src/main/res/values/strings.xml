@@ -34,4 +34,5 @@
     <string name="preference_do_not_disturb_from_minute">notification_interval_from_minute</string>
     <string name="preference_do_not_disturb_to_hour">notification_interval_to_hour</string>
     <string name="preference_do_not_disturb_to_minute">notification_interval_to_minute</string>
+    <string name="share">Поделиться</string>
 </resources>

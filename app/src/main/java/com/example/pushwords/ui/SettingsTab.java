@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.pushwords.BuildConfig;
 import com.example.pushwords.R;
 import com.example.pushwords.data.NotificationFrequency;
 import com.example.pushwords.data.Preference;
@@ -39,6 +40,7 @@ public class SettingsTab extends AppCompatActivity {
     private Spinner notificationFrequencySpinner;
     private TextView notificationIntervalText;
     private View testSettingsButton;
+    private View shareAppButton;
 
 
     private SharedPreferences.Editor preferencesEditor;
@@ -108,6 +110,23 @@ public class SettingsTab extends AppCompatActivity {
         testSettingsButton = findViewById(R.id.testSettingsButton);
         testSettingsButton.setOnClickListener(view ->
                 startActivity(new Intent(this, TestSettingsTab.class)));
+
+        // Share app button
+        shareAppButton = findViewById(R.id.shareAppButton);
+        shareAppButton.setOnClickListener(view -> {
+            try {
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(Intent.EXTRA_SUBJECT, getApplicationInfo().name);
+                String shareMessage= "\nРекомендую приложение\n\n";
+                shareMessage = shareMessage + "https://play.google.com/store/apps/details?id="
+                        + BuildConfig.APPLICATION_ID +"\n\n";
+                shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+                startActivity(Intent.createChooser(shareIntent, "выберите одно"));
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
     @Override
     protected void onPause() {
