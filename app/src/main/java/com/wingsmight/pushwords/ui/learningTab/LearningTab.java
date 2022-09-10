@@ -19,7 +19,7 @@ import com.wingsmight.pushwords.data.learningTab.LearningWordPairsAdapter;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class LearningFragment extends Fragment {
+public class LearningTab extends Fragment {
     private View emptyListView;
     private RecyclerView recyclerView;
     private LearningWordPairsAdapter wordPairsAdapter;

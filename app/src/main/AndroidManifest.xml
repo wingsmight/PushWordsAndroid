@@ -28,7 +28,7 @@
             </intent-filter>
         </service>
         <activity
-            android:name=".ui.signUpTab.SignUpActivity"
+            android:name=".ui.signUpTab.SignUpTab"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,7 +37,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.logInTab.LogInActivity"
+            android:name=".ui.logInTab.LogInTab"
             android:exported="false"/>
         <activity
             android:name="com.wingsmight.pushwords.ui.NotificationIntervalTab"

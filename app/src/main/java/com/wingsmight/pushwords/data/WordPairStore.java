@@ -54,9 +54,9 @@ public class WordPairStore {
 
 
     public static synchronized WordPairStore getInstance(Context context) {
-        if (instance == null){
+        if (instance == null) {
             synchronized (WordPairStore.class) {
-                if(instance == null){
+                if(instance == null) {
                     instance = new WordPairStore(context);
                 }
             }

@@ -8,6 +8,7 @@ import static com.wingsmight.pushwords.ui.NotificationIntervalTab.DEFAULT_TO_MIN
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,12 +18,16 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.wingsmight.pushwords.BuildConfig;
+import com.wingsmight.pushwords.MainActivity;
 import com.wingsmight.pushwords.R;
 import com.wingsmight.pushwords.data.NotificationFrequency;
 import com.wingsmight.pushwords.data.Preference;
+import com.wingsmight.pushwords.data.UserStore;
 import com.wingsmight.pushwords.data.WordPairStore;
 import com.wingsmight.pushwords.ui.learnedTab.TestSettingsTab;
+import com.wingsmight.pushwords.ui.signUpTab.SignUpTab;
 
 import java.util.TimeZone;
 
@@ -41,6 +46,7 @@ public class SettingsTab extends AppCompatActivity {
     private TextView notificationIntervalText;
     private View testSettingsButton;
     private View shareAppButton;
+    private View signOutButton;
 
 
     private SharedPreferences.Editor preferencesEditor;
@@ -126,6 +132,14 @@ public class SettingsTab extends AppCompatActivity {
             } catch(Exception e) {
                 e.printStackTrace();
             }
+        });
+
+        // Sign out button
+        signOutButton = findViewById(R.id.signOutButton);
+        signOutButton.setOnClickListener(view -> {
+            FirebaseAuth.getInstance().signOut();
+            UserStore.getInstance(this).setUser(null);
+            startActivity(new Intent(SettingsTab.this, SignUpTab.class));
         });
     }
     @Override

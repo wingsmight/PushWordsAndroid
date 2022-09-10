@@ -18,7 +18,7 @@ import com.wingsmight.pushwords.data.learnedTab.LearnedWordPairsAdapter;
 
 import java.util.ArrayList;
 
-public class LearnedFragment extends Fragment {
+public class LearnedTab extends Fragment {
     private View emptyListView;
     private StartTestButton startTestButton;
 

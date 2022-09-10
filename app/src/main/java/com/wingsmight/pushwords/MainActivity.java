@@ -19,11 +19,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String CHANNEL_ID = "REPEAT_WORDS_CHANNEL_ID";
-    private static final String CHANNEL_NAME = "Word repeating";
-    private static final String CHANNEL_DESCRIPTION = "Word repeating";
-
-
     private ActivityMainBinding binding;
 
 
@@ -72,11 +67,12 @@ public class MainActivity extends AppCompatActivity {
 
         WordPairStore.getInstance(this).save();
     }
-
     @Override
     protected void onStop() {
         super.onStop();
 
         startService(new Intent(this, NotificationService.class));
     }
+    @Override
+    public void onBackPressed() { }
 }

@@ -1,41 +1,30 @@
 package com.wingsmight.pushwords.ui.logInTab;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.util.Consumer;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.wingsmight.pushwords.MainActivity;
 import com.wingsmight.pushwords.R;
-import com.wingsmight.pushwords.data.Preference;
 import com.wingsmight.pushwords.data.User;
-import com.wingsmight.pushwords.ui.signUpTab.SignUpActivity;
+import com.wingsmight.pushwords.data.UserStore;
+import com.wingsmight.pushwords.data.database.CloudDatabase;
+import com.wingsmight.pushwords.ui.signUpTab.SignUpTab;
 
-import java.text.DateFormat;
-import java.util.Date;
-import java.util.Map;
-
-public class LogInActivity extends AppCompatActivity {
+public class LogInTab extends AppCompatActivity {
+    public static final String TAG = "LogInTab";
     private static final String ACTION_BAR_TITLE = "Вход";
-    public static final String TAG = "LOGIN";
-    public static final String USER_EMAIL = "";
 
 
     private EditText emailEditText;
@@ -58,10 +47,18 @@ public class LogInActivity extends AppCompatActivity {
         setContentView(R.layout.log_in_tab);
 
         logInButton = findViewById(R.id.buttonLogin);
+        logInButton.setOnClickListener(view -> logUserIn());
+
         signUpButton = findViewById(R.id.buttonRegister);
+        signUpButton.setOnClickListener(view -> {
+            Intent intent = new Intent(this, SignUpTab.class);
+            startActivity(intent);
+        });
+
         emailEditText = findViewById(R.id.editEmail);
         passwordEditText = findViewById(R.id.editPassword);
         progressDialog = new ProgressDialog(this);
+
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         authStateListener = firebaseAuth -> {
@@ -73,14 +70,6 @@ public class LogInActivity extends AppCompatActivity {
                 Log.d(TAG,"AuthStateChanged:Logout");
             }
         };
-        logInButton.setOnClickListener(view -> {
-            userSign();
-        });
-
-        signUpButton.setOnClickListener(view -> {
-            Intent intent = new Intent(this, SignUpActivity.class);
-            startActivity(intent);
-        });
     }
     @Override
     protected void onStart() {
@@ -96,61 +85,40 @@ public class LogInActivity extends AppCompatActivity {
         if (authStateListener != null) {
             firebaseAuth.removeAuthStateListener(authStateListener);
         }
-
     }
     @Override
-    public void onBackPressed() {
-        LogInActivity.super.finish();
-    }
+    public void onBackPressed() { }
 
-    private void userSign() {
+    private void logUserIn() {
         email = emailEditText.getText().toString().trim();
         password = passwordEditText.getText().toString().trim();
+
         if (TextUtils.isEmpty(email)) {
-            Toast.makeText(LogInActivity.this, "Введен некорректная почта", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LogInTab.this, "Введена некорректная почта", Toast.LENGTH_SHORT).show();
             return;
         } else if (TextUtils.isEmpty(password)) {
-            Toast.makeText(LogInActivity.this, "Введен некорректный пароль", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LogInTab.this, "Введен некорректный пароль", Toast.LENGTH_SHORT).show();
             return;
         }
+
         progressDialog.setMessage("Производится вход, пожалуйста, подождите...");
         progressDialog.setIndeterminate(true);
         progressDialog.show();
+
         firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if (!task.isSuccessful()) {
                 progressDialog.dismiss();
 
-                Toast.makeText(LogInActivity.this, "Вход не удался, попытайтесь снова", Toast.LENGTH_SHORT).show();
-
+                Toast.makeText(LogInTab.this, "Вход не удался, попытайтесь снова", Toast.LENGTH_SHORT).show();
             } else {
                 progressDialog.dismiss();
 
-//                CloudDatabase.loadUser(email, (Consumer<Map<String, Object>>) userData -> {
-//                    User user = new User(
-//                            (String)userData.get("name"),
-//                            (String)userData.get("surname"),
-//                            (String)userData.get("email"),
-//                            new Date(),
-//                            new Date().getTime(),
-//                            ((Long)userData.get("storageSize")).intValue()
-//                    );
-//                    saveUserToPreferences(user);
-//
-//                    Intent intent = new Intent(LogInActivity.this, MainActivity.class);
-//                    intent.putExtra(USER_EMAIL,email);
-//                    startActivity(intent);
-//                });
+                CloudDatabase.getUser(email, user -> {
+                    UserStore.getInstance(this).setUser(user);
+
+                    startActivity(new Intent(this, MainActivity.class));
+                });
             }
         });
-    }
-    private void saveUserToPreferences(User user) {
-//        SharedPreferences preferences = getSharedPreferences(Preference.SHARED, Context.MODE_PRIVATE);
-//        SharedPreferences.Editor editor = preferences.edit();
-//
-//        editor.putString("userFullName", user.Surname + " " + user.Name);
-//        editor.putString("birthDate", DateFormat.getDateInstance(DateFormat.SHORT).format(user.getBirthDate()));
-//        editor.putString("email", user.getEmail());
-//
-//        editor.commit();
     }
 }

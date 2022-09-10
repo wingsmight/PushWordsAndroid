@@ -19,7 +19,7 @@ import com.wingsmight.pushwords.handlers.network.TranslationApi;
 import com.wingsmight.pushwords.ui.WordControlPanel;
 import com.wingsmight.pushwords.ui.wordInfo.WordInfoView;
 
-public class DictionaryFragment extends Fragment {
+public class DictionaryTab extends Fragment {
     private WordInfoView wordInfo;
     private WordControlPanel translatedWordControlPanel;
     private LanguageSwitch languageSwitch;
