@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.wingsmight.pushwords.R;
+import com.wingsmight.pushwords.data.UserStore;
 import com.wingsmight.pushwords.data.WordPair;
 import com.wingsmight.pushwords.data.WordPairStore;
 import com.wingsmight.pushwords.data.dictionaryTab.CategoryWordPairsAdapter;
@@ -49,6 +50,7 @@ public class CategoryWordTab extends AppCompatActivity {
         super.onPause();
 
         WordPairStore.getInstance(this).save();
+        UserStore.getInstance(this).save();
     }
 
     @Override

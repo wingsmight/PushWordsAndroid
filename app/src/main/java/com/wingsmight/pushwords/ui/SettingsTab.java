@@ -147,6 +147,7 @@ public class SettingsTab extends AppCompatActivity {
         super.onPause();
 
         WordPairStore.getInstance(this).save();
+        UserStore.getInstance(this).save();
     }
     @Override
     protected void onStart() {

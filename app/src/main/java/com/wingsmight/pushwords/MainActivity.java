@@ -3,6 +3,7 @@ package com.wingsmight.pushwords;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.wingsmight.pushwords.data.UserStore;
 import com.wingsmight.pushwords.data.WordPair;
 import com.wingsmight.pushwords.data.WordPairStore;
 
@@ -66,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
 
         WordPairStore.getInstance(this).save();
+        UserStore.getInstance(this).save();
     }
     @Override
     protected void onStop() {

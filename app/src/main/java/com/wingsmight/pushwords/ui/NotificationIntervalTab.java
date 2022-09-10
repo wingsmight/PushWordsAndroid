@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.wingsmight.pushwords.R;
 import com.wingsmight.pushwords.data.Preference;
+import com.wingsmight.pushwords.data.UserStore;
 import com.wingsmight.pushwords.data.WordPairStore;
 
 public class NotificationIntervalTab extends AppCompatActivity {
@@ -97,5 +98,6 @@ public class NotificationIntervalTab extends AppCompatActivity {
         super.onPause();
 
         WordPairStore.getInstance(this).save();
+        UserStore.getInstance(this).save();
     }
 }

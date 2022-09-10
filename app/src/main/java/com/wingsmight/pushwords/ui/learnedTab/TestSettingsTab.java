@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.wingsmight.pushwords.R;
 import com.wingsmight.pushwords.data.Preference;
+import com.wingsmight.pushwords.data.UserStore;
 import com.wingsmight.pushwords.data.WordPairStore;
 
 public class TestSettingsTab extends AppCompatActivity {
@@ -80,6 +81,7 @@ public class TestSettingsTab extends AppCompatActivity {
         super.onPause();
 
         WordPairStore.getInstance(this).save();
+        UserStore.getInstance(this).save();
     }
     @Override
     protected void onStart() {
