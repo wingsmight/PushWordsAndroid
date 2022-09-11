@@ -51,6 +51,10 @@ public class LearningToggle extends FrameLayout {
 
         toggle = findViewById(R.id.toggle);
         toggle.setOnClickListener(view -> {
+            if (!wordPairStore.contains(wordPair)) {
+                wordPairStore.add(wordPair);
+            }
+
             if (toggle.isChecked()) {
                 wordPair.setState(WordPair.State.Learning);
             } else {

@@ -149,4 +149,13 @@ public class WordPairStore {
     public void setOnPushedChanged(Consumer<Boolean> onPushedChanged) {
         this.onPushedChangedList.add(onPushedChanged);
     }
+    public boolean contains(WordPair wordPair) {
+        for (WordPair existedWordPair : wordPairs) {
+            if (existedWordPair.equals(wordPair)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
