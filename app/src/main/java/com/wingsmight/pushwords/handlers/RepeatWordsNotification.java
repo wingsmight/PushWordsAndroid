@@ -11,7 +11,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.wingsmight.pushwords.data.WordPair;
-import com.wingsmight.pushwords.data.WordPairStore;
+import com.wingsmight.pushwords.data.stores.WordPairStore;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -8,10 +8,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.wingsmight.pushwords.R;
 import com.wingsmight.pushwords.data.Language;
-import com.wingsmight.pushwords.data.UserStore;
 import com.wingsmight.pushwords.data.WordPair;
-import com.wingsmight.pushwords.data.WordPairStore;
 import com.wingsmight.pushwords.data.WordPairViewHolder;
+import com.wingsmight.pushwords.handlers.AppCycle;
 import com.wingsmight.pushwords.ui.wordInfo.WordInfoView;
 
 public class WordCardTabView extends AppCompatActivity {
@@ -44,8 +43,7 @@ public class WordCardTabView extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
 
-        WordPairStore.getInstance(this).save();
-        UserStore.getInstance(this).save();
+        AppCycle.quit(this);
     }
 
     @Override

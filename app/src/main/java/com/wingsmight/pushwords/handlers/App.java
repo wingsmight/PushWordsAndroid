@@ -23,7 +23,7 @@ public class App {
         }
         return false;
     }
-    public static  boolean isForegrounded() {
+    public static boolean isForegrounded() {
         ActivityManager.RunningAppProcessInfo appProcessInfo = new ActivityManager.RunningAppProcessInfo();
         ActivityManager.getMyMemoryState(appProcessInfo);
         return (appProcessInfo.importance == IMPORTANCE_FOREGROUND

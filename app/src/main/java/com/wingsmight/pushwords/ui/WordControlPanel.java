@@ -10,7 +10,7 @@ import androidx.appcompat.widget.LinearLayoutCompat;
 
 import com.wingsmight.pushwords.R;
 import com.wingsmight.pushwords.data.WordPair;
-import com.wingsmight.pushwords.data.WordPairStore;
+import com.wingsmight.pushwords.data.stores.WordPairStore;
 
 public class WordControlPanel extends LinearLayoutCompat {
     private SpeakerView speaker;

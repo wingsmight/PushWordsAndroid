@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.wingsmight.pushwords.R;
 import com.wingsmight.pushwords.data.WordPair;
-import com.wingsmight.pushwords.data.WordPairStore;
+import com.wingsmight.pushwords.data.stores.WordPairStore;
 import com.wingsmight.pushwords.data.learningTab.LearningWordPairsAdapter;
 
 import java.util.ArrayList;

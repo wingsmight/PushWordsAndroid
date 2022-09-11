@@ -69,8 +69,8 @@ public class NotificationService extends Service {
 
         long delay = 0;
         Date now = new Date();
-        if (new Date().before(startNotificationDate)) {
-            delay = startNotificationDate.getTime() - new Date().getTime();
+        if (now.before(startNotificationDate)) {
+            delay = startNotificationDate.getTime() - now.getTime();
         }
 
         timer.schedule(timerTask,

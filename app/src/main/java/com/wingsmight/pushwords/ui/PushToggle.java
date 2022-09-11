@@ -15,7 +15,7 @@ import androidx.annotation.Nullable;
 import com.wingsmight.pushwords.R;
 import com.wingsmight.pushwords.data.Preference;
 import com.wingsmight.pushwords.data.WordPair;
-import com.wingsmight.pushwords.data.WordPairStore;
+import com.wingsmight.pushwords.data.stores.WordPairStore;
 
 public class PushToggle extends FrameLayout {
     private static final String TOO_MANY_PUSHED_WORDS_ALERT = "Превышено максимальное число слов в уведомлении";

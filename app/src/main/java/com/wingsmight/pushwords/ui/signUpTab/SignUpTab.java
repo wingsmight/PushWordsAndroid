@@ -17,7 +17,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.wingsmight.pushwords.MainActivity;
 import com.wingsmight.pushwords.R;
 import com.wingsmight.pushwords.data.User;
-import com.wingsmight.pushwords.data.UserStore;
+import com.wingsmight.pushwords.data.stores.UserStore;
 import com.wingsmight.pushwords.data.database.CloudDatabase;
 import com.wingsmight.pushwords.ui.logInTab.LogInTab;
 

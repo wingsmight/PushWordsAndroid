@@ -15,9 +15,13 @@ import androidx.fragment.app.Fragment;
 
 import com.wingsmight.pushwords.R;
 import com.wingsmight.pushwords.data.WordPair;
+import com.wingsmight.pushwords.data.database.CloudDatabase;
+import com.wingsmight.pushwords.handlers.InternalStorage;
 import com.wingsmight.pushwords.handlers.network.TranslationApi;
 import com.wingsmight.pushwords.ui.WordControlPanel;
 import com.wingsmight.pushwords.ui.wordInfo.WordInfoView;
+
+import java.io.File;
 
 public class DictionaryTab extends Fragment {
     private WordInfoView wordInfo;
@@ -36,7 +40,7 @@ public class DictionaryTab extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         // category view
-        View categoryView = view.findViewById(R.id.categoryView);
+        CategoryContainer categoryView = view.findViewById(R.id.categoryView);
 
         // word info view
         View wordInfoView = view.findViewById(R.id.translatedWordInfoView);
@@ -89,6 +93,23 @@ public class DictionaryTab extends Fragment {
 
             @Override
             public void afterTextChanged(Editable editable) { }
+        });
+
+//        File existedFile = InternalStorage.readFile(getContext(), "LearningCategories.xls");
+//        if (existedFile != null) {
+//            CategoryButton[] buttons = categoryView.parseCategoryButtons(existedFile);
+//
+//            for (CategoryButton button : buttons) {
+//                categoryView.addView(button);
+//            }
+//        }
+
+        CloudDatabase.loadLearningCategories(getContext(), file -> {
+            CategoryButton[] buttons = categoryView.parseCategoryButtons(file);
+
+            for (CategoryButton button : buttons) {
+                categoryView.addView(button);
+            }
         });
     }
 }

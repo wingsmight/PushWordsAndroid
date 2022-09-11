@@ -10,8 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.wingsmight.pushwords.R;
 import com.wingsmight.pushwords.data.Preference;
-import com.wingsmight.pushwords.data.UserStore;
-import com.wingsmight.pushwords.data.WordPairStore;
+import com.wingsmight.pushwords.handlers.AppCycle;
 
 public class NotificationIntervalTab extends AppCompatActivity {
     public static final int DEFAULT_FROM_HOUR = 8;
@@ -97,7 +96,6 @@ public class NotificationIntervalTab extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
 
-        WordPairStore.getInstance(this).save();
-        UserStore.getInstance(this).save();
+        AppCycle.quit(this);
     }
 }

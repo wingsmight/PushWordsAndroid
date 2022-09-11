@@ -19,7 +19,7 @@ import androidx.annotation.Nullable;
 import com.wingsmight.pushwords.R;
 import com.wingsmight.pushwords.data.Preference;
 import com.wingsmight.pushwords.data.WordPair;
-import com.wingsmight.pushwords.data.WordPairStore;
+import com.wingsmight.pushwords.data.stores.WordPairStore;
 import com.wingsmight.pushwords.data.learnedTab.RepeatCardStackAdapter;
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
 import com.yuyakaido.android.cardstackview.CardStackView;

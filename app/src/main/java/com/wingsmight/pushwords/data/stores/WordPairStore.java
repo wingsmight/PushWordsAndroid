@@ -1,4 +1,4 @@
-package com.wingsmight.pushwords.data;
+package com.wingsmight.pushwords.data.stores;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -8,6 +8,8 @@ import android.content.SharedPreferences;
 import androidx.core.util.Consumer;
 
 import com.google.gson.Gson;
+import com.wingsmight.pushwords.data.Preference;
+import com.wingsmight.pushwords.data.WordPair;
 
 import java.util.ArrayList;
 import java.util.Arrays;

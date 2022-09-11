@@ -1,11 +1,14 @@
 package com.wingsmight.pushwords;
 
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
-import com.wingsmight.pushwords.data.UserStore;
 import com.wingsmight.pushwords.data.WordPair;
-import com.wingsmight.pushwords.data.WordPairStore;
+import com.wingsmight.pushwords.data.stores.WordPairStore;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -13,6 +16,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
 import com.wingsmight.pushwords.databinding.ActivityMainBinding;
+import com.wingsmight.pushwords.handlers.AppCycle;
 import com.wingsmight.pushwords.handlers.NotificationService;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -61,13 +65,17 @@ public class MainActivity extends AppCompatActivity {
 
         // Action bar
         getSupportActionBar().hide();
+
+        // Permissions
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(new String[] { WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE },1);
+        }
     }
     @Override
     protected void onPause() {
         super.onPause();
 
-        WordPairStore.getInstance(this).save();
-        UserStore.getInstance(this).save();
+        AppCycle.quit(this);
     }
     @Override
     protected void onStop() {

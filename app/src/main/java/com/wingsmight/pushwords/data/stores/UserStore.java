@@ -1,4 +1,4 @@
-package com.wingsmight.pushwords.data;
+package com.wingsmight.pushwords.data.stores;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
+import com.wingsmight.pushwords.data.Preference;
+import com.wingsmight.pushwords.data.User;
 
 public class UserStore {
     public static final String PREF_NAME = "UserStore";

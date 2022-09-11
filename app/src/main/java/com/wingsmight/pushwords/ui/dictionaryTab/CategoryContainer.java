@@ -9,8 +9,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.LinearLayoutCompat;
 
 import com.wingsmight.pushwords.data.WordPair;
-import com.wingsmight.pushwords.data.WordPairStore;
+import com.wingsmight.pushwords.data.stores.WordPairStore;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 
@@ -37,12 +39,12 @@ public class CategoryContainer extends LinearLayoutCompat {
     }
 
     private void initView() {
-        CategoryButton[] buttons = parseCategoryButtons();
-        for (CategoryButton button : buttons) {
-            addView(button);
-        }
+//        CategoryButton[] buttons = parseCategoryButtons();
+//        for (CategoryButton button : buttons) {
+//            addView(button);
+//        }
     }
-    private CategoryButton[] parseCategoryButtons() {
+    public CategoryButton[] parseCategoryButtons(File file) {
         try {
             Context context = getContext();
 
@@ -51,10 +53,7 @@ public class CategoryContainer extends LinearLayoutCompat {
             WorkbookSettings ws = new WorkbookSettings();
             ws.setGCDisabled(true);
 
-            // TODO: TEST
-            AssetManager assetManager = getResources().getAssets();
-            InputStream inputStream = assetManager.open("LearningCategories.xls");
-            // TODO: ^ TEST
+            InputStream inputStream = new FileInputStream(file);
 
             Workbook workbook = Workbook.getWorkbook(inputStream, ws);
             int count = workbook.getNumberOfSheets();
