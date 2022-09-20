@@ -37,6 +37,7 @@ public class RepeatCardViewHolder extends RecyclerView.ViewHolder {
     private CardStackView cardStackView;
     private CardStackLayoutManager cardStackLayoutManager;
     private final SharedPreferences preferences;
+    private boolean isOriginalWordShowing;
 
 
     public RepeatCardViewHolder(@NonNull View itemView) {
@@ -81,15 +82,11 @@ public class RepeatCardViewHolder extends RecyclerView.ViewHolder {
         this.cardStackView = cardStackView;
         this.cardStackLayoutManager = cardStackLayoutManager;
 
-        boolean isTranslationRevered = false;
-        if (preferences.getBoolean(TestSettingsTab.REVERSE_TRANSLATION_PREF_NAME,
-                TestSettingsTab.DEFAULT_REVERSE_TRANSLATION)) {
-            isTranslationRevered = RandomBoolean.get();
-        }
+        isOriginalWordShowing = RandomBoolean.get();
 
         String originalText;
         String translationText;
-        if (!isTranslationRevered) {
+        if (getIsOriginalWordShowing()) {
             originalText = wordPair.getOriginal();
             translationText = wordPair.getTranslation();
         } else {
@@ -124,5 +121,18 @@ public class RepeatCardViewHolder extends RecyclerView.ViewHolder {
                 .build();
         cardStackLayoutManager.setSwipeAnimationSetting(settings);
         cardStackView.swipe();
+    }
+
+
+    private boolean getIsOriginalWordShowing() {
+        boolean isReversedTranslation = preferences
+                .getBoolean(TestSettingsTab.REVERSE_TRANSLATION_PREF_NAME,
+                    TestSettingsTab.DEFAULT_REVERSE_TRANSLATION);
+
+        if (isReversedTranslation) {
+            return isOriginalWordShowing;
+        } else {
+            return true;
+        }
     }
 }
