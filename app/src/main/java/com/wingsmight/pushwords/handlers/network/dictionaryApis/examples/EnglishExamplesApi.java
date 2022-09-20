@@ -42,34 +42,34 @@ public class EnglishExamplesApi implements IExamplesApi {
         ArrayList<String> examples = new ArrayList<>();
         String url = baseUrl + handledRaw;
 
-        Ion.with(context).load(url).asString().setCallback(new FutureCallback<String>() {
-            @Override
-            public void onCompleted(Exception e, String fullHtml) {
-                String startExampleRowPattern = "rh_ex\'>";
-                String endExampleRowPattern = "</span><";
-                int maxExampleLength = 3;
+        Ion.with(context).load(url).asString().setCallback((exception, fullHtml) -> {
+            if (exception != null || fullHtml == null)
+                return;
 
-                String regexString = Pattern.quote(startExampleRowPattern) + "(.*?)" + Pattern.quote(endExampleRowPattern);
+            String startExampleRowPattern = "rh_ex\'>";
+            String endExampleRowPattern = "</span><";
+            int maxExampleLength = 3;
 
-                Pattern pattern = Pattern.compile(regexString);
-                Matcher matcher = pattern.matcher(fullHtml);
+            String regexString = Pattern.quote(startExampleRowPattern) + "(.*?)" + Pattern.quote(endExampleRowPattern);
 
-                while (matcher.find() && examples.size() < maxExampleLength) {
-                    String example = matcher.group(1);
+            Pattern pattern = Pattern.compile(regexString);
+            Matcher matcher = pattern.matcher(fullHtml);
 
-                    Log.e("aaa", "aa");
+            while (matcher.find() && examples.size() < maxExampleLength) {
+                String example = matcher.group(1);
 
-                    if (!example.contains("<span class")
-                        && !example.contains("]</span></span>")) {
-                        examples.add(example);
-                    }
+                Log.e("aaa", "aa");
+
+                if (!example.contains("<span class")
+                    && !example.contains("]</span></span>")) {
+                    examples.add(example);
                 }
+            }
 
-                Log.i("EnglishExamplesApi", examples + " for " + word);
+            Log.i("EnglishExamplesApi", examples + " for " + word);
 
-                if (currentWord.equals(word)) {
-                    onCompleted.accept(examples);
-                }
+            if (currentWord.equals(word)) {
+                onCompleted.accept(examples);
             }
         });
     }

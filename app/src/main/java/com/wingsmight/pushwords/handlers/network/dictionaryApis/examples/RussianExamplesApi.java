@@ -41,33 +41,33 @@ public class RussianExamplesApi implements IExamplesApi {
         ArrayList<String> examples = new ArrayList<>();
         String url = (baseUrl + handledRaw.charAt(0) + "/" + handledRaw);
 
-        Ion.with(context).load(url).asString().setCallback(new FutureCallback<String>() {
-            @Override
-            public void onCompleted(Exception e, String fullHtml) {
-                String startExampleRowPattern = "<i>";
-                String endExampleRowPattern = "</i>";
-                int maxExampleLength = 3;
+        Ion.with(context).load(url).asString().setCallback((exception, fullHtml) -> {
+            if (exception != null || fullHtml == null)
+                return;
 
-                String regexString = Pattern.quote(startExampleRowPattern) + "(.*?)" + Pattern.quote(endExampleRowPattern);
+            String startExampleRowPattern = "<i>";
+            String endExampleRowPattern = "</i>";
+            int maxExampleLength = 3;
 
-                Pattern pattern = Pattern.compile(regexString);
-                Matcher matcher = pattern.matcher(fullHtml);
+            String regexString = Pattern.quote(startExampleRowPattern) + "(.*?)" + Pattern.quote(endExampleRowPattern);
 
-                while (matcher.find() && examples.size() < maxExampleLength) {
-                    String example = matcher.group(1);
+            Pattern pattern = Pattern.compile(regexString);
+            Matcher matcher = pattern.matcher(fullHtml);
 
-                    if (example != null &&
-                        example.length() > 12 &&
-                        Character.isUpperCase(example.charAt(0))) {
-                        examples.add(example);
-                    }
+            while (matcher.find() && examples.size() < maxExampleLength) {
+                String example = matcher.group(1);
+
+                if (example != null &&
+                    example.length() > 12 &&
+                    Character.isUpperCase(example.charAt(0))) {
+                    examples.add(example);
                 }
+            }
 
-                Log.i("RussianExamplesApi", examples + " for " + word);
+            Log.i("RussianExamplesApi", examples + " for " + word);
 
-                if (currentWord.equals(word)) {
-                    onCompleted.accept(examples);
-                }
+            if (currentWord.equals(word)) {
+                onCompleted.accept(examples);
             }
         });
     }

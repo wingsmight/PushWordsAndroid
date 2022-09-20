@@ -13,6 +13,8 @@ import com.wingsmight.pushwords.data.stores.WordPairStore;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
@@ -38,13 +40,17 @@ public class CategoryContainer extends LinearLayoutCompat {
         initView();
     }
 
-    private void initView() {
-//        CategoryButton[] buttons = parseCategoryButtons();
-//        for (CategoryButton button : buttons) {
-//            addView(button);
-//        }
-    }
+
     public CategoryButton[] parseCategoryButtons(File file) {
+        try {
+            return parseCategoryButtons(new FileInputStream(file));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+
+            return new CategoryButton[0];
+        }
+    }
+    public CategoryButton[] parseCategoryButtons(InputStream inputStream) {
         try {
             Context context = getContext();
 
@@ -52,8 +58,6 @@ public class CategoryContainer extends LinearLayoutCompat {
 
             WorkbookSettings ws = new WorkbookSettings();
             ws.setGCDisabled(true);
-
-            InputStream inputStream = new FileInputStream(file);
 
             Workbook workbook = Workbook.getWorkbook(inputStream, ws);
             int count = workbook.getNumberOfSheets();
@@ -84,6 +88,25 @@ public class CategoryContainer extends LinearLayoutCompat {
 
             return buttons;
         } catch (Exception e) {
+            return new CategoryButton[0];
+        }
+    }
+
+    private void initView() {
+        CategoryButton[] buttons = parseCategoryButtonsFromAssets();
+        for (CategoryButton button : buttons) {
+            addView(button);
+        }
+    }
+    public CategoryButton[] parseCategoryButtonsFromAssets() {
+        try {
+            AssetManager assetManager = getResources().getAssets();
+            InputStream inputStream = assetManager.open("LearningCategories.xls");
+
+            return parseCategoryButtons(inputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+
             return new CategoryButton[0];
         }
     }

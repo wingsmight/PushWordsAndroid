@@ -39,49 +39,49 @@ public class EnglishSynonymsApi implements ISynonymsApi {
         ArrayList<String> synonymRows = new ArrayList<String>();
         String url = baseUrl + handledRaw;
 
-        Ion.with(context).load(url).asString().setCallback(new FutureCallback<String>() {
-            @Override
-            public void onCompleted(Exception e, String fullHtml) {
-                String startSynonymRowPattern = "text-decoration: underline;'>Synonyms:</div><div style='margin-left: 40px;'>";
-                String endSynonymRowPattern = "</div>";
-                int maxSynonymListLength = 2;
-                int maxSynonymInListLength = 3;
+        Ion.with(context).load(url).asString().setCallback((exception, fullHtml) -> {
+            if (exception != null || fullHtml == null)
+                return;
 
-                String regexString = Pattern.quote(startSynonymRowPattern) + "(.*?)" + Pattern.quote(endSynonymRowPattern);
+            String startSynonymRowPattern = "text-decoration: underline;'>Synonyms:</div><div style='margin-left: 40px;'>";
+            String endSynonymRowPattern = "</div>";
+            int maxSynonymListLength = 2;
+            int maxSynonymInListLength = 3;
 
-                Pattern pattern = Pattern.compile(regexString);
-                Matcher matcher = pattern.matcher(fullHtml);
+            String regexString = Pattern.quote(startSynonymRowPattern) + "(.*?)" + Pattern.quote(endSynonymRowPattern);
 
-                while (matcher.find() && synonymRows.size() < maxSynonymListLength) {
-                    String synonymRow = matcher.group(1);
+            Pattern pattern = Pattern.compile(regexString);
+            Matcher matcher = pattern.matcher(fullHtml);
 
-                    synonymRows.add(synonymRow);
+            while (matcher.find() && synonymRows.size() < maxSynonymListLength) {
+                String synonymRow = matcher.group(1);
+
+                synonymRows.add(synonymRow);
+            }
+
+            for (String synonymRow : synonymRows) {
+                String startSynonymPattern = "<span>";
+                String endSynonymPattern = "</span>";
+
+                regexString = Pattern.quote(startSynonymPattern) + "(.*?)" + Pattern.quote(endSynonymPattern);
+
+                pattern = Pattern.compile(regexString);
+                matcher = pattern.matcher(synonymRow);
+
+                ArrayList<String> synonyms = new ArrayList<>();
+                while (matcher.find() && synonyms.size() < maxSynonymInListLength) {
+                    String synonym = matcher.group(1);
+
+                    synonyms.add(synonym);
                 }
 
-                for (String synonymRow : synonymRows) {
-                    String startSynonymPattern = "<span>";
-                    String endSynonymPattern = "</span>";
+                synonymLists.add(synonyms);
+            }
 
-                    regexString = Pattern.quote(startSynonymPattern) + "(.*?)" + Pattern.quote(endSynonymPattern);
+            Log.i("EnglishSynonymsApi", synonymLists + " for " + word);
 
-                    pattern = Pattern.compile(regexString);
-                    matcher = pattern.matcher(synonymRow);
-
-                    ArrayList<String> synonyms = new ArrayList<>();
-                    while (matcher.find() && synonyms.size() < maxSynonymInListLength) {
-                        String synonym = matcher.group(1);
-
-                        synonyms.add(synonym);
-                    }
-
-                    synonymLists.add(synonyms);
-                }
-
-                Log.i("EnglishSynonymsApi", synonymLists + " for " + word);
-
-                if (currentWord.equals(word)) {
-                    onCompleted.accept(synonymLists);
-                }
+            if (currentWord.equals(word)) {
+                onCompleted.accept(synonymLists);
             }
         });
     }
