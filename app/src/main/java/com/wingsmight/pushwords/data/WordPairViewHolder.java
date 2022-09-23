@@ -12,8 +12,6 @@ import com.wingsmight.pushwords.ui.WordCardTabView;
 
 public class WordPairViewHolder extends RecyclerView.ViewHolder {
     public static final String WORD_PAIR_EXTRA = "WORD_EXTRA";
-    public static final String TARGET_LANGUAGE_EXTRA = "TARGET_LANGUAGE_EXTRA";
-    private static final Language DEFAULT_TARGET_LANGUAGE = Language.Russian;
 
 
     private final TextView originalTextView;
@@ -31,7 +29,6 @@ public class WordPairViewHolder extends RecyclerView.ViewHolder {
         itemView.setOnClickListener(view -> {
             Intent intent = new Intent(view.getContext(), WordCardTabView.class);
             intent.putExtra(WORD_PAIR_EXTRA, wordPair);
-            intent.putExtra(TARGET_LANGUAGE_EXTRA, DEFAULT_TARGET_LANGUAGE);
 
             view.getContext().startActivity(intent);
         });

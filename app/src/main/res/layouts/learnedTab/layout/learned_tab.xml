@@ -6,12 +6,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginBottom="?attr/actionBarSize">
 
-    <com.wingsmight.pushwords.ui.learnedTab.TestSettingsButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_margin="15dp"/>
-
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/nonTestView"
         android:layout_width="match_parent"
@@ -19,13 +13,18 @@
         android:orientation="vertical"
         android:visibility="visible">
 
+        <com.wingsmight.pushwords.ui.learnedTab.TestSettingsButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_margin="15dp"/>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/wordPairs"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            tools:listitem="@layout/learned_word_pair_row"
-            android:layout_marginTop="75dp" />
+            tools:listitem="@layout/learned_word_pair_row" />
 
         <com.wingsmight.pushwords.ui.learnedTab.StartTestButton
             android:id="@+id/startTestButton"

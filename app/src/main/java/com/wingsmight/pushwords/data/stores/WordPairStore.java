@@ -128,7 +128,7 @@ public class WordPairStore {
     public ArrayList<WordPair> getForgottenOnly() {
         ArrayList<WordPair> forgottenOnly = new ArrayList<>();
         for (WordPair wordPair : wordPairs) {
-            if (wordPair.getState() == WordPair.State.Forgotten) {
+            if (wordPair.isForgotten()) {
                 forgottenOnly.add(wordPair);
             }
         }

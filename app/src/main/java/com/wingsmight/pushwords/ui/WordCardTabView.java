@@ -36,8 +36,7 @@ public class WordCardTabView extends AppCompatActivity {
 
         translatedWordInfoView = findViewById(R.id.translatedWordInfoView);
 
-        set(getIntent().getParcelableExtra(WordPairViewHolder.WORD_PAIR_EXTRA),
-                (Language) getIntent().getSerializableExtra(WordPairViewHolder.TARGET_LANGUAGE_EXTRA));
+        set(getIntent().getParcelableExtra(WordPairViewHolder.WORD_PAIR_EXTRA));
     }
     @Override
     protected void onPause() {
@@ -53,10 +52,9 @@ public class WordCardTabView extends AppCompatActivity {
         getSupportActionBar().hide();
     }
 
-    public void set(WordPair wordPair, Language targetLanguage) {
+    public void set(WordPair wordPair) {
         originalWordTextView.setText(wordPair.getOriginal());
-        translatedWordInfoView.setWord(wordPair.getTranslation());
-        translatedWordInfoView.setTargetLanguage(targetLanguage);
+        translatedWordInfoView.setWord(wordPair.getTranslation(), wordPair.getTranslationLanguage());
         translatedWordControlPanel.setWordPair(wordPair);
 
     }

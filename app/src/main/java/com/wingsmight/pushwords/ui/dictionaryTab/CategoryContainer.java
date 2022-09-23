@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.LinearLayoutCompat;
 
+import com.wingsmight.pushwords.data.Language;
 import com.wingsmight.pushwords.data.WordPair;
 import com.wingsmight.pushwords.data.stores.WordPairStore;
 
@@ -71,13 +72,16 @@ public class CategoryContainer extends LinearLayoutCompat {
                         sheet.getCell(5, 1).getContents(),
                         sheet.getCell(6, 1).getContents());
 
+                Language originalLanguage = Language
+                        .valueOf(sheet.getCell(0, 0).getContents());
                 Cell[] originals = sheet.getColumn(0);
                 Cell[] translations = sheet.getColumn(1);
                 int wordCount = Math.min(originals.length, translations.length);
                 ArrayList<WordPair> words = new ArrayList<>(wordCount);
                 for (int rowIndex = 0; rowIndex < wordCount; rowIndex++) {
                     WordPair newWordPair = new WordPair(originals[rowIndex].getContents(),
-                            translations[rowIndex].getContents());
+                            translations[rowIndex].getContents(),
+                            originalLanguage);
 
                     words.add(newWordPair);
                     wordPairStore.add(newWordPair);

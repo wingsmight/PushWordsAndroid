@@ -1,4 +1,4 @@
-package com.wingsmight.pushwords.data.learnedTab;
+package com.wingsmight.pushwords.data.learnedTab.test;
 
 import android.view.LayoutInflater;
 import android.view.View;

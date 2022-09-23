@@ -14,14 +14,12 @@ import androidx.core.util.Consumer;
 import androidx.fragment.app.Fragment;
 
 import com.wingsmight.pushwords.R;
+import com.wingsmight.pushwords.data.Language;
 import com.wingsmight.pushwords.data.WordPair;
 import com.wingsmight.pushwords.data.database.CloudDatabase;
-import com.wingsmight.pushwords.handlers.InternalStorage;
 import com.wingsmight.pushwords.handlers.network.TranslationApi;
 import com.wingsmight.pushwords.ui.WordControlPanel;
 import com.wingsmight.pushwords.ui.wordInfo.WordInfoView;
-
-import java.io.File;
 
 public class DictionaryTab extends Fragment {
     private WordInfoView wordInfo;
@@ -55,7 +53,7 @@ public class DictionaryTab extends Fragment {
         // language switch
         languageSwitch = view.findViewById(R.id.languageSwitch);
         languageSwitch.setOnSwitchListener((originalLanguage, targetLanguage) ->
-                wordInfo.setTargetLanguage(targetLanguage));
+                wordInfo.setWordLanguage(targetLanguage));
 
         // word input
         View wordInput = view.findViewById(R.id.wordInput);
@@ -63,9 +61,11 @@ public class DictionaryTab extends Fragment {
 
         Consumer<String> onWordTranslated = translation -> getActivity().
                 runOnUiThread(() -> {
-                    wordInfo.setWord(translation);
+                    wordInfo.setWord(translation, languageSwitch.getCurrentTargetLanguage());
 
-                    WordPair wordPair = new WordPair(inputOriginal, translation);
+                    WordPair wordPair = new WordPair(inputOriginal,
+                            translation,
+                            languageSwitch.getCurrentOriginalLanguage());
                     translatedWordControlPanel.setWordPair(wordPair);
                 });
 
@@ -76,7 +76,7 @@ public class DictionaryTab extends Fragment {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 inputOriginal = charSequence.toString();
-                wordInfo.setWord("");
+                wordInfo.setWord("", languageSwitch.getCurrentTargetLanguage());
 
                 translationApi.translate(inputOriginal,
                         languageSwitch.getCurrentTargetLanguage(),

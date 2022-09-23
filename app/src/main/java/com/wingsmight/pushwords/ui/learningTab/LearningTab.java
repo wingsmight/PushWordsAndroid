@@ -15,6 +15,7 @@ import com.wingsmight.pushwords.R;
 import com.wingsmight.pushwords.data.WordPair;
 import com.wingsmight.pushwords.data.stores.WordPairStore;
 import com.wingsmight.pushwords.data.learningTab.LearningWordPairsAdapter;
+import com.wingsmight.pushwords.extensions.WordPairListExt;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -46,8 +47,8 @@ public class LearningTab extends Fragment {
         super.onResume();
 
         ArrayList<WordPair> learnedWordPairs = wordPairStore.getLearningOnly();
-        Collections.sort(learnedWordPairs, (lhs, rhs) ->
-                lhs.getChangingDate().compareTo(rhs.getChangingDate()));
+        WordPairListExt.sortByChangingDate(learnedWordPairs);
+
         Collections.sort(learnedWordPairs, (lhs, rhs) ->
                 lhs.isPushed() && !rhs.isPushed()
                         ? -1

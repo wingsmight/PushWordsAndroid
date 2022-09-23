@@ -48,7 +48,7 @@ public class StartTestButton extends FrameLayout {
         button.setOnClickListener(view -> {
             nonTestView.setVisibility(View.GONE);
 
-            testView.start();
+            testView.startTest();
             testView.setVisibility(View.VISIBLE);
         });
     }

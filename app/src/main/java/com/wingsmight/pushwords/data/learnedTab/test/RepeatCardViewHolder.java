@@ -1,4 +1,4 @@
-package com.wingsmight.pushwords.data.learnedTab;
+package com.wingsmight.pushwords.data.learnedTab.test;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.wingsmight.pushwords.R;
+import com.wingsmight.pushwords.data.Language;
 import com.wingsmight.pushwords.data.Preference;
 import com.wingsmight.pushwords.data.WordPair;
 import com.wingsmight.pushwords.handlers.RandomBoolean;
@@ -86,21 +87,31 @@ public class RepeatCardViewHolder extends RecyclerView.ViewHolder {
 
         String originalText;
         String translationText;
+        Language originalLanguage;
         if (getIsOriginalWordShowing()) {
             originalText = wordPair.getOriginal();
             translationText = wordPair.getTranslation();
+            originalLanguage = wordPair.getOriginalLanguage();
         } else {
             originalText = wordPair.getTranslation();
             translationText = wordPair.getOriginal();
+            originalLanguage = wordPair.getTranslationLanguage();
         }
         originalWordTextView.setText(originalText);
         speakerView.setSpokenTextView(originalWordTextView);
-        wordInfoView.setWord(translationText);
+        wordInfoView.setWord(translationText, originalLanguage.getOpposite());
         counterText.setText((position + 1) + " из " + overallCount);
     }
+
     private void forgot() {
+        swipeOut(Direction.Left);
+    }
+    private void remember() {
+        swipeOut(Direction.Right);
+    }
+    private void swipeOut(Direction direction) {
         SwipeAnimationSetting settings = new SwipeAnimationSetting.Builder()
-                .setDirection(Direction.Left)
+                .setDirection(direction)
                 .setDuration(Duration.Normal.duration)
                 .setInterpolator(new AccelerateInterpolator())
                 .build();
@@ -112,15 +123,6 @@ public class RepeatCardViewHolder extends RecyclerView.ViewHolder {
     }
     private void showTranslation() {
         wordInfoView.setVisibility(View.VISIBLE);
-    }
-    private void remember() {
-        SwipeAnimationSetting settings = new SwipeAnimationSetting.Builder()
-                .setDirection(Direction.Right)
-                .setDuration(Duration.Normal.duration)
-                .setInterpolator(new AccelerateInterpolator())
-                .build();
-        cardStackLayoutManager.setSwipeAnimationSetting(settings);
-        cardStackView.swipe();
     }
 
 

@@ -1,9 +1,13 @@
 package com.wingsmight.pushwords.data;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.core.util.Consumer;
+
+import com.wingsmight.pushwords.ui.learnedTab.TestSettingsTab;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,23 +15,29 @@ import java.util.Date;
 public class WordPair implements Parcelable {
     private String original;
     private String translation;
+    private Language originalLanguage;
     private State state = State.None;
     private boolean isPushed = false;
+    private boolean isForgotten = false;
     private Date changingDate = new Date();
+    private int rememberingCount = 0;
 
     private transient ArrayList<Consumer<State>> onStateChanged = new ArrayList<>();
     private transient ArrayList<Consumer<Boolean>> onPushedChanged = new ArrayList<>();
 
 
-    public WordPair(String original, String translation) {
+    public WordPair(String original, String translation, Language originalLanguage) {
         this.original = original;
         this.translation = translation;
+        this.originalLanguage = originalLanguage;
     }
     protected WordPair(Parcel parcel) {
         original = parcel.readString();
         translation = parcel.readString();
+        originalLanguage = Language.valueOf(parcel.readString());
         state = (State) parcel.readSerializable();
         isPushed = parcel.readByte() != 0;
+        isForgotten = parcel.readByte() != 0;
     }
 
 
@@ -53,8 +63,10 @@ public class WordPair implements Parcelable {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(original);
         parcel.writeString(translation);
+        parcel.writeString(originalLanguage.name());
         parcel.writeSerializable(state);
         parcel.writeByte((byte) (isPushed ? 1 : 0));
+        parcel.writeByte((byte) (isForgotten ? 1 : 0));
     }
     @Override
     public boolean equals(Object object) {
@@ -62,6 +74,20 @@ public class WordPair implements Parcelable {
         return this.original.equalsIgnoreCase(anotherWord.original)
                 && this.translation.equalsIgnoreCase(anotherWord.translation);
     }
+    public void remember(int requiredRememberingCount) {
+        rememberingCount++;
+
+        if (rememberingCount >= requiredRememberingCount) {
+            rememberingCount = 0;
+            isForgotten = false;
+        }
+    }
+    public void forgot() {
+        isForgotten = true;
+
+        rememberingCount = 0;
+    }
+
 
     public String getOriginal() {
         return original;
@@ -79,6 +105,12 @@ public class WordPair implements Parcelable {
 
         setChangingDateToNow();
     }
+    public Language getOriginalLanguage() {
+        return originalLanguage;
+    }
+    public Language getTranslationLanguage() {
+        return originalLanguage.getOpposite();
+    }
     public State getState() {
         return state;
     }
@@ -94,19 +126,27 @@ public class WordPair implements Parcelable {
     public boolean isPushed() {
         return isPushed;
     }
-    public void setPushed(boolean pushed) {
-        isPushed = pushed;
+    public void setPushed(boolean isPushed) {
+        this.isPushed = isPushed;
 
         if (onPushedChanged == null) {
             onPushedChanged = new ArrayList<>();
         }
 
         for (Consumer<Boolean> event : onPushedChanged) {
-            event.accept(pushed);
+            event.accept(isPushed);
         }
 
         setChangingDateToNow();
     }
+    public boolean isForgotten() {
+        return isForgotten;
+    }
+//    public void setForgotten(boolean isForgotten) {
+//        this.isForgotten = isForgotten;
+//
+//        setChangingDateToNow();
+//    }
     public Date getChangingDate() {
         return changingDate;
     }
@@ -132,6 +172,5 @@ public class WordPair implements Parcelable {
         None,
         Learning,
         Learned,
-        Forgotten
     }
 }

@@ -12,7 +12,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class StringExt {
+public final class StringExt {
     public static void getDrawableFromUrl(String url, Consumer<Drawable> onCompleted) {
         new Thread(() -> {
             try {
