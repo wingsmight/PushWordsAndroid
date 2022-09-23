@@ -1,11 +1,13 @@
 package com.wingsmight.pushwords.data.database;
 
 import android.content.Context;
+import android.nfc.Tag;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.util.Consumer;
 
+import com.google.android.gms.tasks.OnCanceledListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -24,6 +26,7 @@ import com.wingsmight.pushwords.ui.dictionaryTab.CategoryButton;
 import com.wingsmight.pushwords.ui.dictionaryTab.DictionaryTab;
 
 import java.io.File;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,7 +65,9 @@ public final class CloudDatabase {
                 });
     }
     public static void updateUser(User user) {
-        if (user.getDocumentID().isEmpty()) {
+        if (user == null
+                || user.getDocumentID() == null
+                || user.getDocumentID().isEmpty()) {
             Log.i(TAG, "user.documentID is empty");
 
             return;
@@ -104,12 +109,15 @@ public final class CloudDatabase {
         files.addOnSuccessListener(listResult -> {
             List<StorageReference> categoryFiles = listResult.getItems();
             for (StorageReference categoryFile : categoryFiles) {
-                categoryFile.getBytes(LEARNING_CATEGORIES_FILE_MAX_SIZE).addOnSuccessListener(bytes -> {
-                    File file = InternalStorage
-                            .writeFile(context, categoryFile.getName(), bytes);
+                categoryFile.getBytes(LEARNING_CATEGORIES_FILE_MAX_SIZE)
+                        .addOnSuccessListener(bytes -> {
+                            String fileName = InternalStorage.LEARNING_CATEGORIES_DIRECTORY
+                                    + "/" + categoryFile.getName();
+                            File file = InternalStorage
+                                    .writeFile(context, fileName, bytes);
 
-                    onSuccess.accept(file);
-                }).addOnFailureListener(Throwable::printStackTrace);
+                            onSuccess.accept(file);
+                        });
             }
         });
     }

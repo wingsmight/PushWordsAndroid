@@ -29,11 +29,14 @@ public class CategoryButton extends LinearLayout {
     private TextView headlineTextView;
     private View backgroundView;
 
+    private Label label;
     private ArrayList<WordPair> words;
 
 
     public CategoryButton(Context context, Label label, ArrayList<WordPair> words) {
         super(context);
+
+        this.label = label;
 
         initView(label);
 
@@ -82,6 +85,11 @@ public class CategoryButton extends LinearLayout {
         titleTextView.setText(label.getTitleText());
         headlineTextView.setText(label.getHeadlineText());
         backgroundView.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(label.getBackgroundColorHex())));
+    }
+
+
+    public Label getLabel() {
+        return label;
     }
 
 

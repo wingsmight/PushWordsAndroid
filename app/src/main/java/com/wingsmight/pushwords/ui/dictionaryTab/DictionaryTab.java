@@ -100,7 +100,7 @@ public class DictionaryTab extends Fragment {
 //            CategoryButton[] buttons = categoryView.parseCategoryButtons(existedFile);
 //
 //            for (CategoryButton button : buttons) {
-//                categoryView.addView(button);
+//                categoryView.addButton(button);
 //            }
 //        }
 
@@ -108,7 +108,7 @@ public class DictionaryTab extends Fragment {
             CategoryButton[] buttons = categoryView.parseCategoryButtons(file);
 
             for (CategoryButton button : buttons) {
-                categoryView.addView(button);
+                categoryView.addButton(button);
             }
         });
     }

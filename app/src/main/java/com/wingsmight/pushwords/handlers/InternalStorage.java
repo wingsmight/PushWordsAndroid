@@ -8,18 +8,19 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 
 public final class InternalStorage {
+    public static final String LEARNING_CATEGORIES_DIRECTORY = "LearningCategories";
+
     private static final String TAG = "InternalStorage";
-    private static final String DEFAULT_DIRECTORY = "DEFAULT_DIRECTORY";
 
 
     public static File writeFile(Context context, String fileName, byte[] bytes) {
-        File directory = new File(context.getFilesDir(), DEFAULT_DIRECTORY);
-        if (!directory.exists()) {
-            directory.mkdir();
-        }
+        File file = new File(context.getFilesDir(), fileName);
 
         try {
-            File file = new File(directory, fileName);
+            if (!file.getParentFile().exists()) {
+                file.getParentFile().mkdir();
+            }
+
             if (!file.exists()) {
                 file.createNewFile();
             }
@@ -34,39 +35,25 @@ public final class InternalStorage {
             return null;
         }
     }
-    public static File readFile(Context context, String fileName) {
-        File directory = new File(context.getFilesDir(), DEFAULT_DIRECTORY);
-        if (!directory.exists()) {
-            return null;
-        }
+    public static boolean exists(Context context, String fileName) {
+        File file = new File(context.getFilesDir(), fileName);
 
-        try {
-            File file = new File(directory, fileName);
-            if (!file.exists()) {
-                return null;
-            }
-
-            return file;
-        } catch (Exception e) {
-            Log.e(TAG, e.getMessage());
-
-            return null;
-        }
+        return file.exists();
     }
-    public static void writeFile(Context context, String fileName, String content){
-        File directory = new File(context.getFilesDir(), DEFAULT_DIRECTORY);
+    public static File[] getFiles(Context context, String directoryName) {
+        File directory = new File(context.getFilesDir(), directoryName);
         if (!directory.exists()) {
-            directory.mkdir();
+            return new File[0];
         }
 
-        try {
-            File file = new File(directory, fileName);
-            FileWriter writer = new FileWriter(file);
-            writer.append(content);
-            writer.flush();
-            writer.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+        return directory.listFiles();
+    }
+    public static File readFile(Context context, String fileName) {
+        File file = new File(context.getFilesDir(), fileName);
+        if (!file.exists()) {
+            return null;
         }
+
+        return file;
     }
 }

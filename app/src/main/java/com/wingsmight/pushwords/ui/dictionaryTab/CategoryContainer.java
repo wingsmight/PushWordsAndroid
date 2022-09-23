@@ -3,6 +3,7 @@ package com.wingsmight.pushwords.ui.dictionaryTab;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.util.AttributeSet;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,6 +12,7 @@ import androidx.appcompat.widget.LinearLayoutCompat;
 import com.wingsmight.pushwords.data.Language;
 import com.wingsmight.pushwords.data.WordPair;
 import com.wingsmight.pushwords.data.stores.WordPairStore;
+import com.wingsmight.pushwords.handlers.InternalStorage;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -25,6 +27,9 @@ import jxl.Workbook;
 import jxl.WorkbookSettings;
 
 public class CategoryContainer extends LinearLayoutCompat {
+    private ArrayList<CategoryButton> buttons = new ArrayList<>();
+
+
     public CategoryContainer(@NonNull Context context) {
         super(context);
 
@@ -42,6 +47,23 @@ public class CategoryContainer extends LinearLayoutCompat {
     }
 
 
+    public void addButton(CategoryButton newButton) {
+        CategoryButton existedButton = null;
+        for (CategoryButton button : buttons) {
+            if (button.getLabel().getTitleText()
+                    .equals(newButton.getLabel().getTitleText())) {
+                existedButton = button;
+                break;
+            }
+        }
+
+        if (existedButton != null) {
+            removeView(existedButton);
+        }
+
+        buttons.add(newButton);
+        addView(newButton);
+    }
     public CategoryButton[] parseCategoryButtons(File file) {
         try {
             return parseCategoryButtons(new FileInputStream(file));
@@ -97,9 +119,14 @@ public class CategoryContainer extends LinearLayoutCompat {
     }
 
     private void initView() {
-        CategoryButton[] buttons = parseCategoryButtonsFromAssets();
-        for (CategoryButton button : buttons) {
-            addView(button);
+        File[] categoryFiles = InternalStorage
+                .getFiles(getContext(), InternalStorage.LEARNING_CATEGORIES_DIRECTORY);
+
+        for (File file : categoryFiles) {
+            CategoryButton[] buttons = parseCategoryButtons(file);
+            for (CategoryButton button : buttons) {
+                addButton(button);
+            }
         }
     }
     public CategoryButton[] parseCategoryButtonsFromAssets() {
