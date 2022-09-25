@@ -1,7 +1,12 @@
 package com.wingsmight.pushwords.ui.signUpTab;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +17,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.wingsmight.pushwords.MainActivity;
@@ -23,6 +35,7 @@ import com.wingsmight.pushwords.ui.logInTab.LogInTab;
 
 public class SignUpTab extends AppCompatActivity {
     private static final String ACTION_BAR_TITLE = "Регистрация";
+    private static final int GOOGLE_SIGN_IN_REQUEST_CODE = 909;
 
 
     private EditText emailEditText;
@@ -31,12 +44,15 @@ public class SignUpTab extends AppCompatActivity {
     private Button signUpButton;
     private TextView loginPageBackTextView;
     private ProgressDialog progressDialog;
+    private SignInButton googleSignInButton;
 
     private FirebaseAuth firebaseAuth;
     private String email;
     private String password;
     private String confirmedPassword;
-
+    private GoogleSignInOptions googleSignInOptions;
+    private GoogleSignInClient googleSignInClient;
+    ActivityResultLauncher<Intent> googleSignInActivityLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,14 +70,15 @@ public class SignUpTab extends AppCompatActivity {
                 startActivity(new Intent(SignUpTab.this, LogInTab.class)));
         progressDialog = new ProgressDialog(this);
 
-        // for authentication using FirebaseAuth.
-        firebaseAuth = FirebaseAuth.getInstance();
-        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (firebaseUser != null) {
-            startActivity(new Intent(SignUpTab.this, MainActivity.class));
+//        firebaseAuth = FirebaseAuth.getInstance();
+//        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+//        if (firebaseUser != null) {
+//            startActivity(new Intent(SignUpTab.this, MainActivity.class));
+//
+//            finish();
+//        }
 
-            finish();
-        }
+        configureGoogleSignIn();
     }
     @Override
     protected void onStart() {
@@ -72,6 +89,36 @@ public class SignUpTab extends AppCompatActivity {
     @Override
     public void onBackPressed() { }
 
+    private void configureGoogleSignIn() {
+        googleSignInButton = findViewById(R.id.googleSignInButton);
+
+        googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+        googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions);
+
+        GoogleSignInAccount googleSignInAccount = GoogleSignIn.getLastSignedInAccount(this);
+        if (googleSignInAccount != null) {
+            navigateToMainActivity();
+        }
+
+        googleSignInButton.setOnClickListener(view -> signInViaGoogle());
+
+        googleSignInActivityLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(result.getData());
+
+                        try {
+                            task.getResult(ApiException.class);
+                            navigateToMainActivity();
+                        } catch (ApiException exception) {
+                            Toast.makeText(getApplicationContext(),
+                                    "Something went wrong: " + exception.getStatusCode(),
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
     private void trySignUserUp() {
         email = emailEditText.getText().toString().trim();
         password = passwordEditText.getText().toString().trim();
@@ -123,6 +170,16 @@ public class SignUpTab extends AppCompatActivity {
         CloudDatabase.addUser(user);
 
         return user;
+    }
+    private void navigateToMainActivity() {
+        startActivity(new Intent(SignUpTab.this, MainActivity.class));
+
+        finish();
+    }
+    private void signInViaGoogle() {
+        Intent signInIntent = googleSignInClient.getSignInIntent();
+
+        googleSignInActivityLauncher.launch(signInIntent);
     }
 
     public String getUserEmail() {
