@@ -19,7 +19,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.wingsmight.pushwords.BuildConfig;
+import com.wingsmight.pushwords.PushWordsApplication;
 import com.wingsmight.pushwords.R;
+import com.wingsmight.pushwords.data.BillingProduct;
 import com.wingsmight.pushwords.data.NotificationFrequency;
 import com.wingsmight.pushwords.data.Preference;
 import com.wingsmight.pushwords.data.stores.UserStore;
@@ -30,12 +32,12 @@ import com.wingsmight.pushwords.ui.signUpTab.SignUpTab;
 import java.util.TimeZone;
 
 public class SettingsTab extends AppCompatActivity {
-    private static final String ACTION_BAR_TITLE = "Настройки";
-
     public static final String NOTIFICATION_WORD_COUNT_PREF_NAME = "NOTIFICATION_WORD_COUNT_PREF_NAME";
-    public static final int NOTIFICATION_WORD_COUNT_DEFAULT = 2;
+    public static final int NOTIFICATION_WORD_COUNT_DEFAULT = 1;
     public static final String NOTIFICATION_FREQUENCY_INDEX_PREF_NAME = "NOTIFICATION_FREQUENCY_INDEX_PREF_NAME";
     public static final int DEFAULT_NOTIFICATION_FREQUENCY_INDEX = 0;
+
+    private static final String ACTION_BAR_TITLE = "Настройки";
 
 
     private TextView timeZoneText;
@@ -45,6 +47,7 @@ public class SettingsTab extends AppCompatActivity {
     private View testSettingsButton;
     private View shareAppButton;
     private View signOutButton;
+    private View subscriptionButton;
 
 
     private SharedPreferences.Editor preferencesEditor;
@@ -70,11 +73,14 @@ public class SettingsTab extends AppCompatActivity {
         timeZoneText.setText(timeZoneDisplayName);
 
         notificationWordCountPicker = findViewById(R.id.notificationWordCountPicker);
+        int notificationMaxWordCount = UserStore.getInstance(this)
+                        .getUser()
+                        .getNotificationMaxWordCount();
         initPicker(notificationWordCountPicker,
                 NOTIFICATION_WORD_COUNT_PREF_NAME,
                 NOTIFICATION_WORD_COUNT_DEFAULT,
                 1,
-                4);
+                notificationMaxWordCount);
 
         // Notification frequency spinner
         notificationFrequencySpinner = findViewById(R.id.notificationFrequencySpinner);
@@ -139,6 +145,12 @@ public class SettingsTab extends AppCompatActivity {
             UserStore.getInstance(this).setUser(null);
             startActivity(new Intent(SettingsTab.this, SignUpTab.class));
         });
+
+        // Subscription button
+        subscriptionButton = findViewById(R.id.subscriptionButton);
+        subscriptionButton.setOnClickListener(view -> ((PushWordsApplication) getApplicationContext())
+                .getBillingHandler()
+                .subscribe(this, BillingProduct.Subscription));
     }
     @Override
     protected void onPause() {
