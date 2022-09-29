@@ -138,14 +138,14 @@ public class TestView extends FrameLayout {
         cardStackView.setAdapter(repeatCardStackAdapter);
         repeatCardStackAdapter.notifyDataSetChanged();
 
-//        nonTestView.setVisibility(View.GONE);
-//        testView.setVisibility(View.VISIBLE);
-//        cardStackView.setVisibility(View.VISIBLE);
+        nonTestView.setVisibility(View.GONE);
+        testView.setVisibility(View.VISIBLE);
+        cardStackView.setVisibility(View.VISIBLE);
     }
     public void finishTest() {
-//        nonTestView.setVisibility(View.VISIBLE);
-//        testView.setVisibility(View.GONE);
-//        cardStackView.setVisibility(View.GONE);
+        nonTestView.setVisibility(View.VISIBLE);
+        testView.setVisibility(View.GONE);
+        cardStackView.setVisibility(View.GONE);
     }
 
     private void initView() {
