@@ -71,6 +71,10 @@ public class SynonymPair extends LinearLayoutCompat {
         originalText.setText("");
         translatedText.setText("");
     }
+    public void setColor(int color) {
+        originalText.setTextColor(color);
+        translatedText.setTextColor(color);
+    }
 
     private void translateSynonym(String original, int synonymIndex, Language targetLanguage) {
         translationApis[synonymIndex].translate(original,

@@ -9,12 +9,14 @@ import static com.wingsmight.pushwords.ui.learnedTab.TestSettingsTab.LEARNED_WOR
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.widget.ImageViewCompat;
 
 import com.wingsmight.pushwords.R;
 import com.wingsmight.pushwords.data.Preference;
@@ -149,8 +151,13 @@ public class TestView extends FrameLayout {
     private void initView() {
         inflate(getContext(), R.layout.test_view, this);
 
+        int closeButtonColor = getContext().getResources().getColor(R.color.black);
+        ColorStateList closeButtonColorStateList = ColorStateList.valueOf(closeButtonColor);
+
         closeButton = findViewById(R.id.closeButton);
         closeButton.setOnClickListener((view) -> finishTest());
+        ImageViewCompat.setImageTintList(closeButton.findViewById(R.id.button),
+                closeButtonColorStateList);
 
         finishTestView = findViewById(R.id.finishTestView);
         View finishButton = finishTestView

@@ -2,12 +2,15 @@ package com.wingsmight.pushwords.data.learnedTab.test;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
+import androidx.core.widget.ImageViewCompat;
+import androidx.core.widget.TextViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.wingsmight.pushwords.R;
@@ -71,6 +74,18 @@ public class RepeatCardViewHolder extends RecyclerView.ViewHolder {
 
         preferences = itemView.getContext()
                 .getSharedPreferences(Preference.SHARED, Context.MODE_PRIVATE);
+
+        int elementColor = itemView.getResources().getColor(R.color.black);
+        ColorStateList elementColorStateList = ColorStateList.valueOf(elementColor);
+
+        ImageViewCompat.setImageTintList(speakerView.getImage(),
+                elementColorStateList);
+
+
+//        int nightModeFlags =
+//                getContext().getResources().getConfiguration().uiMode &
+//                        Configuration.UI_MODE_NIGHT_MASK;
+//        if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES) { }
     }
 
 

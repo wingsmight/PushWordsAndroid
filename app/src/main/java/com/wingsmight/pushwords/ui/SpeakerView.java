@@ -5,6 +5,7 @@ import android.speech.tts.TextToSpeech;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wingsmight.pushwords.R;
@@ -36,9 +37,6 @@ public class SpeakerView extends FrameLayout {
     }
 
 
-    public void setSpokenTextView(TextView spokenTextView) {
-        this.spokenTextView = spokenTextView;
-    }
     private void initView() {
         inflate(getContext(), R.layout.speaker, this);
 
@@ -59,5 +57,13 @@ public class SpeakerView extends FrameLayout {
             textToSpeech.setLanguage(Locale.forLanguageTag(textLanguage));
             textToSpeech.speak(text, TextToSpeech.QUEUE_ADD, null);
         });
+    }
+
+
+    public void setSpokenTextView(TextView spokenTextView) {
+        this.spokenTextView = spokenTextView;
+    }
+    public ImageView getImage() {
+        return button;
     }
 }

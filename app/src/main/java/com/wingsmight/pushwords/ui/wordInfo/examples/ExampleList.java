@@ -9,6 +9,7 @@ import androidx.appcompat.widget.LinearLayoutCompat;
 
 import com.wingsmight.pushwords.R;
 import com.wingsmight.pushwords.data.Language;
+import com.wingsmight.pushwords.ui.wordInfo.synonyms.SynonymPair;
 
 import java.util.ArrayList;
 
@@ -50,6 +51,15 @@ public class ExampleList extends LinearLayoutCompat {
         for (int i = 0; i < MAX_PAIR_COUNT; i++) {
             pairs[i].clear();
             numberTexts[i].setText("");
+        }
+    }
+    public void setTextColor(int color) {
+        for (TextView numberText : numberTexts) {
+            numberText.setTextColor(color);
+        }
+
+        for (ExamplePair pair : pairs) {
+            pair.setColor(color);
         }
     }
 

@@ -45,6 +45,10 @@ public class ExamplePair extends LinearLayoutCompat {
         originalText.setText("");
         translatedText.setText("");
     }
+    public void setColor(int color) {
+        originalText.setTextColor(color);
+        translatedText.setTextColor(color);
+    }
 
     private void initView() {
         inflate(getContext(), R.layout.example_pair, this);

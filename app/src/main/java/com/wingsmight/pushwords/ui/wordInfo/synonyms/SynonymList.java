@@ -52,6 +52,15 @@ public class SynonymList extends LinearLayoutCompat {
             numberTexts[i].setText("");
         }
     }
+    public void setTextColor(int color) {
+        for (TextView numberText : numberTexts) {
+            numberText.setTextColor(color);
+        }
+
+        for (SynonymPair pair : pairs) {
+            pair.setColor(color);
+        }
+    }
 
     private void initView() {
         inflate(getContext(), R.layout.synonym_list, this);

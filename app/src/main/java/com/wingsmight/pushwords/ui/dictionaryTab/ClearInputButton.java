@@ -4,12 +4,13 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wingsmight.pushwords.R;
 
 public class ClearInputButton extends FrameLayout {
-    private View button;
+    private ImageView button;
     private TextView textToClear;
 
 
@@ -42,5 +43,10 @@ public class ClearInputButton extends FrameLayout {
 
             textToClear.setText("");
         });
+    }
+
+
+    public ImageView getImage() {
+        return button;
     }
 }

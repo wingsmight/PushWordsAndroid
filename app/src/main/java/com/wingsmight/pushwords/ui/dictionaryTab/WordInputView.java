@@ -1,9 +1,13 @@
 package com.wingsmight.pushwords.ui.dictionaryTab;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.content.res.Configuration;
 import android.util.AttributeSet;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+
+import androidx.core.widget.ImageViewCompat;
 
 import com.wingsmight.pushwords.R;
 import com.wingsmight.pushwords.ui.SpeakerView;
@@ -37,5 +41,13 @@ public class WordInputView extends FrameLayout {
 
         clearButton.setTextToClear(wordInputText);
         speakerView.setSpokenTextView(wordInputText);
+
+        int buttonColor = getContext().getResources().getColor(R.color.black);
+        ColorStateList buttonColorStateList = ColorStateList.valueOf(buttonColor);
+
+        ImageViewCompat.setImageTintList(clearButton.getImage(),
+                buttonColorStateList);
+        ImageViewCompat.setImageTintList(speakerView.getImage(),
+                buttonColorStateList);
     }
 }
