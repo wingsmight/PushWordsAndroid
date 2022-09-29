@@ -1,5 +1,6 @@
 package com.wingsmight.pushwords.ui.wordInfo.examples;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
@@ -37,15 +38,17 @@ public class ExampleList extends LinearLayoutCompat {
 
 
     public void set(ArrayList<String> originalExamples, Language targetLanguage) {
-        for (int i = 0; i < MAX_PAIR_COUNT; i++) {
-            if (i < originalExamples.size()) {
-                pairs[i].set(originalExamples.get(i), targetLanguage);
-                numberTexts[i].setText(String.valueOf(i + 1));
-            } else {
-                pairs[i].clear();
-                numberTexts[i].setText("");
+        ((Activity)getContext()).runOnUiThread(() -> {
+            for (int i = 0; i < MAX_PAIR_COUNT; i++) {
+                if (i < originalExamples.size()) {
+                    pairs[i].set(originalExamples.get(i), targetLanguage);
+                    numberTexts[i].setText(String.valueOf(i + 1));
+                } else {
+                    pairs[i].clear();
+                    numberTexts[i].setText("");
+                }
             }
-        }
+        });
     }
     public void clear() {
         for (int i = 0; i < MAX_PAIR_COUNT; i++) {

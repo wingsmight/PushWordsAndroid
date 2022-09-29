@@ -1,5 +1,6 @@
 package com.wingsmight.pushwords.ui.wordInfo.synonyms;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
@@ -36,15 +37,17 @@ public class SynonymList extends LinearLayoutCompat {
 
 
     public void set(ArrayList<ArrayList<String>> originalSynonyms, Language targetLanguage) {
-        for (int i = 0; i < MAX_PAIR_COUNT; i++) {
-            if (i < originalSynonyms.size()) {
-                pairs[i].set(originalSynonyms.get(i), targetLanguage);
-                numberTexts[i].setText(String.valueOf(i + 1));
-            } else {
-                pairs[i].clear();
-                numberTexts[i].setText("");
+        ((Activity)getContext()).runOnUiThread(() -> {
+            for (int i = 0; i < MAX_PAIR_COUNT; i++) {
+                if (i < originalSynonyms.size()) {
+                    pairs[i].set(originalSynonyms.get(i), targetLanguage);
+                    numberTexts[i].setText(String.valueOf(i + 1));
+                } else {
+                    pairs[i].clear();
+                    numberTexts[i].setText("");
+                }
             }
-        }
+        });
     }
     public void clear() {
         for (int i = 0; i < MAX_PAIR_COUNT; i++) {

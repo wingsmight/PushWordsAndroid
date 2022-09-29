@@ -81,12 +81,6 @@ public class RepeatCardViewHolder extends RecyclerView.ViewHolder {
 
         ImageViewCompat.setImageTintList(speakerView.getImage(),
                 elementColorStateList);
-
-
-//        int nightModeFlags =
-//                getContext().getResources().getConfiguration().uiMode &
-//                        Configuration.UI_MODE_NIGHT_MASK;
-//        if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES) { }
     }
 
 

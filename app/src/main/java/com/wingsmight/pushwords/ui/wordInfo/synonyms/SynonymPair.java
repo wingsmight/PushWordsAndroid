@@ -58,9 +58,8 @@ public class SynonymPair extends LinearLayoutCompat {
         setTranslatedSynonyms();
 
         String finalOriginalSynonymRow = originalSynonymRow;
-        ((Activity)getContext()).runOnUiThread(() -> {
-            originalText.setText(finalOriginalSynonymRow);
-        });
+        ((Activity)getContext()).runOnUiThread(() ->
+                originalText.setText(finalOriginalSynonymRow));
 
         Language targetTranslationLanguage = targetLanguage.getOpposite();
         for (int synonymIndex = 0; synonymIndex < originalSynonyms.size(); synonymIndex++) {
