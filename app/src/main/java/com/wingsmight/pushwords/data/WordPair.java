@@ -1,13 +1,9 @@
 package com.wingsmight.pushwords.data;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.core.util.Consumer;
-
-import com.wingsmight.pushwords.ui.learnedTab.TestSettingsTab;
 
 import java.util.ArrayList;
 import java.util.Date;

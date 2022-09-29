@@ -7,17 +7,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.anjlab.android.iab.v3.BillingProcessor;
+import com.anjlab.android.iab.v3.PurchaseData;
 import com.anjlab.android.iab.v3.PurchaseInfo;
 import com.anjlab.android.iab.v3.PurchaseState;
 import com.wingsmight.pushwords.data.BillingProduct;
 import com.wingsmight.pushwords.data.User;
 import com.wingsmight.pushwords.data.database.CloudDatabase;
 import com.wingsmight.pushwords.data.stores.UserStore;
-import com.wingsmight.pushwords.ui.SettingsTab;
 
 public class BillingHandler implements BillingProcessor.IBillingHandler {
     private static final String LICENSE_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA4vhdHKPp/PFdBhJGcGe0dzsICYvIEW+HdZjxOvJfnTlbZxxfFYtVo2RRgGHGWrMYDjNOGGrnqFjmMs/Th+6WQUTCSoHv7kSl8D8u2Z7cIYgm76CiKdfKQSnDXOyBHgabsk3xidPzupk8nDNDjcP0C/kYRFRo3PKp37MRYoiiKzCqQJzViyDJ7pOMu6pihtqtTS6wLZGYtItHZ2OCsyo5oI9DPzqmZ8ygtVBxvToUmU7hlJwMvfd3WnEjXwb6gGsu75GfRUqSp2/MXG0FUAkTZbdhjsBalhCA1rSME/ACh3gqhm6tMw5lqJjdvz51OAkJiedia+Q/I+ZHeXoGF6i0AQIDAQAB";;
-    private static final int SUBSCRIPTION_NOTIFICATION_MAX_WORD_COUNT = 4;
 
 
     protected BillingProcessor billingProcessor;
@@ -60,10 +59,23 @@ public class BillingHandler implements BillingProcessor.IBillingHandler {
     }
 
     private boolean isSubscriptionActive() {
-        PurchaseState subscriptionPurchaseState = billingProcessor
-                .getSubscriptionPurchaseInfo(BillingProduct.Subscription.getId())
-                .purchaseData
+        PurchaseInfo subscriptionPurchaseInfo = billingProcessor
+                .getSubscriptionPurchaseInfo(BillingProduct.Subscription.getId());
+        if (subscriptionPurchaseInfo == null) {
+            return false;
+        }
+
+        PurchaseData subscriptionPurchaseData = subscriptionPurchaseInfo
+                .purchaseData;
+        if (subscriptionPurchaseData == null) {
+            return false;
+        }
+
+        PurchaseState subscriptionPurchaseState = subscriptionPurchaseData
                 .purchaseState;
+        if (subscriptionPurchaseState == null) {
+            return false;
+        }
 
         return subscriptionPurchaseState == PurchaseState.PurchasedSuccessfully
                 || subscriptionPurchaseState == PurchaseState.Refunded;
@@ -71,11 +83,11 @@ public class BillingHandler implements BillingProcessor.IBillingHandler {
     public void setSubscriptionActivation(boolean isActive) {
         User user = UserStore.getInstance(context).getUser();
 
+        if (user == null) {
+            return;
+        }
+
         user.setSubscribed(isActive);
-        int notificationMaxWordCount = isActive
-                ? SUBSCRIPTION_NOTIFICATION_MAX_WORD_COUNT
-                : SettingsTab.NOTIFICATION_WORD_COUNT_DEFAULT;
-        user.setNotificationMaxWordCount(notificationMaxWordCount);
         CloudDatabase.updateUser(user);
     }
 }

@@ -38,6 +38,8 @@ public class SettingsTab extends AppCompatActivity {
     public static final int DEFAULT_NOTIFICATION_FREQUENCY_INDEX = 0;
 
     private static final String ACTION_BAR_TITLE = "Настройки";
+    private static final int NON_SUBSCRIPTION_NOTIFICATION_MAX_WORD_COUNT = 1;
+    private static final int SUBSCRIPTION_NOTIFICATION_MAX_WORD_COUNT = 4;
 
 
     private TextView timeZoneText;
@@ -73,14 +75,11 @@ public class SettingsTab extends AppCompatActivity {
         timeZoneText.setText(timeZoneDisplayName);
 
         notificationWordCountPicker = findViewById(R.id.notificationWordCountPicker);
-        int notificationMaxWordCount = UserStore.getInstance(this)
-                        .getUser()
-                        .getNotificationMaxWordCount();
         initPicker(notificationWordCountPicker,
                 NOTIFICATION_WORD_COUNT_PREF_NAME,
                 NOTIFICATION_WORD_COUNT_DEFAULT,
-                1,
-                notificationMaxWordCount);
+                NON_SUBSCRIPTION_NOTIFICATION_MAX_WORD_COUNT,
+                getNotificationMaxWordCount());
 
         // Notification frequency spinner
         notificationFrequencySpinner = findViewById(R.id.notificationFrequencySpinner);
@@ -141,9 +140,12 @@ public class SettingsTab extends AppCompatActivity {
         // Sign out button
         signOutButton = findViewById(R.id.signOutButton);
         signOutButton.setOnClickListener(view -> {
-            FirebaseAuth.getInstance().signOut();
             UserStore.getInstance(this).setUser(null);
+            FirebaseAuth.getInstance().signOut();
+
             startActivity(new Intent(SettingsTab.this, SignUpTab.class));
+
+            finish();
         });
 
         // Subscription button
@@ -196,5 +198,16 @@ public class SettingsTab extends AppCompatActivity {
                 preferencesEditor
                         .putInt(name, numberPicker.getValue())
                         .apply());
+    }
+    private Integer getNotificationMaxWordCount() {
+        Boolean isSubscribed = UserStore.getInstance(this)
+                .getUser()
+                .getSubscribed();
+
+        int notificationMaxWordCount = isSubscribed
+                ? SUBSCRIPTION_NOTIFICATION_MAX_WORD_COUNT
+                : SettingsTab.NOTIFICATION_WORD_COUNT_DEFAULT;
+
+        return notificationMaxWordCount;
     }
 }

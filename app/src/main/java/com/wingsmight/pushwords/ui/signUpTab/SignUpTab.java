@@ -1,41 +1,29 @@
 package com.wingsmight.pushwords.ui.signUpTab;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.SignInButton;
-import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.Task;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.wingsmight.pushwords.MainActivity;
 import com.wingsmight.pushwords.R;
 import com.wingsmight.pushwords.data.User;
-import com.wingsmight.pushwords.data.stores.UserStore;
 import com.wingsmight.pushwords.data.database.CloudDatabase;
+import com.wingsmight.pushwords.data.stores.UserStore;
+import com.wingsmight.pushwords.handlers.Email;
+import com.wingsmight.pushwords.ui.GoogleSignInButton;
 import com.wingsmight.pushwords.ui.logInTab.LogInTab;
 
 public class SignUpTab extends AppCompatActivity {
     private static final String ACTION_BAR_TITLE = "Регистрация";
-    private static final int GOOGLE_SIGN_IN_REQUEST_CODE = 909;
 
 
     private EditText emailEditText;
@@ -44,21 +32,25 @@ public class SignUpTab extends AppCompatActivity {
     private Button signUpButton;
     private TextView loginPageBackTextView;
     private ProgressDialog progressDialog;
-    private SignInButton googleSignInButton;
+    private GoogleSignInButton googleSignInButton;
 
     private FirebaseAuth firebaseAuth;
-    private String email;
-    private String password;
-    private String confirmedPassword;
-    private GoogleSignInOptions googleSignInOptions;
-    private GoogleSignInClient googleSignInClient;
-    ActivityResultLauncher<Intent> googleSignInActivityLauncher;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.sign_up_tab);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (firebaseUser != null) {
+            startActivity(new Intent(SignUpTab.this, MainActivity.class));
+
+            finish();
+            return;
+        }
 
         emailEditText = findViewById(R.id.editEmail);
         passwordEditText = findViewById(R.id.editPassword);
@@ -70,15 +62,11 @@ public class SignUpTab extends AppCompatActivity {
                 startActivity(new Intent(SignUpTab.this, LogInTab.class)));
         progressDialog = new ProgressDialog(this);
 
-//        firebaseAuth = FirebaseAuth.getInstance();
-//        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-//        if (firebaseUser != null) {
-//            startActivity(new Intent(SignUpTab.this, MainActivity.class));
-//
-//            finish();
-//        }
-
-        configureGoogleSignIn();
+        googleSignInButton = findViewById(R.id.googleSignInButton);
+        googleSignInButton.init(this,
+                this::showLoadingView,
+                googleAccount -> signUp(googleAccount.getEmail()),
+                this::showError);
     }
     @Override
     protected void onStart() {
@@ -89,42 +77,12 @@ public class SignUpTab extends AppCompatActivity {
     @Override
     public void onBackPressed() { }
 
-    private void configureGoogleSignIn() {
-        googleSignInButton = findViewById(R.id.googleSignInButton);
-
-        googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
-        googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions);
-
-        GoogleSignInAccount googleSignInAccount = GoogleSignIn.getLastSignedInAccount(this);
-        if (googleSignInAccount != null) {
-            navigateToMainActivity();
-        }
-
-        googleSignInButton.setOnClickListener(view -> signInViaGoogle());
-
-        googleSignInActivityLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if (result.getResultCode() == Activity.RESULT_OK) {
-                        Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(result.getData());
-
-                        try {
-                            task.getResult(ApiException.class);
-                            navigateToMainActivity();
-                        } catch (ApiException exception) {
-                            Toast.makeText(getApplicationContext(),
-                                    "Something went wrong: " + exception.getStatusCode(),
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-    }
     private void trySignUserUp() {
-        email = emailEditText.getText().toString().trim();
-        password = passwordEditText.getText().toString().trim();
-        confirmedPassword = confirmedPasswordEditText.getText().toString().trim();
+        String email = emailEditText.getText().toString().trim();
+        String password = passwordEditText.getText().toString().trim();
+        String confirmedPassword = confirmedPasswordEditText.getText().toString().trim();
 
-        if (!isValidEmail(email)) {
+        if (!Email.isValid(email)) {
             Toast.makeText(SignUpTab.this, "Введите корректную почту", Toast.LENGTH_SHORT).show();
             return;
         } else if (TextUtils.isEmpty(password)) {
@@ -141,51 +99,42 @@ public class SignUpTab extends AppCompatActivity {
             return;
         }
 
-        progressDialog.setMessage("Создание пользователя, пожалуйста, подождите...");
-        progressDialog.setCanceledOnTouchOutside(false);
-        progressDialog.show();
+        showLoadingView();
 
+        firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                OnAuth(task.getResult().getUser());
+                signUp(email);
             } else {
-                Exception exception = task.getException();
-                String localizedMessage = exception.getLocalizedMessage();
-
-                Toast.makeText(SignUpTab.this, localizedMessage, Toast.LENGTH_SHORT).show();
+                showError(task.getException());
             }
 
             progressDialog.dismiss();
         });
     }
-    private void OnAuth(FirebaseUser user) {
-        createNewUser();
+    private void signUp(String email) {
+        createNewUser(email);
 
         startActivity(new Intent(SignUpTab.this, MainActivity.class));
     }
-    private User createNewUser() {
-        User user = new User(getUserEmail());
+    private User createNewUser(String email) {
+        User user = new User(email);
 
         UserStore.getInstance(this).setUser(user);
         CloudDatabase.addUser(user);
 
         return user;
     }
-    private void navigateToMainActivity() {
-        startActivity(new Intent(SignUpTab.this, MainActivity.class));
-
-        finish();
+    private void showLoadingView() {
+        progressDialog.setMessage("Создание пользователя, пожалуйста, подождите...");
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
     }
-    private void signInViaGoogle() {
-        Intent signInIntent = googleSignInClient.getSignInIntent();
+    private void showError(Exception exception) {
+        Toast.makeText(this,
+                exception.getLocalizedMessage(),
+                Toast.LENGTH_SHORT).show();
 
-        googleSignInActivityLauncher.launch(signInIntent);
-    }
-
-    public String getUserEmail() {
-        return email;
-    }
-    public static boolean isValidEmail(CharSequence target) {
-        return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
+        progressDialog.hide();
     }
 }

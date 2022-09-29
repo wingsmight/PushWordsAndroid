@@ -17,7 +17,6 @@ public class User {
     private boolean isSubscribed;
     private int overallLearnedWordCount;
     private int weeklyLearnedWordCount;
-    private int subscriptionNotificationMaxWordCount = 1;
 
 
     public User(String email,
@@ -26,8 +25,7 @@ public class User {
                 Date lastOpeningDate,
                 boolean isSubscribed,
                 int overallLearnedWordCount,
-                int weeklyLearnedWordCount,
-                int subscriptionNotificationMaxWordCount) {
+                int weeklyLearnedWordCount) {
         this.email = email;
         this.documentID = documentID;
         this.signUpDate = signUpDate;
@@ -35,7 +33,6 @@ public class User {
         this.isSubscribed = isSubscribed;
         this.overallLearnedWordCount = overallLearnedWordCount;
         this.weeklyLearnedWordCount = weeklyLearnedWordCount;
-        this.subscriptionNotificationMaxWordCount = subscriptionNotificationMaxWordCount;
     }
     public User(String email) {
         this(email,
@@ -44,8 +41,7 @@ public class User {
                 new Date(),
                 false,
                 0,
-                0,
-                1);
+                0);
     }
     public User(QueryDocumentSnapshot data) {
         this(data.getString("email"),
@@ -54,8 +50,7 @@ public class User {
                 data.getDate("lastOpeningDate"),
                 data.getBoolean("isSubscribed"),
                 data.getLong("overallLearnedWordCount").intValue(),
-                data.getLong("weeklyLearnedWordCount").intValue(),
-                data.getLong("subscriptionNotificationMaxWordCount").intValue());
+                data.getLong("weeklyLearnedWordCount").intValue());
     }
 
 
@@ -113,14 +108,7 @@ public class User {
         mapData.put("overallLearnedWordCount", overallLearnedWordCount);
         mapData.put("weeklyLearnedWordCount", weeklyLearnedWordCount);
         mapData.put("platform", PLATFORM_NAME);
-        mapData.put("subscriptionNotificationMaxWordCount", subscriptionNotificationMaxWordCount);
 
         return mapData;
-    }
-    public int getNotificationMaxWordCount() {
-        return subscriptionNotificationMaxWordCount;
-    }
-    public void setNotificationMaxWordCount(int subscriptionNotificationMaxWordCount) {
-        this.subscriptionNotificationMaxWordCount = subscriptionNotificationMaxWordCount;
     }
 }

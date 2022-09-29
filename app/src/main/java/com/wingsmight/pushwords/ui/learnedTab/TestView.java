@@ -40,14 +40,8 @@ public class TestView extends FrameLayout {
     private View nonTestView;
     private View testView;
 
-    private ArrayList<WordPair> testWordPairs = new ArrayList<>();; // all words
-    private int currentWordIndex = 0;
     private SharedPreferences preferences;
     private RepeatCardStackAdapter repeatCardStackAdapter;
-
-    private ArrayList<WordPair> lastLearnedWordPairs; // 20 top learned except of forgotten words
-    private ArrayList<WordPair> learnedWordPairs; // 15 learned after top except of forgotten words
-    private ArrayList<WordPair> forgottenWordPairs; // all forgotten words
 
 
     public TestView(@NonNull Context context) {
@@ -75,12 +69,14 @@ public class TestView extends FrameLayout {
 
         WordPairStore wordPairStore = WordPairStore.getInstance(getContext());
 
-        lastLearnedWordPairs = wordPairStore.getLearnedOnly();
+        // 20 top learned except of forgotten words
+        ArrayList<WordPair> lastLearnedWordPairs = wordPairStore.getLearnedOnly();
         if (lastLearnedWordPairs.isEmpty()) {
             return;
         }
 
-        forgottenWordPairs = wordPairStore.getForgottenOnly();
+        // all forgotten words
+        ArrayList<WordPair> forgottenWordPairs = wordPairStore.getForgottenOnly();
 
         int lastLearnedWordCount = preferences.getInt(LAST_LEARNED_WORD_COUNT_PREF_NAME,
                 DEFAULT_LAST_LEARNED_WORD_COUNT);
@@ -91,7 +87,8 @@ public class TestView extends FrameLayout {
                 .subList(0, lastLearnedWordCount));
         lastLearnedWordPairs.removeAll(forgottenWordPairs);
 
-        learnedWordPairs = wordPairStore.getLearnedOnly();
+        // 15 learned after top except of forgotten words
+        ArrayList<WordPair> learnedWordPairs = wordPairStore.getLearnedOnly();
         learnedWordPairs.removeAll(lastLearnedWordPairs);
         learnedWordPairs.removeAll(forgottenWordPairs);
 
@@ -105,7 +102,7 @@ public class TestView extends FrameLayout {
             learnedWordPairs.subList(0, remainedLearnedWordCount);
         }
 
-        testWordPairs.clear();
+        ArrayList<WordPair> testWordPairs = new ArrayList<>();
         testWordPairs.addAll(lastLearnedWordPairs);
         testWordPairs.addAll(forgottenWordPairs);
 

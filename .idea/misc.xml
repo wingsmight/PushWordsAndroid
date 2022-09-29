@@ -47,6 +47,7 @@
         <entry key="app/src/main/res/layouts/layout/layout/example_list.xml" value="0.14339090983072916" />
         <entry key="app/src/main/res/layouts/layout/layout/example_pair.xml" value="0.1675925925925926" />
         <entry key="app/src/main/res/layouts/layout/layout/example_row.xml" value="0.2819819132486979" />
+        <entry key="app/src/main/res/layouts/layout/layout/google_sign_in.xml" value="0.30885416666666665" />
         <entry key="app/src/main/res/layouts/layout/layout/google_sign_in_button.xml" value="0.2032025372540509" />
         <entry key="app/src/main/res/layouts/layout/layout/learned_button.xml" value="0.30885416666666665" />
         <entry key="app/src/main/res/layouts/layout/layout/learned_toggle.xml" value="0.473699951171875" />

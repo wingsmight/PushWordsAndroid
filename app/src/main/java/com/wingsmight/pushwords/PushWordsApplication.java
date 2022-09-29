@@ -2,6 +2,7 @@ package com.wingsmight.pushwords;
 
 import android.app.Application;
 
+import com.wingsmight.pushwords.data.stores.UserStore;
 import com.wingsmight.pushwords.handlers.BillingHandler;
 
 public class PushWordsApplication extends Application {
@@ -12,6 +13,7 @@ public class PushWordsApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
+        UserStore.getInstance(this);
         billingHandler = new BillingHandler(this);
     }
 
