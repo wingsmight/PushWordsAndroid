@@ -47,6 +47,9 @@ public class RepeatCardViewHolder extends RecyclerView.ViewHolder {
     public RepeatCardViewHolder(@NonNull View itemView) {
         super(itemView);
 
+        int elementColor = itemView.getResources().getColor(R.color.black);
+        ColorStateList elementColorStateList = ColorStateList.valueOf(elementColor);
+
         counterTextView = itemView.findViewById(R.id.counterText);
 
         originalWordTextView = itemView.findViewById(R.id.originalWordText);
@@ -54,6 +57,7 @@ public class RepeatCardViewHolder extends RecyclerView.ViewHolder {
         speakerView = itemView.findViewById(R.id.speakerButton);
 
         wordInfoView = itemView.findViewById(R.id.wordInfo);
+        wordInfoView.setElementColor(elementColor);
 
         forgotButton = itemView.findViewById(R.id.forgotButton);
         forgotButton.setOnClickListener((view) -> forgot());
@@ -74,9 +78,6 @@ public class RepeatCardViewHolder extends RecyclerView.ViewHolder {
 
         preferences = itemView.getContext()
                 .getSharedPreferences(Preference.SHARED, Context.MODE_PRIVATE);
-
-        int elementColor = itemView.getResources().getColor(R.color.black);
-        ColorStateList elementColorStateList = ColorStateList.valueOf(elementColor);
 
         ImageViewCompat.setImageTintList(speakerView.getImage(),
                 elementColorStateList);

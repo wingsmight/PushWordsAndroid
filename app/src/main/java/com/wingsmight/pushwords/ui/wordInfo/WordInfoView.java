@@ -85,14 +85,17 @@ public class WordInfoView extends LinearLayoutCompat {
             examplesApi = new RussianExamplesApi(getContext());
         }
     }
+    public void setElementColor(int color) {
+        wordText.setTextColor(color);
+
+        synonymList.setTextColor(color);
+        exampleList.setTextColor(color);
+    }
 
     private void initView() {
         inflate(getContext(), R.layout.word_info, this);
 
-        int elementColor = getResources().getColor(R.color.black);
-
         wordText = findViewById(R.id.word);
-        wordText.setTextColor(elementColor);
 
         synonymList = findViewById(R.id.synonym_list);
         exampleList = findViewById(R.id.example_list);
@@ -101,9 +104,6 @@ public class WordInfoView extends LinearLayoutCompat {
 
         synonymList.clear();
         exampleList.clear();
-
-        synonymList.setTextColor(elementColor);
-        exampleList.setTextColor(elementColor);
 
         SingleSelectToggleGroup synonymsExamplesToggle = findViewById(R.id.synonyms_examples_toggle);
         synonymsExamplesToggle.setOnCheckedChangeListener((group, checkedId) -> {
