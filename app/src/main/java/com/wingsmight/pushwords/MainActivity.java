@@ -4,7 +4,6 @@ import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -16,7 +15,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.wingsmight.pushwords.handlers.AppCycle;
-import com.wingsmight.pushwords.handlers.NotificationService;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.wingsmight.pushwords.ui.dictionaryTab.DictionaryTab;
@@ -128,8 +126,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-
-        startService(new Intent(this, NotificationService.class));
     }
     @Override
     public void onBackPressed() { }

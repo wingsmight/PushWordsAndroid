@@ -53,8 +53,11 @@ public class RepeatWordsReceiver extends BroadcastReceiver {
                 WordPair wordPair = intent
                         .getParcelableExtra(RepeatWordsNotification.EXTRA_WORD_PAIR);
                 wordPair = wordPairStore.get(wordPair);
-                wordPair.setPushed(false);
+                wordPair.setPushed(false, context);
                 wordPair.setState(WordPair.State.Learned);
+
+                new RepeatWordsNotification(context)
+                        .cancel(wordPair);
 
                 wordPairStore.save();
 
@@ -73,6 +76,8 @@ public class RepeatWordsReceiver extends BroadcastReceiver {
                 preferencesEditor.commit();
 
                 notificationManager.cancelAll();
+                new RepeatWordsNotification(context)
+                        .cancelAll();
 
                 break;
         }

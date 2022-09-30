@@ -1,9 +1,12 @@
 package com.wingsmight.pushwords.data;
 
+import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.core.util.Consumer;
+
+import com.wingsmight.pushwords.handlers.RepeatWordsNotification;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -83,6 +86,10 @@ public class WordPair implements Parcelable {
 
         rememberingCount = 0;
     }
+    @Override
+    public int hashCode() {
+        return original.hashCode();
+    }
 
 
     public String getOriginal() {
@@ -122,7 +129,7 @@ public class WordPair implements Parcelable {
     public boolean isPushed() {
         return isPushed;
     }
-    public void setPushed(boolean isPushed) {
+    public void setPushed(boolean isPushed, Context context) {
         this.isPushed = isPushed;
 
         if (onPushedChanged == null) {
@@ -134,15 +141,17 @@ public class WordPair implements Parcelable {
         }
 
         setChangingDateToNow();
+
+        RepeatWordsNotification repeatWordsNotification = new RepeatWordsNotification(context);
+        if (isPushed) {
+            repeatWordsNotification.send(this);
+        } else {
+            repeatWordsNotification.cancel(this);
+        }
     }
     public boolean isForgotten() {
         return isForgotten;
     }
-//    public void setForgotten(boolean isForgotten) {
-//        this.isForgotten = isForgotten;
-//
-//        setChangingDateToNow();
-//    }
     public Date getChangingDate() {
         return changingDate;
     }

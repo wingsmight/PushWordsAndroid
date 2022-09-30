@@ -1,91 +1,95 @@
 package com.wingsmight.pushwords.handlers;
 
+import static com.wingsmight.pushwords.ui.SettingsTab.DEFAULT_NOTIFICATION_FREQUENCY_INDEX;
+import static com.wingsmight.pushwords.ui.SettingsTab.NOTIFICATION_FREQUENCY_INDEX_PREF_NAME;
+
+import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.wingsmight.pushwords.data.NotificationFrequency;
+import com.wingsmight.pushwords.data.Preference;
 import com.wingsmight.pushwords.data.WordPair;
 import com.wingsmight.pushwords.data.stores.WordPairStore;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Calendar;
 
 public class RepeatWordsNotification {
-    private static final String CHANNEL_ID = "REPEAT_WORDS_CHANNEL_ID";
     private static final String CHANNEL_NAME = "Word repeating";
     private static final String CHANNEL_DESCRIPTION = "Word repeating";
-    private static final String NOTIFICATION_TITLE = "Повторите слова";
 
+    public static final String CHANNEL_ID = "REPEAT_WORDS_CHANNEL_ID";
     public static final String EXTRA_WORD_PAIR = "EXTRA_WORD_PAIR";
     public static final String EXTRA_NOTIFICATION_ID = "EXTRA_NOTIFICATION_ID";
 
 
     private Context context;
+    private SharedPreferences preferences;
 
 
     public RepeatWordsNotification(Context context) {
         this.context = context;
 
         createNotificationChannel();
+        preferences = context.getSharedPreferences(Preference.SHARED, Context.MODE_PRIVATE);
     }
 
 
-    public void send() {
-        ArrayList<WordPair> pushedWordPairs = WordPairStore.getInstance(context)
-                .getPushedOnly();
-        if (pushedWordPairs.size() <= 0)
-            return;
+    public void send(WordPair pushedWordPair) {
+        int frequencyIndex = preferences.getInt(NOTIFICATION_FREQUENCY_INDEX_PREF_NAME,
+                DEFAULT_NOTIFICATION_FREQUENCY_INDEX);
+        NotificationFrequency currentFrequency = NotificationFrequency.values()[frequencyIndex];
 
-        Collections.sort(pushedWordPairs, (lhs, rhs) ->
-                rhs.getChangingDate().compareTo(lhs.getChangingDate()));
+        Intent alarmIntent = new Intent(context, RepeatWordScheduler.class);
+        alarmIntent.putExtra(EXTRA_WORD_PAIR, pushedWordPair);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
+                pushedWordPair.hashCode(),
+                alarmIntent,
+                PendingIntent.FLAG_IMMUTABLE);
+
+        AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.add(Calendar.MILLISECOND, Math.toIntExact(currentFrequency.getMilliseconds()));
+
+        manager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                currentFrequency.getMilliseconds(), pendingIntent);
+    }
+    public void cancel(WordPair wordPair) {
+        int notificationId = wordPair.hashCode();
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+        notificationManager.cancel(notificationId);
+
+        Intent alarmIntent = new Intent(context, RepeatWordScheduler.class);
+        alarmIntent.putExtra(EXTRA_WORD_PAIR, wordPair);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
+                notificationId,
+                alarmIntent,
+                PendingIntent.FLAG_IMMUTABLE);
+
+        AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        manager.cancel(pendingIntent);
+    }
+    public void cancelAll() {
+        ArrayList<WordPair> pushedWordPairs = WordPairStore.getInstance(context)
+                        .getPushedOnly();
 
         for (WordPair pushedWordPair : pushedWordPairs) {
-            int notificationId = pushedWordPair.getOriginal().hashCode();
-
-            Intent learnIntent = new Intent(context, RepeatWordsReceiver.class);
-            learnIntent.setAction(RepeatWordsReceiver.Action.Learn.getId());
-            learnIntent.putExtra(EXTRA_WORD_PAIR, pushedWordPair);
-            learnIntent.putExtra(EXTRA_NOTIFICATION_ID, notificationId);
-            PendingIntent learnPendingIntent = PendingIntent
-                    .getBroadcast(context, notificationId, learnIntent, PendingIntent.FLAG_IMMUTABLE);
-
-            NotificationCompat.Action learnAction = new NotificationCompat.Action(0,
-                    RepeatWordsReceiver.Action.Learn.getDescription(),
-                    learnPendingIntent);
-
-            Intent doNotSendTodayIntent = new Intent(context, RepeatWordsReceiver.class);
-            doNotSendTodayIntent.setAction(RepeatWordsReceiver.Action.DoNotSendToday.getId());
-            doNotSendTodayIntent.putExtra(EXTRA_NOTIFICATION_ID, notificationId);
-            PendingIntent doNotSendPendingIntent = PendingIntent
-                    .getBroadcast(context, notificationId, doNotSendTodayIntent, PendingIntent.FLAG_IMMUTABLE);
-
-            NotificationCompat.Action doNotSendTodayAction = new NotificationCompat.Action(0,
-                    RepeatWordsReceiver.Action.DoNotSendToday.getDescription(),
-                    doNotSendPendingIntent);
-
-            String notificationText = pushedWordPair.getOriginal() + " - " +
-                    pushedWordPair.getTranslation();
-
-            NotificationCompat.Builder notificationBuilder = new NotificationCompat
-                    .Builder(context, CHANNEL_ID)
-                    .setSmallIcon(context.getApplicationInfo().icon)
-                    .setContentTitle(NOTIFICATION_TITLE)
-                    .setContentText(notificationText)
-                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                    .addAction(learnAction)
-                    .addAction(doNotSendTodayAction);
-
-            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-            notificationManager.notify(notificationId,
-                    notificationBuilder.build());
+            cancel(pushedWordPair);
         }
     }
+
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             int importance = NotificationManager.IMPORTANCE_DEFAULT;

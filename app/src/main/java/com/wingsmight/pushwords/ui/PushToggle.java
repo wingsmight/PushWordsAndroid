@@ -71,7 +71,7 @@ public class PushToggle extends FrameLayout {
                 return;
             }
 
-            wordPair.setPushed(toggle.isChecked());
+            wordPair.setPushed(toggle.isChecked(), getContext());
         });
 
         preference = getContext()
@@ -79,8 +79,9 @@ public class PushToggle extends FrameLayout {
     }
 
     private int getNotificationWordCount() {
-        return preference.getInt(SettingsTab.NOTIFICATION_WORD_COUNT_PREF_NAME,
-                    SettingsTab.NOTIFICATION_WORD_COUNT_DEFAULT);
+        return 5;
+//        return preference.getInt(SettingsTab.NOTIFICATION_WORD_COUNT_PREF_NAME,
+//                    SettingsTab.NOTIFICATION_WORD_COUNT_DEFAULT);
     }
     private int getPushedWordCount() {
         return wordPairStore.getPushedOnly().size();
