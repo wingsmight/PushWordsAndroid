@@ -79,9 +79,8 @@ public class PushToggle extends FrameLayout {
     }
 
     private int getNotificationWordCount() {
-        return 5;
-//        return preference.getInt(SettingsTab.NOTIFICATION_WORD_COUNT_PREF_NAME,
-//                    SettingsTab.NOTIFICATION_WORD_COUNT_DEFAULT);
+        return preference.getInt(SettingsTab.NOTIFICATION_WORD_COUNT_PREF_NAME,
+                    SettingsTab.NOTIFICATION_WORD_COUNT_DEFAULT);
     }
     private int getPushedWordCount() {
         return wordPairStore.getPushedOnly().size();
