@@ -64,11 +64,6 @@ public class TestView extends FrameLayout {
 
 
     public void startTest() {
-        View parent = ((View) getParent());
-
-        nonTestView = parent.findViewById(R.id.nonTestView);
-        testView = parent.findViewById(R.id.test);
-
         WordPairStore wordPairStore = WordPairStore.getInstance(getContext());
 
         // 20 top learned except of forgotten words
@@ -127,20 +122,23 @@ public class TestView extends FrameLayout {
             testWordPairs.add(insertIndex + i, word);
         }
 
-        cardStackLayoutManager = new CardStackLayoutManager(getContext(),
-                new RepeatCardStackListener(getContext(), testWordPairs, cardStackView));
-        cardStackLayoutManager.setCanScrollVertical(false);
-        cardStackView.setLayoutManager(cardStackLayoutManager);
-        repeatCardStackAdapter = new RepeatCardStackAdapter(testWordPairs,
-                cardStackView,
-                cardStackLayoutManager,
-                testWordPairs.size());
-        cardStackView.setAdapter(repeatCardStackAdapter);
-        repeatCardStackAdapter.notifyDataSetChanged();
+        initTest(testWordPairs);
+    }
+    public void startTestAfterContinue() {
+        WordPairStore wordPairStore = WordPairStore.getInstance(getContext());
 
-        nonTestView.setVisibility(View.GONE);
-        testView.setVisibility(View.VISIBLE);
-        cardStackView.setVisibility(View.VISIBLE);
+        ArrayList<WordPair> learnedWordPairs = wordPairStore.getLearnedOnly();
+        WordPairListExt.sortByChangingDate(learnedWordPairs);
+
+        int learnedWordCount = preferences.getInt(LEARNED_WORD_COUNT_PREF_NAME,
+                DEFAULT_LEARNED_WORD_COUNT);
+        int remainedLearnedWordCount = Math.min(learnedWordCount,
+                learnedWordPairs.size());
+        if (remainedLearnedWordCount > 0) {
+            learnedWordPairs.subList(0, remainedLearnedWordCount);
+        }
+
+        initTest(learnedWordPairs);
     }
     public void finishTest() {
         nonTestView.setVisibility(View.VISIBLE);
@@ -162,10 +160,31 @@ public class TestView extends FrameLayout {
         finishTestView = findViewById(R.id.finishTestView);
         View finishButton = finishTestView
                 .findViewById(R.id.continueButton);
-        finishButton.setOnClickListener(view -> finishTest());
+        finishButton.setOnClickListener(view -> startTestAfterContinue());
 
         cardStackView = findViewById(R.id.cardStack);
 
         preferences = getContext().getSharedPreferences(Preference.SHARED, MODE_PRIVATE);
+    }
+    private void initTest(ArrayList<WordPair> testWordPairs) {
+        View parent = ((View) getParent());
+
+        nonTestView = parent.findViewById(R.id.nonTestView);
+        testView = parent.findViewById(R.id.test);
+
+        cardStackLayoutManager = new CardStackLayoutManager(getContext(),
+                new RepeatCardStackListener(getContext(), testWordPairs, cardStackView));
+        cardStackLayoutManager.setCanScrollVertical(false);
+        cardStackView.setLayoutManager(cardStackLayoutManager);
+        repeatCardStackAdapter = new RepeatCardStackAdapter(testWordPairs,
+                cardStackView,
+                cardStackLayoutManager,
+                testWordPairs.size());
+        cardStackView.setAdapter(repeatCardStackAdapter);
+        repeatCardStackAdapter.notifyDataSetChanged();
+
+        nonTestView.setVisibility(View.GONE);
+        testView.setVisibility(View.VISIBLE);
+        cardStackView.setVisibility(View.VISIBLE);
     }
 }
