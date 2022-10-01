@@ -55,17 +55,6 @@ public enum NotificationFrequency {
         public Long getMilliseconds() {
             return  24 * 60 * 60 * 1000L;
         }
-    },
-    EveryMinute {
-        public String getDescription() {
-            return "Каждую минуту";
-        }
-        public int getIndex() {
-            return 5;
-        }
-        public Long getMilliseconds() {
-            return 1 * 60 * 1000L;
-        }
     };
 
 
