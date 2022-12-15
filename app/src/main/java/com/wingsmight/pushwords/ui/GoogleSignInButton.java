@@ -103,16 +103,27 @@ public class GoogleSignInButton extends FrameLayout {
                 .build();
         googleSignInClient = GoogleSignIn.getClient(getContext(), googleSignInOptions);
 
-//        GoogleSignInAccount googleSignInAccount = GoogleSignIn.getLastSignedInAccount(this);
-//        if (googleSignInAccount != null) {
-//
-//        }
-
         button.setOnClickListener(view -> {
             onLoaded.run();
 
             Intent signInIntent = googleSignInClient.getSignInIntent();
             googleSignInActivityLauncher.launch(signInIntent);
         });
+
+        GoogleSignInAccount googleAccount = GoogleSignIn.getLastSignedInAccount(getContext());
+        if (googleAccount != null) {
+            AuthCredential googleCredential = GoogleAuthProvider
+                    .getCredential(googleAccount.getIdToken(), null);
+
+            FirebaseAuth.getInstance()
+                    .signInWithCredential(googleCredential)
+                    .addOnCompleteListener(signInTask -> {
+                        if (signInTask.isSuccessful()) {
+                            onComplete.accept(googleAccount);
+                        } else {
+                            onFailure.accept(signInTask.getException());
+                        }
+                    });
+        }
     }
 }

@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 
 import com.wingsmight.pushwords.R;
 import com.wingsmight.pushwords.data.Language;
+import com.wingsmight.pushwords.data.Word;
 import com.wingsmight.pushwords.data.WordPair;
 import com.wingsmight.pushwords.data.database.CloudDatabase;
 import com.wingsmight.pushwords.handlers.network.TranslationApi;
@@ -61,17 +62,20 @@ public class DictionaryTab extends Fragment {
 
         Consumer<String> onWordTranslated = translation -> getActivity().
                 runOnUiThread(() -> {
-                    wordInfo.setWord(translation, languageSwitch.getCurrentTargetLanguage());
+                    Language originalLanguage = languageSwitch.getCurrentOriginalLanguage();
+                    Language translatedLanguage = languageSwitch.getCurrentTargetLanguage();
 
-                    WordPair wordPair = new WordPair(inputOriginal,
-                            translation,
-                            languageSwitch.getCurrentOriginalLanguage());
+                    wordInfo.setWord(translation, translatedLanguage);
+
+                    WordPair wordPair = new WordPair(new Word(inputOriginal, originalLanguage),
+                            new Word(translation, translatedLanguage));
                     translatedWordControlPanel.setWordPair(wordPair);
                 });
 
         wordInputText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -92,7 +96,8 @@ public class DictionaryTab extends Fragment {
             }
 
             @Override
-            public void afterTextChanged(Editable editable) { }
+            public void afterTextChanged(Editable editable) {
+            }
         });
 
 //        File existedFile = InternalStorage.readFile(getContext(), "LearningCategories.xls");

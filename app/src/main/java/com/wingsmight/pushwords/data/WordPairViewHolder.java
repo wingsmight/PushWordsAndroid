@@ -38,7 +38,7 @@ public class WordPairViewHolder extends RecyclerView.ViewHolder {
     public void bind(WordPair wordPair) {
         this.wordPair = wordPair;
 
-        originalTextView.setText(wordPair.getOriginal());
-        translationTextView.setText(wordPair.getTranslation());
+        originalTextView.setText(wordPair.getOriginal().getText());
+        translationTextView.setText(wordPair.getTranslation().getText());
     }
 }

@@ -99,12 +99,12 @@ public class RepeatCardViewHolder extends RecyclerView.ViewHolder {
         String translationText;
         Language originalLanguage;
         if (getIsOriginalWordShowing()) {
-            originalText = wordPair.getOriginal();
-            translationText = wordPair.getTranslation();
+            originalText = wordPair.getOriginal().getText();
+            translationText = wordPair.getTranslation().getText();
             originalLanguage = wordPair.getOriginalLanguage();
         } else {
-            originalText = wordPair.getTranslation();
-            translationText = wordPair.getOriginal();
+            originalText = wordPair.getTranslation().getText();
+            translationText = wordPair.getOriginal().getText();
             originalLanguage = wordPair.getTranslationLanguage();
         }
         originalWordTextView.setText(originalText);
@@ -116,9 +116,11 @@ public class RepeatCardViewHolder extends RecyclerView.ViewHolder {
     private void forgot() {
         swipeOut(Direction.Left);
     }
+
     private void remember() {
         swipeOut(Direction.Right);
     }
+
     private void swipeOut(Direction direction) {
         SwipeAnimationSetting settings = new SwipeAnimationSetting.Builder()
                 .setDirection(direction)
@@ -128,9 +130,11 @@ public class RepeatCardViewHolder extends RecyclerView.ViewHolder {
         cardStackLayoutManager.setSwipeAnimationSetting(settings);
         cardStackView.swipe();
     }
+
     private void hideTranslation() {
         wordInfoView.setVisibility(View.INVISIBLE);
     }
+
     private void showTranslation() {
         wordInfoView.setVisibility(View.VISIBLE);
     }
@@ -139,7 +143,7 @@ public class RepeatCardViewHolder extends RecyclerView.ViewHolder {
     private boolean getIsOriginalWordShowing() {
         boolean isReversedTranslation = preferences
                 .getBoolean(TestSettingsTab.REVERSE_TRANSLATION_PREF_NAME,
-                    TestSettingsTab.DEFAULT_REVERSE_TRANSLATION);
+                        TestSettingsTab.DEFAULT_REVERSE_TRANSLATION);
 
         if (isReversedTranslation) {
             return isOriginalWordShowing;

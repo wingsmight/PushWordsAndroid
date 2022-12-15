@@ -8,9 +8,11 @@ import android.content.SharedPreferences;
 import androidx.core.util.Consumer;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.wingsmight.pushwords.data.Preference;
 import com.wingsmight.pushwords.data.WordPair;
 
+import java.security.cert.Extension;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -22,7 +24,8 @@ public class WordPairStore {
 
     private Context context;
     private ArrayList<WordPair> wordPairs;
-    private Consumer<WordPair> onAdded = wordPair -> { };
+    private Consumer<WordPair> onAdded = wordPair -> {
+    };
     private ArrayList<Consumer<WordPair.State>> onStateChangedList = new ArrayList<>();
     private ArrayList<Consumer<Boolean>> onPushedChangedList = new ArrayList<>();
 
@@ -36,7 +39,13 @@ public class WordPairStore {
         if (objectAsJson == null || objectAsJson.isEmpty()) {
             wordPairs = new ArrayList<>();
         } else {
-            wordPairs = new ArrayList<>(Arrays.asList(gson.fromJson(objectAsJson, WordPair[].class)));
+            try {
+                WordPair[] wordPairArray = gson.fromJson(objectAsJson, WordPair[].class);
+
+                wordPairs = new ArrayList<>(Arrays.asList(wordPairArray));
+            } catch (JsonSyntaxException extension) {
+                wordPairs = new ArrayList<>();
+            }
         }
 
         for (WordPair wordPair : wordPairs) {
@@ -58,13 +67,14 @@ public class WordPairStore {
     public static synchronized WordPairStore getInstance(Context context) {
         if (instance == null) {
             synchronized (WordPairStore.class) {
-                if(instance == null) {
+                if (instance == null) {
                     instance = new WordPairStore(context);
                 }
             }
         }
         return instance;
     }
+
     public void save() {
         SharedPreferences preferences = context.getSharedPreferences(Preference.SHARED, MODE_PRIVATE);
         SharedPreferences.Editor preferencesEditor = preferences.edit();
@@ -73,6 +83,7 @@ public class WordPairStore {
         preferencesEditor.putString(PREF_NAME, objectAsJson);
         preferencesEditor.apply();
     }
+
     public void add(WordPair wordPair) {
         if (wordPairs.contains(wordPair)) {
             return;
@@ -94,6 +105,7 @@ public class WordPairStore {
             }
         });
     }
+
     public WordPair get(WordPair wordPair) {
         for (WordPair existedWordPair : wordPairs) {
             if (existedWordPair.equals(wordPair)) {
@@ -107,6 +119,7 @@ public class WordPairStore {
     public ArrayList<WordPair> getAll() {
         return wordPairs;
     }
+
     public ArrayList<WordPair> getLearningOnly() {
         ArrayList<WordPair> learningOnly = new ArrayList<>();
         for (WordPair wordPair : wordPairs) {
@@ -116,6 +129,7 @@ public class WordPairStore {
         }
         return learningOnly;
     }
+
     public ArrayList<WordPair> getLearnedOnly() {
         ArrayList<WordPair> learnedOnly = new ArrayList<>();
         for (WordPair wordPair : wordPairs) {
@@ -125,6 +139,7 @@ public class WordPairStore {
         }
         return learnedOnly;
     }
+
     public ArrayList<WordPair> getForgottenOnly() {
         ArrayList<WordPair> forgottenOnly = new ArrayList<>();
         for (WordPair wordPair : wordPairs) {
@@ -134,6 +149,7 @@ public class WordPairStore {
         }
         return forgottenOnly;
     }
+
     public ArrayList<WordPair> getPushedOnly() {
         ArrayList<WordPair> pushedOnly = new ArrayList<>();
         for (WordPair wordPair : wordPairs) {
@@ -143,12 +159,15 @@ public class WordPairStore {
         }
         return pushedOnly;
     }
+
     public void setOnStateChanged(Consumer<WordPair.State> onStateChanged) {
         this.onStateChangedList.add(onStateChanged);
     }
+
     public void setOnPushedChanged(Consumer<Boolean> onPushedChanged) {
         this.onPushedChangedList.add(onPushedChanged);
     }
+
     public boolean contains(WordPair wordPair) {
         for (WordPair existedWordPair : wordPairs) {
             if (existedWordPair.equals(wordPair)) {

@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.LinearLayoutCompat;
 
 import com.wingsmight.pushwords.data.Language;
+import com.wingsmight.pushwords.data.Word;
 import com.wingsmight.pushwords.data.WordPair;
 import com.wingsmight.pushwords.data.stores.WordPairStore;
 import com.wingsmight.pushwords.handlers.InternalStorage;
@@ -35,11 +36,13 @@ public class CategoryContainer extends LinearLayoutCompat {
 
         initView();
     }
+
     public CategoryContainer(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
 
         initView();
     }
+
     public CategoryContainer(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
@@ -64,6 +67,7 @@ public class CategoryContainer extends LinearLayoutCompat {
         buttons.add(newButton);
         addView(newButton);
     }
+
     public CategoryButton[] parseCategoryButtons(File file) {
         try {
             return parseCategoryButtons(new FileInputStream(file));
@@ -73,6 +77,7 @@ public class CategoryContainer extends LinearLayoutCompat {
             return new CategoryButton[0];
         }
     }
+
     public CategoryButton[] parseCategoryButtons(InputStream inputStream) {
         try {
             Context context = getContext();
@@ -101,9 +106,8 @@ public class CategoryContainer extends LinearLayoutCompat {
                 int wordCount = Math.min(originals.length, translations.length);
                 ArrayList<WordPair> words = new ArrayList<>(wordCount);
                 for (int rowIndex = 0; rowIndex < wordCount; rowIndex++) {
-                    WordPair newWordPair = new WordPair(originals[rowIndex].getContents(),
-                            translations[rowIndex].getContents(),
-                            originalLanguage);
+                    WordPair newWordPair = new WordPair(new Word(originals[rowIndex].getContents(), originalLanguage),
+                            new Word(translations[rowIndex].getContents(), originalLanguage.getOpposite()));
 
                     words.add(newWordPair);
                     wordPairStore.add(newWordPair);
@@ -129,6 +133,7 @@ public class CategoryContainer extends LinearLayoutCompat {
             }
         }
     }
+
     public CategoryButton[] parseCategoryButtonsFromAssets() {
         try {
             AssetManager assetManager = getResources().getAssets();
