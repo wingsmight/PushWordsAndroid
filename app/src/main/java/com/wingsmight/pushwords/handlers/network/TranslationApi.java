@@ -22,8 +22,8 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class TranslationApi {
     private static final String url = "https://translate.api.cloud.yandex.net/translate/v2/translate";
-    private static final String folderId = "b1ghdoa4bn03qp2jlmvu";
-    private static final String apiKey = "AQVN03Qd4FO2tAoaSLJO5tzJXQL1QrUvLU_CrFsL";
+    private static final String folderId = "b1g0hvncpdnasa6b7adg";
+    private static final String apiKey = "AQVN1SkizcUmkyFnCjfxU3sKGUlCRQ14K50-eojB";
 
     private TranslationTask task = new TranslationTask("", Language.English);
 
