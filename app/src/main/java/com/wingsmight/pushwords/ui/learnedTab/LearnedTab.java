@@ -46,6 +46,9 @@ public class LearnedTab extends Fragment {
         startTestButton.setNonTestView(nonTestView);
 
         emptyListView = view.findViewById(R.id.emptyListView);
+
+        wordPairStore.setOnStateChanged(wordPair -> onResume());
+        wordPairStore.setOnPushedChanged(wordPair -> onResume());
     }
     @Override
     public void onResume() {
