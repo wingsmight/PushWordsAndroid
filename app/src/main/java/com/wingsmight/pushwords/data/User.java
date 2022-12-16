@@ -9,6 +9,9 @@ import java.util.Map;
 public class User {
     private static final String PLATFORM_NAME = "Android";
 
+    public static Language PrimaryLanguage = Language.Russian;
+    public static Language LearningLanguage = Language.English;
+
 
     private String email;
     private String documentID;
@@ -34,6 +37,7 @@ public class User {
         this.overallLearnedWordCount = overallLearnedWordCount;
         this.weeklyLearnedWordCount = weeklyLearnedWordCount;
     }
+
     public User(String email) {
         this(email,
                 "",
@@ -43,6 +47,7 @@ public class User {
                 0,
                 0);
     }
+
     public User(QueryDocumentSnapshot data) {
         this(data.getString("email"),
                 data.getId(),
@@ -57,48 +62,63 @@ public class User {
     public String getEmail() {
         return email;
     }
+
     public void setEmail(String email) {
         this.email = email;
     }
+
     public String getDocumentID() {
         return documentID;
     }
+
     public void setDocumentID(String documentID) {
         this.documentID = documentID;
     }
+
     public Date getSignUpDate() {
         return signUpDate;
     }
+
     public void setSignUpDate(Date signUpDate) {
         this.signUpDate = signUpDate;
     }
+
     public String getPlatform() {
         return PLATFORM_NAME;
     }
+
     public Date getLastOpeningDate() {
         return lastOpeningDate;
     }
+
     public void setLastOpeningDate(Date lastOpeningDate) {
         this.lastOpeningDate = lastOpeningDate;
     }
+
     public Boolean getSubscribed() {
         return isSubscribed;
     }
+
     public void setSubscribed(Boolean subscribed) {
         isSubscribed = subscribed;
     }
+
     public int getOverallLearnedWordCount() {
         return overallLearnedWordCount;
     }
+
     public void setOverallLearnedWordCount(int overallLearnedWordCount) {
         this.overallLearnedWordCount = overallLearnedWordCount;
     }
+
     public int getWeeklyLearnedWordCount() {
         return weeklyLearnedWordCount;
     }
+
     public void setWeeklyLearnedWordCount(int weeklyLearnedWordCount) {
         this.weeklyLearnedWordCount = weeklyLearnedWordCount;
     }
+
     public Map<String, Object> getMapData() {
         Map<String, Object> mapData = new HashMap<>();
         mapData.put("email", email);

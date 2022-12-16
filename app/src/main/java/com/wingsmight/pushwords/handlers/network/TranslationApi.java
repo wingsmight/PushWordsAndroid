@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import androidx.core.util.Consumer;
 
 import com.wingsmight.pushwords.data.Language;
+import com.wingsmight.pushwords.data.Word;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,13 +28,11 @@ public class TranslationApi {
 
     private TranslationTask task = new TranslationTask("", Language.English);
 
-    private Consumer<String> onCompleted;
-    private String currentText;
+    private Consumer<Word> onCompleted;
+    private Runnable onFailure;
 
 
-    public void translate(String text, Language targetLanguage, Consumer<String> onCompleted) {
-        currentText = text;
-
+    public void translate(String text, Language targetLanguage, Consumer<Word> onCompleted, Runnable onFailure) {
         if (text.isEmpty()) {
             task.cancel(true);
 
@@ -47,17 +46,21 @@ public class TranslationApi {
         task.execute();
 
         this.onCompleted = onCompleted;
+        this.onFailure = onFailure;
     }
 
-    private void onSuccess(String response) {
-        String translation = parse(response);
+    private void onSuccess(String response, Language language) {
+        String translationText = parse(response);
+        Word translation = new Word(translationText, language);
         onCompleted.accept(translation);
     }
+
     private void onFailure() {
-        if (onCompleted != null) {
-            onCompleted.accept("Неизвестное слово...");
+        if (onFailure != null) {
+            onFailure.run();
         }
     }
+
     private String parse(String response) {
         try {
             JSONObject jsonObject = new JSONObject(response);
@@ -75,8 +78,8 @@ public class TranslationApi {
         return "";
     }
 
-   @SuppressLint("StaticFieldLeak")
-   public class TranslationTask extends AsyncTask<Void, Void, Boolean> {
+    @SuppressLint("StaticFieldLeak")
+    public class TranslationTask extends AsyncTask<Void, Void, Boolean> {
         private final String originalText;
         private final Language targetLanguage;
 
@@ -86,76 +89,77 @@ public class TranslationApi {
             this.targetLanguage = targetLanguage;
         }
 
-       @Override
-       protected Boolean doInBackground(Void... params) {
-           boolean isSucceed = false;
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            boolean isSucceed = false;
 
-           try {
-               String response = performPostCall(url, new HashMap<String, String>() {
-                   private static final long serialVersionUID = 1L;
-                   {
-                       put("Accept", "application/json");
-                       put("Content-Type", "application/json");
-                   }
-               });
+            try {
+                String response = performPostCall(url, new HashMap<String, String>() {
+                    private static final long serialVersionUID = 1L;
 
-               if (!response.equalsIgnoreCase("")) {
-                   onSuccess(response);
+                    {
+                        put("Accept", "application/json");
+                        put("Content-Type", "application/json");
+                    }
+                });
 
-                   isSucceed = true;
-               }
-           } catch (Exception e) {
-               Exception i = e;
-           }
+                if (!response.equals("")) {
+                    onSuccess(response, targetLanguage);
 
-           if (!isSucceed) {
-               onFailure();
-           }
+                    isSucceed = true;
+                }
+            } catch (Exception e) {
+                Exception i = e;
+            }
 
-           return isSucceed;
-       }
+            if (!isSucceed) {
+                onFailure();
+            }
 
-       public String performPostCall(String requestURL, HashMap<String, String> postDataParams) {
-           URL requestUrl;
-           String response = "";
-           try {
-               requestUrl = new URL(requestURL);
+            return isSucceed;
+        }
 
-               HttpURLConnection connection = (HttpURLConnection) requestUrl.openConnection();
-               connection.setRequestMethod("POST");
+        public String performPostCall(String requestURL, HashMap<String, String> postDataParams) {
+            URL requestUrl;
+            String response = "";
+            try {
+                requestUrl = new URL(requestURL);
 
-               connection.setDoInput(true);
-               connection.setDoOutput(true);
+                HttpURLConnection connection = (HttpURLConnection) requestUrl.openConnection();
+                connection.setRequestMethod("POST");
 
-               connection.setRequestProperty("Content-Type", "application/json");
-               connection.setRequestProperty("Authorization", "Api-Key " + apiKey);
+                connection.setDoInput(true);
+                connection.setDoOutput(true);
 
-               JSONObject root = new JSONObject();
-               root.put("targetLanguageCode", targetLanguage.getShort()); // language.short
-               root.put("texts", originalText); // text
-               root.put("folderId", folderId); // folderId
+                connection.setRequestProperty("Content-Type", "application/json");
+                connection.setRequestProperty("Authorization", "Api-Key " + apiKey);
 
-               String str = root.toString();
-               byte[] outputBytes = str.getBytes(StandardCharsets.UTF_8);
-               OutputStream os = connection.getOutputStream();
-               os.write(outputBytes);
-               os.close();
+                JSONObject root = new JSONObject();
+                root.put("targetLanguageCode", targetLanguage.getShort()); // language.short
+                root.put("texts", originalText); // text
+                root.put("folderId", folderId); // folderId
 
-               int responseCode = connection.getResponseCode();
-               if (responseCode == HttpsURLConnection.HTTP_OK) {
-                   String line;
-                   BufferedReader br = new BufferedReader(new InputStreamReader(
-                           connection.getInputStream()));
-                   while ((line = br.readLine()) != null) {
-                       response += line;
-                   }
-               }
-           } catch (Exception e) {
-               e.printStackTrace();
-           }
+                String str = root.toString();
+                byte[] outputBytes = str.getBytes(StandardCharsets.UTF_8);
+                OutputStream os = connection.getOutputStream();
+                os.write(outputBytes);
+                os.close();
 
-           return response;
-       }
-   }
+                int responseCode = connection.getResponseCode();
+                if (responseCode == HttpsURLConnection.HTTP_OK) {
+                    String line;
+                    BufferedReader br = new BufferedReader(new InputStreamReader(
+                            connection.getInputStream()));
+                    while ((line = br.readLine()) != null) {
+                        response += line;
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return response;
+        }
+    }
 }
 

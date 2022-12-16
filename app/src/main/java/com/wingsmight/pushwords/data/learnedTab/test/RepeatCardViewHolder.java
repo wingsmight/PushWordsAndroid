@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.wingsmight.pushwords.R;
 import com.wingsmight.pushwords.data.Language;
 import com.wingsmight.pushwords.data.Preference;
+import com.wingsmight.pushwords.data.Word;
 import com.wingsmight.pushwords.data.WordPair;
 import com.wingsmight.pushwords.handlers.RandomBoolean;
 import com.wingsmight.pushwords.ui.SpeakerView;
@@ -95,21 +96,19 @@ public class RepeatCardViewHolder extends RecyclerView.ViewHolder {
 
         isOriginalWordShowing = RandomBoolean.get();
 
-        String originalText;
-        String translationText;
-        Language originalLanguage;
+        Word originalWord;
+        Word translationWord;
         if (getIsOriginalWordShowing()) {
-            originalText = wordPair.getOriginal().getText();
-            translationText = wordPair.getTranslation().getText();
-            originalLanguage = wordPair.getOriginalLanguage();
+            originalWord = wordPair.getOriginal();
+            translationWord = wordPair.getTranslation();
         } else {
-            originalText = wordPair.getTranslation().getText();
-            translationText = wordPair.getOriginal().getText();
-            originalLanguage = wordPair.getTranslationLanguage();
+            originalWord = wordPair.getTranslation();
+            translationWord = wordPair.getOriginal();
         }
-        originalWordTextView.setText(originalText);
+
+        originalWordTextView.setText(originalWord.getText());
         speakerView.setSpokenTextView(originalWordTextView);
-        wordInfoView.setWord(translationText, originalLanguage.getOpposite());
+        wordInfoView.setWord(translationWord, wordPair.getOriginal());
         counterText.setText((position + 1) + " из " + overallCount);
     }
 

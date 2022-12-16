@@ -29,10 +29,12 @@ public class SynonymPair extends LinearLayoutCompat {
         super(context, attrs, defStyle);
         initView();
     }
+
     public SynonymPair(Context context, AttributeSet attrs) {
         super(context, attrs);
         initView();
     }
+
     public SynonymPair(Context context) {
         super(context);
         initView();
@@ -58,7 +60,7 @@ public class SynonymPair extends LinearLayoutCompat {
         setTranslatedSynonyms();
 
         String finalOriginalSynonymRow = originalSynonymRow;
-        ((Activity)getContext()).runOnUiThread(() ->
+        ((Activity) getContext()).runOnUiThread(() ->
                 originalText.setText(finalOriginalSynonymRow));
 
         Language targetTranslationLanguage = targetLanguage.getOpposite();
@@ -66,10 +68,12 @@ public class SynonymPair extends LinearLayoutCompat {
             translateSynonym(originalSynonyms.get(synonymIndex), synonymIndex, targetTranslationLanguage);
         }
     }
+
     public void clear() {
         originalText.setText("");
         translatedText.setText("");
     }
+
     public void setColor(int color) {
         originalText.setTextColor(color);
         translatedText.setTextColor(color);
@@ -79,10 +83,12 @@ public class SynonymPair extends LinearLayoutCompat {
         translationApis[synonymIndex].translate(original,
                 targetLanguage,
                 translatedSynonym -> {
-                    translatedSynonyms[synonymIndex] = translatedSynonym;
+                    translatedSynonyms[synonymIndex] = translatedSynonym.getText();
                     setTranslatedSynonyms();
-                });
+                },
+                this::clear);
     }
+
     private void setTranslatedSynonyms() {
         if (translatedSynonyms.length <= 0)
             return;
@@ -91,18 +97,19 @@ public class SynonymPair extends LinearLayoutCompat {
         for (int i = 1; i < translatedSynonyms.length; i++) {
             String translatedSynonym = translatedSynonyms[i];
             if (translatedSynonym.isEmpty()
-                || translatedSynonym.equals(EMPTY_TRANSLATED_STRING)) {
+                    || translatedSynonym.equals(EMPTY_TRANSLATED_STRING)) {
                 translatedSynonym = EMPTY_TRANSLATED_STRING;
             }
             translatedSynonymRow += ", " + translatedSynonym;
         }
 
         String finalTranslatedSynonymRow = translatedSynonymRow;
-        ((Activity)getContext()).runOnUiThread(() -> {
+        ((Activity) getContext()).runOnUiThread(() -> {
 
             translatedText.setText(finalTranslatedSynonymRow);
         });
     }
+
     private void initView() {
         inflate(getContext(), R.layout.synonym_pair, this);
 

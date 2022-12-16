@@ -29,6 +29,12 @@ public class WordPair implements Parcelable {
         this.translation = translation;
     }
 
+    public WordPair(Word word1, Word word2, Language primaryLanguage, Language learningLanguage) {
+        this.original = word1.getLanguage() == learningLanguage ? word1 : word2;
+        this.translation = word2.getLanguage() == primaryLanguage ? word2 : word1;
+    }
+
+
     protected WordPair(Parcel parcel) {
         original = parcel.readParcelable(Word.class.getClassLoader());
         translation = parcel.readParcelable(Word.class.getClassLoader());

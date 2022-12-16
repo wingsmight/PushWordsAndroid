@@ -22,10 +22,12 @@ public class ExamplePair extends LinearLayoutCompat {
         super(context, attrs, defStyle);
         initView();
     }
+
     public ExamplePair(Context context, AttributeSet attrs) {
         super(context, attrs);
         initView();
     }
+
     public ExamplePair(Context context) {
         super(context);
         initView();
@@ -33,18 +35,20 @@ public class ExamplePair extends LinearLayoutCompat {
 
 
     public void set(String originalExample, Language targetLanguage) {
-        ((Activity)getContext()).runOnUiThread(() -> {
-            originalText.setText(originalExample);
-        });
+        Activity activity = ((Activity) getContext());
+        activity.runOnUiThread(() -> originalText.setText(originalExample));
 
         translationApi.translate(originalExample,
                 targetLanguage.getOpposite(),
-                translatedExample -> translatedText.setText(translatedExample));
+                translatedExample -> activity.runOnUiThread(() -> translatedText.setText(translatedExample.getText())),
+                () -> activity.runOnUiThread(() -> translatedText.setText("")));
     }
+
     public void clear() {
         originalText.setText("");
         translatedText.setText("");
     }
+
     public void setColor(int color) {
         originalText.setTextColor(color);
         translatedText.setTextColor(color);

@@ -10,6 +10,7 @@ import androidx.core.util.Consumer;
 
 import com.wingsmight.pushwords.R;
 import com.wingsmight.pushwords.data.Language;
+import com.wingsmight.pushwords.data.Word;
 import com.wingsmight.pushwords.handlers.network.dictionaryApis.examples.IExamplesApi;
 import com.wingsmight.pushwords.handlers.network.dictionaryApis.examples.RussianExamplesApi;
 import com.wingsmight.pushwords.handlers.network.dictionaryApis.examples.EnglishExamplesApi;
@@ -31,65 +32,65 @@ public class WordInfoView extends LinearLayoutCompat {
     private final Consumer<ArrayList<String>> onExamplesGot = new Consumer<ArrayList<String>>() {
         @Override
         public void accept(ArrayList<String> synonyms) {
-            exampleList.set(synonyms, wordLanguage);
+            exampleList.set(synonyms, detailedWord.getLanguage());
         }
     };
     private final Consumer<ArrayList<ArrayList<String>>> onSynonymsGot = new Consumer<ArrayList<ArrayList<String>>>() {
         @Override
         public void accept(ArrayList<ArrayList<String>> exampleLists) {
-            synonymList.set(exampleLists, wordLanguage);
+            synonymList.set(exampleLists, detailedWord.getLanguage());
         }
     };
 
     private IExamplesApi examplesApi;
     private ISynonymsApi synonymsApi;
 
-    private Language wordLanguage = Language.Russian;
+    private Word detailedWord = new Word("", Language.English);
 
 
     public WordInfoView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         initView();
     }
+
     public WordInfoView(Context context, AttributeSet attrs) {
         super(context, attrs);
         initView();
     }
+
     public WordInfoView(Context context) {
         super(context);
         initView();
     }
 
+    public void setWord(Word labelWord, Word detailedWord) {
+        setWord(labelWord, detailedWord, false);
+    }
 
-    public void setWord(String word, Language wordLanguage) {
-        Log.i("WordInfoView", word + " from " + wordLanguage);
+    public void setWord(Word labelWord, Word detailedWord, Boolean isTranscriptionShowing) {
+        setDetailedLanguage(detailedWord.getLanguage());
 
-        setWordLanguage(wordLanguage);
-
-        wordText.setText(word);
+        wordText.setText(labelWord.getText());
 
         synonymList.clear();
         exampleList.clear();
 
-        synonymsApi.loadSynonyms(word, onSynonymsGot);
-        examplesApi.loadExamples(word, onExamplesGot);
+        synonymsApi.loadSynonyms(detailedWord.getText(), onSynonymsGot);
+        examplesApi.loadExamples(detailedWord.getText(), onExamplesGot);
     }
-    public void setWordLanguage(Language wordLanguage) {
-        this.wordLanguage = wordLanguage;
 
-        if (wordLanguage == Language.English) {
-            synonymsApi = new EnglishSynonymsApi(getContext());
-            examplesApi = new EnglishExamplesApi(getContext());
-        } else if (wordLanguage == Language.Russian) {
-            synonymsApi = new RussianSynonymsApi(getContext());
-            examplesApi = new RussianExamplesApi(getContext());
-        }
-    }
     public void setElementColor(int color) {
         wordText.setTextColor(color);
 
         synonymList.setTextColor(color);
         exampleList.setTextColor(color);
+    }
+
+    public void clear() {
+        wordText.setText("");
+        
+        synonymList.clear();
+        exampleList.clear();
     }
 
     private void initView() {
@@ -100,7 +101,7 @@ public class WordInfoView extends LinearLayoutCompat {
         synonymList = findViewById(R.id.synonym_list);
         exampleList = findViewById(R.id.example_list);
 
-        setWordLanguage(wordLanguage);
+        setDetailedLanguage(detailedWord.getLanguage());
 
         synonymList.clear();
         exampleList.clear();
@@ -115,5 +116,15 @@ public class WordInfoView extends LinearLayoutCompat {
                 exampleList.setVisibility(GONE);
             }
         });
+    }
+
+    private void setDetailedLanguage(Language language) {
+        if (language == Language.English) {
+            synonymsApi = new EnglishSynonymsApi(getContext());
+            examplesApi = new EnglishExamplesApi(getContext());
+        } else if (language == Language.Russian) {
+            synonymsApi = new RussianSynonymsApi(getContext());
+            examplesApi = new RussianExamplesApi(getContext());
+        }
     }
 }

@@ -55,7 +55,7 @@ public class WordCardTabView extends AppCompatActivity {
 
     public void set(WordPair wordPair) {
         originalWordTextView.setText(wordPair.getOriginal().getText());
-        translatedWordInfoView.setWord(wordPair.getTranslation().getText(), wordPair.getTranslationLanguage());
+        translatedWordInfoView.setWord(wordPair.getTranslation(), wordPair.getOriginal());
         translatedWordControlPanel.setWordPair(wordPair);
     }
 }
