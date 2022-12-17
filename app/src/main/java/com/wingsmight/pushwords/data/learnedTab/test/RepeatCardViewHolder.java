@@ -18,6 +18,7 @@ import com.wingsmight.pushwords.data.Language;
 import com.wingsmight.pushwords.data.Preference;
 import com.wingsmight.pushwords.data.Word;
 import com.wingsmight.pushwords.data.WordPair;
+import com.wingsmight.pushwords.handlers.PhoneticTranscription;
 import com.wingsmight.pushwords.handlers.RandomBoolean;
 import com.wingsmight.pushwords.ui.SpeakerView;
 import com.wingsmight.pushwords.ui.learnedTab.TestSettingsTab;
@@ -31,6 +32,7 @@ import com.yuyakaido.android.cardstackview.SwipeAnimationSetting;
 public class RepeatCardViewHolder extends RecyclerView.ViewHolder {
     private final TextView counterTextView;
     private final TextView originalWordTextView;
+    private final TextView originalWordTextTranscriptionView;
     private final SpeakerView speakerView;
     private final WordInfoView wordInfoView;
     private final View forgotButton;
@@ -43,7 +45,7 @@ public class RepeatCardViewHolder extends RecyclerView.ViewHolder {
     private CardStackLayoutManager cardStackLayoutManager;
     private final SharedPreferences preferences;
     private boolean isOriginalWordShowing;
-
+    private PhoneticTranscription phoneticTranscription;
 
     public RepeatCardViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -54,6 +56,7 @@ public class RepeatCardViewHolder extends RecyclerView.ViewHolder {
         counterTextView = itemView.findViewById(R.id.counterText);
 
         originalWordTextView = itemView.findViewById(R.id.originalWordText);
+        originalWordTextTranscriptionView = itemView.findViewById(R.id.originalWordTextTranscription);
 
         speakerView = itemView.findViewById(R.id.speakerButton);
 
@@ -82,6 +85,8 @@ public class RepeatCardViewHolder extends RecyclerView.ViewHolder {
 
         ImageViewCompat.setImageTintList(speakerView.getImage(),
                 elementColorStateList);
+
+        phoneticTranscription = PhoneticTranscription.getInstance(itemView.getContext());
     }
 
 
@@ -108,8 +113,15 @@ public class RepeatCardViewHolder extends RecyclerView.ViewHolder {
 
         originalWordTextView.setText(originalWord.getText());
         speakerView.setSpokenTextView(originalWordTextView);
-        wordInfoView.setWord(translationWord, wordPair.getOriginal());
+        wordInfoView.setWord(translationWord, wordPair.getOriginal(), !isOriginalWordShowing);
         counterText.setText((position + 1) + " из " + overallCount);
+
+        if (isOriginalWordShowing) {
+            originalWordTextTranscriptionView.setText(phoneticTranscription.get(originalWord.getText()));
+            originalWordTextTranscriptionView.setVisibility(View.VISIBLE);
+        } else {
+            originalWordTextTranscriptionView.setVisibility(View.GONE);
+        }
     }
 
     private void forgot() {

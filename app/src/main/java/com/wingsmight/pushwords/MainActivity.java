@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentManager;
 import com.wingsmight.pushwords.handlers.AppCycle;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.wingsmight.pushwords.handlers.PhoneticTranscription;
 import com.wingsmight.pushwords.ui.dictionaryTab.DictionaryTab;
 import com.wingsmight.pushwords.ui.learnedTab.LearnedTab;
 import com.wingsmight.pushwords.ui.learningTab.LearningTab;
@@ -114,19 +115,28 @@ public class MainActivity extends AppCompatActivity {
 
         // Permissions
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(new String[] { WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE },1);
+            requestPermissions(new String[]{WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE}, 1);
         }
+
+        // Init PhoneticTranscription
+        PhoneticTranscription
+                .getInstance(this)
+                .get("Test");
     }
+
     @Override
     protected void onPause() {
         super.onPause();
 
         AppCycle.quit(this);
     }
+
     @Override
     protected void onStop() {
         super.onStop();
     }
+
     @Override
-    public void onBackPressed() { }
+    public void onBackPressed() {
+    }
 }

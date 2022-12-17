@@ -58,8 +58,6 @@ public class EnglishExamplesApi implements IExamplesApi {
             while (matcher.find() && examples.size() < maxExampleLength) {
                 String example = matcher.group(1);
 
-                Log.e("aaa", "aa");
-
                 if (!example.contains("<span class")
                     && !example.contains("]</span></span>")) {
                     examples.add(example);

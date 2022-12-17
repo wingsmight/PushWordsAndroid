@@ -11,14 +11,17 @@ import com.wingsmight.pushwords.data.Language;
 import com.wingsmight.pushwords.data.WordPair;
 import com.wingsmight.pushwords.data.WordPairViewHolder;
 import com.wingsmight.pushwords.handlers.AppCycle;
+import com.wingsmight.pushwords.handlers.PhoneticTranscription;
 import com.wingsmight.pushwords.ui.wordInfo.WordInfoView;
 
 public class WordCardTabView extends AppCompatActivity {
     private View closeButton;
     private TextView originalWordTextView;
+    private TextView originalWordTextTranscription;
     private WordControlPanel translatedWordControlPanel;
     private WordInfoView translatedWordInfoView;
 
+    private PhoneticTranscription phoneticTranscription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,11 +33,14 @@ public class WordCardTabView extends AppCompatActivity {
         closeButton.setOnClickListener(view -> finish());
 
         originalWordTextView = findViewById(R.id.originalWordText);
+        originalWordTextTranscription = findViewById(R.id.originalWordTextTranscription);
 
         translatedWordControlPanel = findViewById(R.id.translatedWordControlPanel);
         translatedWordControlPanel.setWordTextView(originalWordTextView);
 
         translatedWordInfoView = findViewById(R.id.translatedWordInfoView);
+
+        phoneticTranscription = PhoneticTranscription.getInstance(getApplicationContext());
 
         set(getIntent().getParcelableExtra(WordPairViewHolder.WORD_PAIR_EXTRA));
     }
@@ -54,8 +60,11 @@ public class WordCardTabView extends AppCompatActivity {
     }
 
     public void set(WordPair wordPair) {
-        originalWordTextView.setText(wordPair.getOriginal().getText());
+        String originalWordText = wordPair.getOriginal().getText();
+
+        originalWordTextView.setText(originalWordText);
         translatedWordInfoView.setWord(wordPair.getTranslation(), wordPair.getOriginal());
         translatedWordControlPanel.setWordPair(wordPair);
+        originalWordTextTranscription.setText(phoneticTranscription.get(originalWordText));
     }
 }

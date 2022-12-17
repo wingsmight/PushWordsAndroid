@@ -2,7 +2,6 @@ package com.wingsmight.pushwords.ui.wordInfo;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.LinearLayoutCompat;
@@ -10,7 +9,9 @@ import androidx.core.util.Consumer;
 
 import com.wingsmight.pushwords.R;
 import com.wingsmight.pushwords.data.Language;
+import com.wingsmight.pushwords.data.User;
 import com.wingsmight.pushwords.data.Word;
+import com.wingsmight.pushwords.handlers.PhoneticTranscription;
 import com.wingsmight.pushwords.handlers.network.dictionaryApis.examples.IExamplesApi;
 import com.wingsmight.pushwords.handlers.network.dictionaryApis.examples.RussianExamplesApi;
 import com.wingsmight.pushwords.handlers.network.dictionaryApis.examples.EnglishExamplesApi;
@@ -25,9 +26,11 @@ import java.util.ArrayList;
 
 public class WordInfoView extends LinearLayoutCompat {
     private TextView wordText;
+    private TextView wordTextTranscription;
     private SynonymList synonymList;
     private ExampleList exampleList;
 
+    private PhoneticTranscription phoneticTranscription;
 
     private final Consumer<ArrayList<String>> onExamplesGot = new Consumer<ArrayList<String>>() {
         @Override
@@ -77,6 +80,14 @@ public class WordInfoView extends LinearLayoutCompat {
 
         synonymsApi.loadSynonyms(detailedWord.getText(), onSynonymsGot);
         examplesApi.loadExamples(detailedWord.getText(), onExamplesGot);
+
+        if (labelWord.getLanguage() == User.LearningLanguage &&
+                isTranscriptionShowing) {
+            wordTextTranscription.setText(phoneticTranscription.get(labelWord.getText()));
+            wordTextTranscription.setVisibility(VISIBLE);
+        } else {
+            wordTextTranscription.setVisibility(GONE);
+        }
     }
 
     public void setElementColor(int color) {
@@ -88,7 +99,7 @@ public class WordInfoView extends LinearLayoutCompat {
 
     public void clear() {
         wordText.setText("");
-        
+
         synonymList.clear();
         exampleList.clear();
     }
@@ -97,6 +108,7 @@ public class WordInfoView extends LinearLayoutCompat {
         inflate(getContext(), R.layout.word_info, this);
 
         wordText = findViewById(R.id.word);
+        wordTextTranscription = findViewById(R.id.wordTranscription);
 
         synonymList = findViewById(R.id.synonym_list);
         exampleList = findViewById(R.id.example_list);
@@ -116,6 +128,8 @@ public class WordInfoView extends LinearLayoutCompat {
                 exampleList.setVisibility(GONE);
             }
         });
+
+        phoneticTranscription = PhoneticTranscription.getInstance(getContext());
     }
 
     private void setDetailedLanguage(Language language) {

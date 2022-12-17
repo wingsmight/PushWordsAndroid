@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -9,34 +8,50 @@
         layout="@layout/close_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:layout_gravity="end" />
+        android:layout_gravity="end"
+        android:layout_margin="10dp" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/originalWordText"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="20dp"
                 android:layout_weight="1"
-                android:text="bag"
-                android:textSize="50sp"
-                android:textColor="?android:textColorPrimary"
-                android:layout_margin="20dp" />
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/originalWordText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="bag"
+                    android:textColor="?android:textColorPrimary"
+                    android:textSize="50sp" />
+
+                <TextView
+                    android:id="@+id/originalWordTextTranscription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/originalWordText"
+                    android:text="[bag]"
+                    android:textColor="?android:textColorSecondary"
+                    android:textSize="26sp" />
+
+            </RelativeLayout>
 
             <com.wingsmight.pushwords.ui.WordControlPanel
                 android:id="@+id/translatedWordControlPanel"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
