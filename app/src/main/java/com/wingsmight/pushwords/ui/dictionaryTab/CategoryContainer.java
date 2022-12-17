@@ -105,7 +105,7 @@ public class CategoryContainer extends LinearLayoutCompat {
                 Cell[] translations = sheet.getColumn(1);
                 int wordCount = Math.min(originals.length, translations.length);
                 ArrayList<WordPair> words = new ArrayList<>(wordCount);
-                for (int rowIndex = 0; rowIndex < wordCount; rowIndex++) {
+                for (int rowIndex = 1; rowIndex < wordCount; rowIndex++) {
                     WordPair newWordPair = new WordPair(new Word(originals[rowIndex].getContents(), originalLanguage),
                             new Word(translations[rowIndex].getContents(), originalLanguage.getOpposite()));
 
